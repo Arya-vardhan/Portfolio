@@ -6,7 +6,7 @@ import CSS3DCube from "@/components/shared/css-3d-cube";
 const HeroSection = () => {
   return (
     <section id="home" className="min-h-screen pt-24 md:pt-0 flex items-center relative overflow-hidden">
-      <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 items-center z-10">
+      <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center z-10">
         <div className="flex flex-col gap-4 text-center md:text-left">
           <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
             Hi, I&rsquo;m <span className="text-primary text-glow">Arya Vardhan Gelli</span>
