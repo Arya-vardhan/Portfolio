@@ -42,7 +42,7 @@ const AnimatedText = () => {
   }, [subIndex, isDeleting, index]);
 
   return (
-    <h2 className="font-headline text-2xl md:text-3xl font-semibold text-accent accent-glow">
+    <h2 className="font-headline text-2xl md:text-3xl font-semibold text-primary text-glow">
       {text}
       <span className="animate-pulse">|</span>
     </h2>
