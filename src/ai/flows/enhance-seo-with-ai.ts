@@ -44,9 +44,7 @@ const enhanceSEOPrompt = ai.definePrompt({
   3. Refine the content description to be more engaging and SEO-friendly.
   4. Ensure that the enhanced keywords are comma-separated.
   5. Return the enhanced keywords and description in the specified JSON format.
-
-  Enhanced Keywords:
-  Enhanced Description: `,
+`,
 });
 
 const enhanceSEOFlow = ai.defineFlow(
