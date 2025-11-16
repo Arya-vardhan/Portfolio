@@ -1,7 +1,7 @@
 import { Github, Linkedin, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedText from "@/components/shared/animated-text";
-import CSS3DCube from "@/components/shared/css-3d-cube";
+import ParticleNetwork from "@/components/shared/particle-network";
 
 const HeroSection = () => {
   return (
@@ -36,7 +36,7 @@ const HeroSection = () => {
           </div>
         </div>
         <div className="hidden md:flex justify-center items-center">
-          <CSS3DCube />
+          <ParticleNetwork />
         </div>
       </div>
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/10 to-transparent -z-10" />
