@@ -1,3 +1,58 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "text-to-speech",
+      "description": "Real-time Text-to-Speech using Raspberry Pi",
+      "imageUrl": "https://images.unsplash.com/photo-1631553127988-36343ac5bb0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyYXNwYmVycnklMjBwaXxlbnwwfHx8fDE3NjMzMTE5NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "raspberry pi"
+    },
+    {
+      "id": "voice-assistant",
+      "description": "Google Bard Voice Assistant using Python",
+      "imageUrl": "https://images.unsplash.com/photo-1558089687-f282ffcbc126?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx2b2ljZSUyMGFzc2lzdGFudHxlbnwwfHx8fDE3NjMyMjQyNzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "voice assistant"
+    },
+    {
+      "id": "image-encryption",
+      "description": "Image Encryption System",
+      "imageUrl": "https://images.unsplash.com/photo-1667372393086-9d4001d51cf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxlbmNyeXB0aW9uJTIwc3lzdGVtfGVufDB8fHx8MTc2MzMxMTk3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "encryption system"
+    },
+    {
+      "id": "health-monitor",
+      "description": "Health & Vitals Monitoring System",
+      "imageUrl": "https://images.unsplash.com/photo-1695048441269-41b4d75351c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxoZWFsdGglMjBtb25pdG9yaW5nfGVufDB8fHx8MTc2MzMxMTk3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "health monitoring"
+    },
+    {
+      "id": "weather-monitor",
+      "description": "IoT Weather Monitoring System (ESP32)",
+      "imageUrl": "https://images.unsplash.com/photo-1629204120289-3cb6c195ddde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3ZWF0aGVyJTIwc3RhdGlvbnxlbnwwfHx8fDE3NjMzMTE5NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "weather station"
+    },
+    {
+      "id": "vending-machine",
+      "description": "Reverse Vending Machine using Raspberry Pi",
+      "imageUrl": "https://images.unsplash.com/photo-1670653357289-68c4f2961895?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dmVuZGluZyUyMG1hY2hpbmV8ZW58MHx8fHwxNzYzMjEzNDIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vending machine"
+    },
+    {
+      "id": "portfolio",
+      "description": "Personal Portfolio Website",
+      "imageUrl": "https://images.unsplash.com/photo-1496660782328-0957101c8c62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3ZWJzaXRlJTIwcG9ydGZvbGlvfGVufDB8fHx8MTc2MzIxMTY4MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "website portfolio"
+    },
+    {
+      "id": "mini-games",
+      "description": "Mini Games Mania",
+      "imageUrl": "https://images.unsplash.com/photo-1610561212775-b191f21b6998?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cmV0cm8lMjBnYW1lc3xlbnwwfHx8fDE3NjMzMTE5NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "retro games"
+    },
+    {
+      "id": "confession-website",
+      "description": "Confession Website",
+      "imageUrl": "https://images.unsplash.com/photo-1712839397054-f5bb6edd8fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhbm9ueW1vdXMlMjBtZXNzYWdlfGVufDB8fHx8MTc2MzMxMTk3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "anonymous message"
+    }
+  ]
 }
