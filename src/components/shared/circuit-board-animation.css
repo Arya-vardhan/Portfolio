@@ -1,0 +1,73 @@
+.circuit-board-animation path,
+.circuit-board-animation circle {
+  fill: none;
+  stroke: hsl(var(--primary) / 0.3);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.circuit-board-animation path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-trace 10s linear infinite;
+}
+
+.circuit-board-animation circle {
+  stroke: hsl(var(--primary));
+  animation: pulse-node 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px hsl(var(--primary)));
+}
+
+.circuit-board-animation .center-node {
+    stroke-width: 3;
+    filter: drop-shadow(0 0 5px hsl(var(--primary)));
+    animation-duration: 3s;
+}
+
+/* Stagger path animations */
+.circuit-board-animation path:nth-child(2) { animation-delay: -0.5s; }
+.circuit-board-animation path:nth-child(3) { animation-delay: -1s; }
+.circuit-board-animation path:nth-child(4) { animation-delay: -1.5s; }
+.circuit-board-animation path:nth-child(5) { animation-delay: -2s; }
+.circuit-board-animation path:nth-child(6) { animation-delay: -2.5s; }
+.circuit-board-animation path:nth-child(7) { animation-delay: -3s; }
+.circuit-board-animation path:nth-child(8) { animation-delay: -3.5s; }
+.circuit-board-animation path:nth-child(9) { animation-delay: -4s; }
+.circuit-board-animation path:nth-child(10) { animation-delay: -4.5s; }
+.circuit-board-animation path:nth-child(11) { animation-delay: -5s; }
+.circuit-board-animation path:nth-child(12) { animation-delay: -5.5s; }
+.circuit-board-animation path:nth-child(13) { animation-delay: -6s; }
+.circuit-board-animation path:nth-child(14) { animation-delay: -6.5s; }
+.circuit-board-animation path:nth-child(15) { animation-delay: -7s; }
+.circuit-board-animation path:nth-child(16) { animation-delay: -7.5s; }
+
+/* Stagger circle animations */
+.circuit-board-animation circle:nth-of-type(2) { animation-delay: -0.5s; }
+.circuit-board-animation circle:nth-of-type(3) { animation-delay: -1s; }
+.circuit-board-animation circle:nth-of-type(4) { animation-delay: -1.5s; }
+.circuit-board-animation circle:nth-of-type(5) { animation-delay: -2s; }
+.circuit-board-animation circle:nth-of-type(6) { animation-delay: -2.5s; }
+.circuit-board-animation circle:nth-of-type(7) { animation-delay: -3s; }
+.circuit-board-animation circle:nth-of-type(8) { animation-delay: -3.5s; }
+
+
+@keyframes draw-trace {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes pulse-node {
+  0%, 100% {
+    r: 3;
+    stroke-opacity: 0.7;
+  }
+  50% {
+    r: 4;
+    stroke-opacity: 1;
+    stroke: hsl(var(--accent));
+  }
+}
