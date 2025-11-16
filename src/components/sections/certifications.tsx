@@ -13,7 +13,7 @@ const certifications = [
 
 const CertificationsSection = () => {
   return (
-    <SectionWrapper id="certifications" className="bg-background">
+    <SectionWrapper id="certifications">
       <div className="flex flex-col items-center text-center gap-4 mb-12">
         <ScrollAnimationWrapper>
           <h2 className="font-headline text-3xl md:text-4xl lg:text-5xl font-bold">Certifications</h2>

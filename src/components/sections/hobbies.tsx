@@ -15,7 +15,7 @@ const hobbies = [
 
 const HobbiesSection = () => {
   return (
-    <SectionWrapper id="hobbies" className="bg-background">
+    <SectionWrapper id="hobbies">
       <div className="flex flex-col items-center text-center gap-4 mb-12">
         <ScrollAnimationWrapper>
           <h2 className="font-headline text-3xl md:text-4xl lg:text-5xl font-bold">Hobbies</h2>
