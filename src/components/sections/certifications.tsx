@@ -1,5 +1,6 @@
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { ScrollAnimationWrapper } from "@/components/shared/scroll-animation-wrapper";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ShieldCheck } from "lucide-react";
 import React from 'react';
 
@@ -19,16 +20,20 @@ const CertificationsSection = () => {
           <p className="max-w-2xl text-muted-foreground md:text-xl">Recognitions of my skills and knowledge.</p>
         </ScrollAnimationWrapper>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {certifications.map((cert, index) => (
           <ScrollAnimationWrapper key={index} style={{ animationDelay: `${index * 0.1}s` }}>
-            <div className="flex flex-col items-center text-center p-6 rounded-lg glassmorphism transition-transform duration-300 hover:-translate-y-2 hover:shadow-primary/20 hover:shadow-lg h-full">
-              <div className="p-4 bg-primary/20 rounded-full mb-4">
-                <ShieldCheck className="w-8 h-8 text-accent"/>
-              </div>
-              <h3 className="font-headline font-semibold text-lg flex-grow">{cert.name}</h3>
-              <p className="text-muted-foreground text-sm mt-2">{cert.issuer}</p>
-            </div>
+            <Card className="glassmorphism h-full text-center group transition-all duration-300 hover:border-primary/60 hover:-translate-y-2">
+              <CardHeader className="items-center">
+                <div className="p-4 bg-primary/10 rounded-full transition-colors duration-300 group-hover:bg-primary/20">
+                  <ShieldCheck className="w-10 h-10 text-primary transition-transform duration-300 group-hover:scale-110"/>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <h3 className="font-headline font-bold text-lg">{cert.name}</h3>
+                <p className="text-muted-foreground mt-1">{cert.issuer}</p>
+              </CardContent>
+            </Card>
           </ScrollAnimationWrapper>
         ))}
       </div>
