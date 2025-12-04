@@ -1,15 +1,9 @@
 import type {NextConfig} from 'next';
 
-const isProd = process.env.NODE_ENV === 'production';
-const repoName = 'Portfolio'; 
-
 const nextConfig: NextConfig = {
   /* config options here */
   output: 'export',
-  // assetPrefix is used for production builds on GitHub Pages
-  assetPrefix: isProd ? `/${repoName}/` : '',
-  // basePath is used for routing on GitHub Pages
-  basePath: isProd ? `/${repoName}` : '',
+  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
   },
