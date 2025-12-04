@@ -28,9 +28,9 @@ export async function submitContactForm(
     };
   }
 
+  // This is a static site export for GitHub pages, so server actions are not supported.
   // In a real app, you would send an email here using a service like Resend or Nodemailer.
-  // For this example, we'll just log it to the console.
-  console.log("New contact form submission:", parsedData.data);
-
-  return { success: true, message: "Message sent successfully! Thanks for reaching out." };
+  console.log("Form submission simulated for static site:", parsedData.data);
+  
+  return { success: true, message: "Thank you for your message! I'll be in touch soon." };
 }
