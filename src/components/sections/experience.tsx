@@ -6,7 +6,7 @@ const experiences = [
   {
     role: "Junior Design Engineer",
     company: "Cadsys (Apex Group)",
-    period: "2025 – Nov 2025",
+    period: "Apr 2025 – Nov 2025",
     tasks: [
       "OSP Design & Drafting",
       "Work Prints",
