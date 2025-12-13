@@ -1,53 +1,28 @@
 
 "use client";
 
-import { useActionState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { ScrollAnimationWrapper } from "@/components/shared/scroll-animation-wrapper";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Mail, Github, Linkedin, Instagram, Share2 } from "lucide-react";
-import { submitContactForm, type FormState } from "@/app/actions";
 import Link from "next/link";
-
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
-  message: z.string().min(10, "Message must be at least 10 characters long."),
-});
+import { Label } from "../ui/label";
 
 const ContactSection = () => {
-  const { toast } = useToast();
-  const [state, formAction] = useActionState<FormState, FormData>(submitContactForm, {
-    success: false,
-    message: "",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { name: "", email: "", message: "" },
-  });
-
-  useEffect(() => {
-    if (state.message) {
-      toast({
-        title: state.success ? "Success!" : "Error",
-        description: state.message,
-        variant: state.success ? "default" : "destructive",
-      });
-      if (state.success) {
-        form.reset();
-      }
-    }
-  }, [state, toast, form]);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const subject = `Message from ${name} via Portfolio`;
+    const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+    window.location.href = `mailto:aryavardhan.gelli@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
   return (
     <SectionWrapper id="contact">
@@ -99,34 +74,23 @@ const ContactSection = () => {
                 <CardDescription>Fill out the form below and I'll get back to you.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Form {...form}>
-                  <form action={formAction} className="space-y-6">
-                    <FormField control={form.control} name="name" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl><Input placeholder="Your Name" {...field} className="bg-input/50" /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                    <FormField control={form.control} name="email" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl><Input placeholder="your.email@example.com" {...field} className="bg-input/50" /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                    <FormField control={form.control} name="message" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Message</FormLabel>
-                        <FormControl><Textarea placeholder="Your message..." {...field} className="bg-input/50" /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                    <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                      {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Name</Label>
+                      <Input id="name" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} required className="bg-input/50" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input id="email" type="email" placeholder="your.email@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required className="bg-input/50" />
+                    </div>
+                     <div className="space-y-2">
+                      <Label htmlFor="message">Message</Label>
+                      <Textarea id="message" placeholder="Your message..." value={message} onChange={(e) => setMessage(e.target.value)} required className="bg-input/50" />
+                    </div>
+                    <Button type="submit" className="w-full">
+                      Send Message
                     </Button>
                   </form>
-                </Form>
               </CardContent>
             </Card>
           </ScrollAnimationWrapper>
