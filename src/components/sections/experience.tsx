@@ -5,8 +5,8 @@ import { Briefcase } from "lucide-react";
 const experiences = [
   {
     role: "Junior Design Engineer",
-    company: "Apex Group",
-    period: "2025 – Present",
+    company: "Cadsys (Apex Group)",
+    period: "2025 – Nov 2025",
     tasks: [
       "OSP Design & Drafting",
       "Work Prints",
