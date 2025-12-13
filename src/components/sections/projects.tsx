@@ -16,7 +16,7 @@ const hardwareProjects = [
 ];
 
 const websiteProjects = [
-  { title: "Personal Portfolio", description: "My main portfolio website showcasing my work.", link: "https://arya-vardhan.github.io/Arya/", tags: ["HTML", "CSS", "JS"], imageSeed: "portfolio" },
+  { title: "Personal Portfolio", description: "My main portfolio website showcasing my work.", link: "https://arya-vardhan.github.io/Portfolio/", tags: ["HTML", "CSS", "JS"], imageSeed: "portfolio" },
   { title: "Mini-Games-Mania", description: "A collection of simple web-based mini-games.", link: "https://mini-game-mania-ten.vercel.app/", tags: ["React", "Vercel"], imageSeed: "mini-games" },
   { title: "Confession Website", description: "An anonymous confession platform.", link: "https://arya-vardhan.github.io/Confession/", tags: ["HTML", "JS", "Github Pages"], imageSeed: "confession-website" },
 ];
