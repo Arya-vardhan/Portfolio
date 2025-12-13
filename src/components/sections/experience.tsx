@@ -44,13 +44,13 @@ const ExperienceSection = () => {
               <div className="md:absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-background border-2 border-primary flex items-center justify-center">
                 <Briefcase className="w-4 h-4 text-primary" />
               </div>
-              <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12 md:ml-auto'}`}>
+              <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto'}`}>
                 <ScrollAnimationWrapper animationClassName={index % 2 === 0 ? 'md:animate-fade-in-right' : 'md:animate-fade-in-left'}>
-                  <div className={`p-6 rounded-lg glassmorphism ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                  <div className={`p-6 rounded-lg glassmorphism ${index % 2 !== 0 ? 'md:text-left' : ''}`}>
                     <p className="text-sm text-primary font-semibold">{exp.period}</p>
                     <h3 className="text-xl font-bold mt-1 font-headline">{exp.role}</h3>
                     <p className="text-md text-muted-foreground mb-3">{exp.company}</p>
-                    <ul className={`text-sm list-disc list-inside text-left ${index % 2 === 0 ? 'md:text-right md:list-inside' : ''}`}>
+                    <ul className={`text-sm list-disc list-inside text-left ${index % 2 === 0 ? 'md:ml-auto' : ''}`}>
                       {exp.tasks.map((task, i) => (
                         <li key={i}>{task}</li>
                       ))}
