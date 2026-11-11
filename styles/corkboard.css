@@ -22,6 +22,11 @@
   cursor: grabbing;
 }
 
+#viewport.dragging, #viewport.dragging * {
+  cursor: grabbing !important;
+}
+
+
 /* Ambient Film Grain & Vignette Overlay */
 #ambient-overlay {
   position: fixed;

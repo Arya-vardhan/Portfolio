@@ -65,7 +65,7 @@
   <!-- ==================== AMBIENT & 3D PARTICLE OVERLAYS ==================== -->
   <div id="ambient-overlay"></div>
   <canvas id="three-canvas"></canvas>
-  <div id="torch-overlay"></div>
+  <div id="torch-overlay" class="torch-off"></div>
 
   <!-- ==================== TOP DETECTIVE HUD ==================== -->
   <header class="fixed top-0 left-0 right-0 z-40 p-3 sm:p-4 flex items-center justify-between pointer-events-none">
@@ -83,9 +83,15 @@
 
     <!-- Controls -->
     <div class="flex items-center gap-2 pointer-events-auto">
+      <button id="btn-3d-badges" onclick="open3DBadgeInspector('cisco-analyst')" class="hud-element px-2.5 sm:px-3 py-2 rounded text-xs font-mono bg-gradient-to-r from-red-950 via-stone-900 to-amber-950 border border-amber-600/50 text-amber-300 hover:text-amber-100 hover:border-amber-400 flex items-center gap-1.5 transition-all shadow-lg cursor-pointer" title="Examine 3D Badges (360° Spin)">
+        <span class="text-amber-400">⚡</span>
+        <span class="font-bold hidden sm:inline">EXAMINE 3D BADGES</span>
+        <span class="font-bold sm:hidden">3D BADGES</span>
+      </button>
+
       <button id="btn-torch" onclick="toggleTorch()" class="hud-element px-2.5 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors" title="Toggle Detective Flashlight">
         <span>🔦</span>
-        <span class="hidden sm:inline" id="torch-label">TORCH: ON</span>
+        <span class="hidden sm:inline" id="torch-label">TORCH: OFF</span>
       </button>
 
       <button id="btn-audio" onclick="toggleAudio()" class="hud-element px-2.5 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors" title="Toggle Sound FX">
@@ -1056,7 +1062,7 @@
   </div>
 
   <!-- ==================== 3D INTERACTIVE EVIDENCE BADGE INSPECTOR MODAL ==================== -->
-  <div id="badge-3d-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 text-stone-100 font-mono">
+  <div id="badge-3d-modal" class="fixed inset-0 z-[70] bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 text-stone-100 font-mono">
     <div class="relative max-w-4xl w-full bg-[#14100c] border-2 border-[#544130] rounded-xl shadow-2xl p-5 sm:p-7 overflow-hidden flex flex-col md:flex-row gap-6 max-h-[92vh] overflow-y-auto">
       
       <!-- Left: 3D Viewport Column -->

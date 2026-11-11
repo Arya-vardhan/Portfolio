@@ -183,39 +183,85 @@ function setupKeyboard() {
 
 function setupDrag() {
   let isDragging = false;
-  let startX, startY;
+  let startX = 0, startY = 0;
   let currentX = 0, currentY = 0;
+  let dragDist = 0;
+  let justDragged = false;
 
-  worldEl.addEventListener('mousedown', (e) => {
+  // Intercept synthetic click after dragging in capture phase
+  window.addEventListener('click', (e) => {
+    if (justDragged) {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      justDragged = false;
+      return false;
+    }
+  }, true);
+
+  const startDrag = (e) => {
     dismissHint();
-    if (e.target.closest('button, a, input, textarea, .pushpin')) return;
+    // Don't hijack clicks on interactive controls, links, pushpins, HUD elements or elevator
+    if (e.target.closest('button, a, input, textarea, .pushpin, .hud-element, #elevator-track, #elevator-thumb')) return;
+    if (e.button !== undefined && e.button !== 0) return; // Only primary mouse button
+
     isDragging = true;
-    worldEl.classList.add('dragging');
+    dragDist = 0;
     startX = e.clientX;
     startY = e.clientY;
+
     if (gsap) {
+      gsap.killTweensOf(worldEl);
       currentX = gsap.getProperty(worldEl, 'x');
       currentY = gsap.getProperty(worldEl, 'y');
+    } else {
+      currentX = 0;
+      currentY = 0;
     }
-  });
+    worldEl.classList.add('dragging');
+    if (viewportEl) viewportEl.classList.add('dragging');
+  };
 
-  window.addEventListener('mousemove', (e) => {
+  const moveDrag = (e) => {
     if (!isDragging) return;
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
-    if (gsap) {
-      gsap.set(worldEl, { x: currentX + dx, y: currentY + dy });
-    } else {
-      worldEl.style.transform = `translate(${currentX + dx}px, ${currentY + dy}px)`;
-    }
-  });
+    dragDist = Math.hypot(dx, dy);
 
-  window.addEventListener('mouseup', () => {
-    if (isDragging) {
-      isDragging = false;
-      worldEl.classList.remove('dragging');
+    if (dragDist > 6) {
+      const nextX = currentX + dx;
+      const nextY = currentY + dy;
+
+      if (gsap) {
+        gsap.set(worldEl, { x: nextX, y: nextY });
+      } else {
+        worldEl.style.transform = `translate(${nextX}px, ${nextY}px)`;
+      }
     }
-  });
+  };
+
+  const endDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    worldEl.classList.remove('dragging');
+    if (viewportEl) viewportEl.classList.remove('dragging');
+
+    if (dragDist > 6) {
+      justDragged = true;
+      // Allow brief window for browser to emit synthetic click and intercept it
+      setTimeout(() => {
+        justDragged = false;
+      }, 150);
+    }
+  };
+
+  if (viewportEl) {
+    viewportEl.addEventListener('mousedown', startDrag);
+  } else {
+    worldEl.addEventListener('mousedown', startDrag);
+  }
+  window.addEventListener('mousemove', moveDrag);
+  window.addEventListener('mouseup', endDrag);
 }
 
 function setupTouch() {

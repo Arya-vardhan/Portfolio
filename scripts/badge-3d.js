@@ -516,6 +516,11 @@ function animate() {
 
 export function open3DBadgeInspector(badgeIdOrIndex = 0) {
   playTypewriterClick();
+
+  // Dismiss evidence lightbox if open so it doesn't conflict or cover the 3D inspector
+  const evModal = document.getElementById('evidence-modal');
+  if (evModal) evModal.classList.remove('active');
+
   const modal = document.getElementById('badge-3d-modal');
   if (!modal) return;
 
@@ -531,14 +536,15 @@ export function open3DBadgeInspector(badgeIdOrIndex = 0) {
     if (idx === -1) idx = 0;
   }
 
-  // Init 3D if not ready
-  if (!renderer) {
-    init3DBadgeViewer();
-  } else {
-    onViewerResize();
-  }
-
-  loadBadgeModel(idx);
+  // Ensure DOM container layout is resolved before Three.js computes viewport aspect
+  requestAnimationFrame(() => {
+    if (!renderer) {
+      init3DBadgeViewer();
+    } else {
+      onViewerResize();
+    }
+    loadBadgeModel(idx);
+  });
 }
 
 export function close3DBadgeInspector() {
@@ -562,6 +568,29 @@ export function flipBadge3D() {
   if (!coinGroup) return;
   autoRotate = false;
   targetRotation.y += Math.PI;
+}
+
+// Global modal dismiss on Escape key & backdrop click
+if (typeof window !== 'undefined') {
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('badge-3d-modal');
+      if (modal && !modal.classList.contains('hidden')) {
+        close3DBadgeInspector();
+      }
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('badge-3d-modal');
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          close3DBadgeInspector();
+        }
+      });
+    }
+  });
 }
 
 // Global exposure

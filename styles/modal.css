@@ -16,3 +16,9 @@
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
 }
 
+/* ==================== 3D BADGE SPECIMEN MODAL ==================== */
+#badge-3d-modal {
+  z-index: 70;
+}
+
+

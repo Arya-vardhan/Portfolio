@@ -1,9 +1,14 @@
 /* ==================== DYNAMIC FLASHLIGHT / DESK LAMP BEAM ==================== */
 import { playTypewriterClick } from './audio.js';
 
-let torchEnabled = true;
+let torchEnabled = false;
 
 export function initTorch(torchOverlayEl) {
+  const overlay = torchOverlayEl || document.getElementById('torch-overlay');
+  const label = document.getElementById('torch-label');
+  if (overlay) overlay.classList.add('torch-off');
+  if (label) label.textContent = 'TORCH: OFF';
+
   window.addEventListener('mousemove', (e) => {
     if (torchEnabled) {
       document.documentElement.style.setProperty('--torch-x', `${e.clientX}px`);
@@ -21,4 +26,5 @@ export function toggleTorch() {
   playTypewriterClick();
   return torchEnabled;
 }
+
 
