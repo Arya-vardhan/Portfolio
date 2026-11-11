@@ -138,20 +138,24 @@ export const EVIDENCE_DETAILS = {
   cyber: {
     id: "cyber",
     pageUrl: "pages/cybersecurity.html",
-    title: "FORENSIC RECORD: CISCO CYBERSECURITY ACCREDITATIONS",
-    subtitle: "CREDENTIAL VERIFICATION // NETWORK DEFENSE AUDIT",
+    title: "FORENSIC RECORD: CYBERSECURITY ACCREDITATIONS & BADGES",
+    subtitle: "CREDENTIAL VERIFICATION // CISCO & HACK THE BOX",
     stamp: "OFFICIAL CLEARANCE",
-    badge: "4 ACCREDITED BADGES",
-    summary: "Certified by Cisco Networking Academy in threat defense, network administration, and hardware troubleshooting, plus ethical hacking foundations.",
+    badge: "CREDLY & HTB VERIFIED",
+    summary: "Certified by Cisco Networking Academy (Junior Cybersecurity Analyst, Networking Basics, IT Essentials) and Hack The Box Academy (Network Foundations).",
     content: `
       <div class="space-y-3 text-xs font-mono">
         <div class="p-2 bg-stone-100 rounded border border-stone-300 flex justify-between items-center">
-          <span>• Cisco: Junior Cybersecurity Analyst Career Path</span>
-          <span class="text-emerald-700 font-bold">[VERIFIED]</span>
+          <span>• Cisco: Junior Cybersecurity Analyst</span>
+          <a href="https://www.credly.com/badges/baf50dae-b67b-41f2-a45f-c1f854e6567e" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-bold hover:underline">Credly [VERIFIED] ↗</a>
         </div>
         <div class="p-2 bg-stone-100 rounded border border-stone-300 flex justify-between items-center">
-          <span>• Cisco: Networking Basics (IP Addressing &amp; Protocols)</span>
-          <span class="text-emerald-700 font-bold">[VERIFIED]</span>
+          <span>• Cisco: Networking Basics</span>
+          <a href="https://www.credly.com/badges/0aa99b23-f8f8-4e09-b4ab-2ee9e76d9331" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-bold hover:underline">Credly [VERIFIED] ↗</a>
+        </div>
+        <div class="p-2 bg-stone-100 rounded border border-stone-300 flex justify-between items-center">
+          <span>• Hack The Box: Solid Basis (Network Foundations)</span>
+          <a href="https://academy.hackthebox.com/achievement/badge/ba738bc3-efc1-11ef-864f-bea50ffe6cb4" target="_blank" rel="noopener noreferrer" class="text-emerald-700 font-bold hover:underline">HTB [AWARDED] ↗</a>
         </div>
         <div class="p-2 bg-stone-100 rounded border border-stone-300 flex justify-between items-center">
           <span>• Cisco: IT Essentials (PC Hardware &amp; OS Maintenance)</span>
@@ -161,7 +165,11 @@ export const EVIDENCE_DETAILS = {
           <span>• Udemy: Ethical Hacking &amp; Penetration Testing</span>
           <span class="text-amber-700 font-bold">[COMPLETED]</span>
         </div>
-        <div class="pt-2">
+        <div class="pt-2 flex flex-wrap gap-2">
+          <button onclick="open3DBadgeInspector('cisco-analyst')" class="px-3 py-1.5 bg-gradient-to-r from-red-950 via-stone-900 to-amber-900 hover:brightness-125 text-amber-300 border border-amber-500/50 rounded text-xs font-mono font-bold transition-all shadow flex items-center gap-1.5">
+            <span>⚡</span>
+            <span>Inspect 3D Evidence Badges (360°) →</span>
+          </button>
           <a href="pages/cybersecurity.html" class="px-3 py-1.5 bg-emerald-900 hover:bg-emerald-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
             Open Full Cybersecurity Dossier →
           </a>
@@ -280,28 +288,44 @@ export const EVIDENCE_DETAILS = {
   cisco_badges: {
     id: "cisco_badges",
     pageUrl: "pages/cybersecurity.html",
-    title: "CREDENTIAL RECORD: CISCO NETACAD ACCREDITATIONS",
-    subtitle: "OFFICIAL VERIFICATION // NETWORK DEFENSE & FORENSICS",
+    title: "CREDENTIAL RECORD: VERIFIED CYBER INTELLIGENCE BADGES",
+    subtitle: "OFFICIAL VERIFICATION // CISCO NETACAD & HACK THE BOX",
     stamp: "OFFICIAL CLEARANCE",
-    badge: "CISCO NETACAD VERIFIED",
-    summary: "Multi-tier Cisco certifications spanning Junior Cybersecurity Analyst, Networking Basics, and IT Essentials.",
+    badge: "CREDLY & HTB VERIFIED",
+    summary: "Official verified cyber credentials earned by Arya Vardhan Gelli from Cisco Networking Academy (Credly) and Hack The Box Academy.",
     content: `
       <div class="space-y-3 text-xs font-mono">
-        <div class="p-2.5 bg-stone-100 rounded border border-stone-300">
-          <div class="font-bold text-emerald-800">• Cisco Junior Cybersecurity Analyst Career Path</div>
-          <div class="text-stone-600 mt-1">Covers security operations, packet captures, threat hunting, vulnerability management, and host incident handling.</div>
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-emerald-800 text-sm">• Cisco: Junior Cybersecurity Analyst</span>
+            <a href="https://www.credly.com/badges/baf50dae-b67b-41f2-a45f-c1f854e6567e" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-bold hover:underline">Credly ↗</a>
+          </div>
+          <p class="text-stone-600 text-[11px] font-sans">Vulnerability management, threat intelligence, host defense, network monitoring, cryptography, firewalls, and incident response planning.</p>
         </div>
-        <div class="p-2.5 bg-stone-100 rounded border border-stone-300">
-          <div class="font-bold text-emerald-800">• Cisco Networking Basics</div>
-          <div class="text-stone-600 mt-1">OSI model, TCP/IP, IP addressing (IPv4/IPv6 subnetting), VLAN topologies, router &amp; switch diagnostics.</div>
+
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-emerald-800 text-sm">• Cisco: Networking Basics</span>
+            <a href="https://www.credly.com/badges/0aa99b23-f8f8-4e09-b4ab-2ee9e76d9331" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-bold hover:underline">Credly ↗</a>
+          </div>
+          <p class="text-stone-600 text-[11px] font-sans">Network architecture, IPv4/IPv6 packet transport, subnetting, cabling, routing/switch topologies, and 13 Cisco Packet Tracer activities.</p>
         </div>
-        <div class="p-2.5 bg-stone-100 rounded border border-stone-300">
-          <div class="font-bold text-emerald-800">• Cisco IT Essentials: PC Hardware and Software</div>
-          <div class="text-stone-600 mt-1">Computer architecture, OS deployment, bus protocols, and system recovery.</div>
+
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-lime-800 text-sm">• Hack The Box Academy: Network Foundations</span>
+            <a href="https://academy.hackthebox.com/achievement/badge/ba738bc3-efc1-11ef-864f-bea50ffe6cb4" target="_blank" rel="noopener noreferrer" class="text-emerald-700 font-bold hover:underline">HTB Academy ↗</a>
+          </div>
+          <p class="text-stone-600 text-[11px] font-sans">Network Foundations module completed. Packet inspection with Wireshark, protocol stack internals, and offensive/defensive network security fundamentals.</p>
         </div>
-        <div class="pt-2">
-          <a href="pages/cybersecurity.html" class="px-3 py-1.5 bg-emerald-900 hover:bg-emerald-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
-            Open Cybersecurity Case File →
+
+        <div class="pt-2 flex flex-wrap items-center gap-2">
+          <button onclick="open3DBadgeInspector('cisco-analyst')" class="px-3 py-1.5 bg-gradient-to-r from-red-950 via-stone-900 to-amber-900 hover:brightness-125 text-amber-300 border border-amber-500/50 rounded text-xs font-mono font-bold transition-all shadow flex items-center gap-1.5">
+            <span>⚡</span>
+            <span>Examine Badges in 3D (360° Spin) →</span>
+          </button>
+          <a href="pages/cybersecurity.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-stone-200 rounded text-xs font-mono font-bold transition-colors inline-block">
+            Open Cyber Dossier →
           </a>
         </div>
       </div>

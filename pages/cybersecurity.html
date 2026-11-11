@@ -10,25 +10,94 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../styles/base.css">
   <link rel="stylesheet" href="../styles/dossier.css">
+
+  <!-- Three.js for 3D Badge Interactive Specimen Viewer -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body class="bg-[#120e0a] text-stone-900 font-typewriter min-h-screen py-10 px-4 flex justify-center">
 
   <div class="max-w-4xl w-full dossier-sheet p-8 sm:p-12 rounded-lg shadow-2xl border-4 border-[#3a2f26] relative">
-    <a href="../index.html" class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-stone-900 text-stone-100 font-mono text-xs hover:bg-stone-800 transition-colors mb-6">
-      ← Return to Investigation Board
-    </a>
+    <div class="flex items-center justify-between mb-6">
+      <a href="../index.html" class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-stone-900 text-stone-100 font-mono text-xs hover:bg-stone-800 transition-colors">
+        ← Return to Investigation Board
+      </a>
+      <button onclick="open3DBadgeInspector('cisco-analyst')" class="px-3 py-1.5 bg-gradient-to-r from-red-950 to-stone-900 text-amber-300 border border-amber-600/40 rounded text-xs font-mono font-bold hover:brightness-125 transition-all shadow flex items-center gap-1.5">
+        <span>⚡</span>
+        <span>Examine 3D Badges (360° Spin)</span>
+      </button>
+    </div>
 
     <div class="flex flex-wrap items-start justify-between border-b-2 border-stone-800 pb-4 mb-6 gap-3">
       <div>
         <span class="stamp stamp-green">OFFICIAL CLEARANCE</span>
         <h1 class="font-news text-3xl sm:text-4xl font-bold tracking-tight text-stone-950 uppercase mt-2">
-          CISCO NETACAD &amp; CYBER DEFENSE
+          CISCO NETACAD &amp; HACK THE BOX
         </h1>
-        <div class="font-mono text-xs text-stone-600 mt-1">FILE REF: #SEC-CISCO-2025 // VERIFIED CREDENTIALS</div>
+        <div class="font-mono text-xs text-stone-600 mt-1">FILE REF: #SEC-CISCO-HTB-2025 // VERIFIED PHYSICAL CREDENTIALS</div>
       </div>
       <div class="font-mono text-xs text-right text-stone-600">
-        AUTHORITY: Cisco Networking Academy<br>
-        STATUS: Fully Verified Credentials
+        AUTHORITIES: Cisco &amp; Hack The Box<br>
+        STATUS: Authenticated Credentials
+      </div>
+    </div>
+
+    <!-- Featured Verified Physical Evidence Badges -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-3 border-b border-stone-300 pb-1">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-stone-700 font-bold">
+          PHYSICAL EVIDENCE SPECIMENS // 3D INTERACTABLE
+        </h2>
+        <span class="text-[10px] font-mono text-emerald-800 font-bold">CLICK BADGE FOR 3D INSPECTION</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Badge 1: Cisco Junior Cyber Analyst -->
+        <div class="p-4 rounded-lg bg-white border border-stone-300 shadow-md flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition-all group" onclick="open3DBadgeInspector('cisco-analyst')">
+          <div class="w-24 h-24 mb-3 flex items-center justify-center p-2 rounded-full bg-stone-50 border border-stone-200 group-hover:scale-105 transition-transform">
+            <img src="../assets/badges/cisco-junior-cybersecurity-analyst.png" alt="Cisco Junior Cybersecurity Analyst Badge" class="max-w-full max-h-full object-contain drop-shadow">
+          </div>
+          <span class="stamp text-[8px] py-0 px-1 border-blue-600 text-blue-700 mb-1">CREDLY VERIFIED</span>
+          <h3 class="font-bold text-sm text-stone-950 leading-tight">Junior Cybersecurity Analyst</h3>
+          <div class="text-[10px] text-stone-500 font-mono mt-0.5 mb-2">Cisco Networking Academy</div>
+          <div class="mt-auto pt-2 border-t border-stone-200 w-full flex items-center justify-between text-[10px] font-mono">
+            <span class="text-amber-800 font-bold group-hover:underline">3D Spin ↺</span>
+            <a href="https://www.credly.com/badges/baf50dae-b67b-41f2-a45f-c1f854e6567e" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="text-blue-700 font-bold hover:underline">
+              Verify ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Badge 2: Cisco Networking Basics -->
+        <div class="p-4 rounded-lg bg-white border border-stone-300 shadow-md flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition-all group" onclick="open3DBadgeInspector('cisco-networking')">
+          <div class="w-24 h-24 mb-3 flex items-center justify-center p-2 rounded-full bg-stone-50 border border-stone-200 group-hover:scale-105 transition-transform">
+            <img src="../assets/badges/cisco-networking-basics.png" alt="Cisco Networking Basics Badge" class="max-w-full max-h-full object-contain drop-shadow">
+          </div>
+          <span class="stamp text-[8px] py-0 px-1 border-blue-600 text-blue-700 mb-1">CREDLY VERIFIED</span>
+          <h3 class="font-bold text-sm text-stone-950 leading-tight">Networking Basics</h3>
+          <div class="text-[10px] text-stone-500 font-mono mt-0.5 mb-2">Cisco Networking Academy</div>
+          <div class="mt-auto pt-2 border-t border-stone-200 w-full flex items-center justify-between text-[10px] font-mono">
+            <span class="text-amber-800 font-bold group-hover:underline">3D Spin ↺</span>
+            <a href="https://www.credly.com/badges/0aa99b23-f8f8-4e09-b4ab-2ee9e76d9331" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="text-blue-700 font-bold hover:underline">
+              Verify ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Badge 3: Hack The Box Network Foundations -->
+        <div class="p-4 rounded-lg bg-white border border-stone-300 shadow-md flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition-all group" onclick="open3DBadgeInspector('htb-foundations')">
+          <div class="w-24 h-24 mb-3 flex items-center justify-center p-2 rounded-full bg-stone-50 border border-stone-200 group-hover:scale-105 transition-transform">
+            <img src="../assets/badges/htb-network-foundations.png" alt="Hack The Box Network Foundations Badge" class="max-w-full max-h-full object-contain drop-shadow">
+          </div>
+          <span class="stamp text-[8px] py-0 px-1 border-lime-600 text-lime-700 mb-1">HTB ACADEMY</span>
+          <h3 class="font-bold text-sm text-stone-950 leading-tight">Solid basis — Network Foundations</h3>
+          <div class="text-[10px] text-stone-500 font-mono mt-0.5 mb-2">Hack The Box Academy</div>
+          <div class="mt-auto pt-2 border-t border-stone-200 w-full flex items-center justify-between text-[10px] font-mono">
+            <span class="text-amber-800 font-bold group-hover:underline">3D Spin ↺</span>
+            <a href="https://academy.hackthebox.com/achievement/badge/ba738bc3-efc1-11ef-864f-bea50ffe6cb4" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="text-emerald-700 font-bold hover:underline">
+              Verify ↗
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -37,22 +106,33 @@
       <div class="p-4 rounded bg-white border border-stone-300 shadow-sm space-y-1">
         <div class="flex justify-between items-center">
           <span class="font-mono text-xs text-emerald-800 font-bold">CISCO NETACAD</span>
-          <span class="stamp text-[9px] py-0 px-1 border-emerald-600 text-emerald-600">VERIFIED</span>
+          <a href="https://www.credly.com/badges/baf50dae-b67b-41f2-a45f-c1f854e6567e" target="_blank" rel="noopener noreferrer" class="stamp text-[9px] py-0 px-1 border-emerald-600 text-emerald-600 hover:bg-emerald-50">CREDLY VERIFIED ↗</a>
         </div>
         <h3 class="font-bold text-base text-stone-900">Junior Cybersecurity Analyst Career Path</h3>
         <p class="text-xs text-stone-600 leading-relaxed">
-          Trained in vulnerability analysis, endpoint defense, threat detection, network monitoring, and security incident response strategies.
+          Trained in vulnerability analysis, endpoint defense, threat detection, network monitoring, firewalls, cryptography, and incident response planning.
         </p>
       </div>
 
       <div class="p-4 rounded bg-white border border-stone-300 shadow-sm space-y-1">
         <div class="flex justify-between items-center">
           <span class="font-mono text-xs text-emerald-800 font-bold">CISCO NETACAD</span>
-          <span class="stamp text-[9px] py-0 px-1 border-emerald-600 text-emerald-600">VERIFIED</span>
+          <a href="https://www.credly.com/badges/0aa99b23-f8f8-4e09-b4ab-2ee9e76d9331" target="_blank" rel="noopener noreferrer" class="stamp text-[9px] py-0 px-1 border-emerald-600 text-emerald-600 hover:bg-emerald-50">CREDLY VERIFIED ↗</a>
         </div>
         <h3 class="font-bold text-base text-stone-900">Networking Basics</h3>
         <p class="text-xs text-stone-600 leading-relaxed">
-          Comprehensive training in network configuration, IPv4/IPv6 packet addressing, subnetting, TCP/IP protocol stack, and switch routing topologies.
+          Comprehensive training in network configuration, IPv4/IPv6 packet addressing, subnetting, TCP/IP protocol stack, and 13 Cisco Packet Tracer hands-on activities.
+        </p>
+      </div>
+
+      <div class="p-4 rounded bg-white border border-stone-300 shadow-sm space-y-1">
+        <div class="flex justify-between items-center">
+          <span class="font-mono text-xs text-lime-800 font-bold">HACK THE BOX ACADEMY</span>
+          <a href="https://academy.hackthebox.com/achievement/badge/ba738bc3-efc1-11ef-864f-bea50ffe6cb4" target="_blank" rel="noopener noreferrer" class="stamp text-[9px] py-0 px-1 border-lime-600 text-lime-700 hover:bg-lime-50">HTB VERIFIED ↗</a>
+        </div>
+        <h3 class="font-bold text-base text-stone-900">Solid basis — Network Foundations</h3>
+        <p class="text-xs text-stone-600 leading-relaxed">
+          Completed hands-on modules in network architecture, packet analysis with Wireshark, protocol stack internals, and offensive/defensive network penetration testing fundamentals.
         </p>
       </div>
 
@@ -67,7 +147,7 @@
         </p>
       </div>
 
-      <div class="p-4 rounded bg-white border border-stone-300 shadow-sm space-y-1">
+      <div class="p-4 rounded bg-white border border-stone-300 shadow-sm space-y-1 md:col-span-2">
         <div class="flex justify-between items-center">
           <span class="font-mono text-xs text-amber-800 font-bold">UDEMY</span>
           <span class="stamp text-[9px] py-0 px-1 border-amber-600 text-amber-600">COMPLETED</span>
@@ -85,6 +165,113 @@
     </div>
   </div>
 
+  <!-- ==================== 3D INTERACTIVE EVIDENCE BADGE INSPECTOR MODAL ==================== -->
+  <div id="badge-3d-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 text-stone-100 font-mono">
+    <div class="relative max-w-4xl w-full bg-[#14100c] border-2 border-[#544130] rounded-xl shadow-2xl p-5 sm:p-7 overflow-hidden flex flex-col md:flex-row gap-6 max-h-[92vh] overflow-y-auto">
+      
+      <!-- Left: 3D Viewport Column -->
+      <div class="w-full md:w-1/2 flex flex-col items-center">
+        <!-- 3D Header -->
+        <div class="w-full flex items-center justify-between border-b border-[#3e2e20] pb-2 mb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-xs font-bold text-[#faf0dc] uppercase tracking-wider">3D EVIDENCE SPECIMEN</span>
+          </div>
+          <span class="text-[10px] text-[#a89880]">DRAG TO ROTATE 360°</span>
+        </div>
+
+        <!-- 3D Canvas Container -->
+        <div id="badge-3d-canvas-container" class="w-full h-72 sm:h-80 bg-gradient-to-b from-[#1c1611] to-[#0c0a08] rounded-lg border border-[#3e2e20] relative cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center">
+          <div class="text-xs text-[#a89880] animate-pulse">INITIALIZING 3D EVIDENCE SPECIMEN...</div>
+        </div>
+
+        <!-- 3D Viewport Controls -->
+        <div class="w-full flex items-center justify-between mt-3 text-xs">
+          <div class="flex items-center gap-1.5">
+            <button onclick="flipBadge3D()" class="px-2.5 py-1 rounded bg-[#251d16] hover:bg-[#382b20] border border-[#4a3b2c] text-[#faf0dc] text-[11px] transition-colors flex items-center gap-1">
+              <span>↻</span> Flip to Engraved Back
+            </button>
+            <button id="badge-autorotate-btn" onclick="toggleBadgeAutoRotate()" class="px-2.5 py-1 rounded bg-[#251d16] hover:bg-[#382b20] border border-[#4a3b2c] text-[#faf0dc] text-[11px] transition-colors">
+              PAUSE SPIN
+            </button>
+          </div>
+          <span class="text-[10px] text-[#a89880] hidden sm:inline">Scroll to zoom</span>
+        </div>
+      </div>
+
+      <!-- Right: Credential Information Column -->
+      <div class="w-full md:w-1/2 flex flex-col justify-between">
+        <div>
+          <!-- Close button & Case stamp -->
+          <div class="flex items-start justify-between border-b border-[#3e2e20] pb-3 mb-3">
+            <div>
+              <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/50 text-emerald-400 text-[10px] font-bold">
+                ✓ OFFICIALLY VERIFIED
+              </span>
+              <h2 id="badge-3d-title" class="font-news text-2xl font-bold text-[#faf0dc] mt-1 uppercase leading-tight">
+                JUNIOR CYBERSECURITY ANALYST
+              </h2>
+              <div id="badge-3d-issuer" class="text-xs text-amber-400 mt-0.5">Cisco Networking Academy</div>
+            </div>
+            <button onclick="close3DBadgeInspector()" class="p-1.5 rounded hover:bg-[#251d16] text-[#a89880] hover:text-white transition-colors" title="Close 3D Inspector">
+              ✕
+            </button>
+          </div>
+
+          <!-- Badge Selector Switcher Tabs -->
+          <div class="text-[11px] text-[#a89880] mb-1.5 uppercase tracking-wider">SELECT EVIDENCE SPECIMEN:</div>
+          <div class="grid grid-cols-3 gap-1.5 mb-4">
+            <button onclick="loadBadgeModel(0)" class="badge-tab-btn p-1.5 rounded border border-stone-700 text-[10px] text-center hover:bg-[#251d16] transition-colors truncate">
+              1. Cisco Analyst
+            </button>
+            <button onclick="loadBadgeModel(1)" class="badge-tab-btn p-1.5 rounded border border-stone-700 text-[10px] text-center hover:bg-[#251d16] transition-colors truncate">
+              2. Cisco Network
+            </button>
+            <button onclick="loadBadgeModel(2)" class="badge-tab-btn p-1.5 rounded border border-stone-700 text-[10px] text-center hover:bg-[#251d16] transition-colors truncate">
+              3. HTB Academy
+            </button>
+          </div>
+
+          <!-- Description -->
+          <p id="badge-3d-desc" class="text-xs text-[#d6c7b0] leading-relaxed mb-3">
+            Loading verification intelligence...
+          </p>
+
+          <!-- Skills tags -->
+          <div class="mb-4">
+            <div class="text-[10px] text-[#a89880] uppercase tracking-wider mb-1">VERIFIED COMPETENCIES:</div>
+            <div id="badge-3d-skills" class="flex flex-wrap gap-1"></div>
+          </div>
+
+          <!-- Credential ID -->
+          <div class="p-2 rounded bg-[#0d0a08] border border-[#2e231a] text-[10px] text-[#a89880] font-mono break-all mb-4">
+            <span class="text-amber-400">HASH:</span> <span id="badge-3d-uuid">ID: baf50dae-b67b-41f2-a45f-c1f854e6567e</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-3 border-t border-[#3e2e20] flex items-center justify-between gap-3">
+          <a id="badge-3d-verify-link" href="https://www.credly.com/badges/baf50dae-b67b-41f2-a45f-c1f854e6567e" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 rounded bg-gradient-to-r from-red-800 to-amber-700 hover:from-red-700 hover:to-amber-600 text-[#faf0dc] text-xs font-bold text-center tracking-wider transition-all shadow-lg flex items-center justify-center gap-1.5 uppercase">
+            <span>Verify Official Credential</span>
+            <span>↗</span>
+          </a>
+          <button onclick="close3DBadgeInspector()" class="px-3 py-2 rounded bg-[#251d16] hover:bg-[#382b20] text-xs text-[#d6c7b0] transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { open3DBadgeInspector, close3DBadgeInspector, loadBadgeModel, flipBadge3D, toggleBadgeAutoRotate } from '../scripts/badge-3d.js';
+    window.open3DBadgeInspector = open3DBadgeInspector;
+    window.close3DBadgeInspector = close3DBadgeInspector;
+    window.loadBadgeModel = loadBadgeModel;
+    window.flipBadge3D = flipBadge3D;
+    window.toggleBadgeAutoRotate = toggleBadgeAutoRotate;
+  </script>
 </body>
 </html>
 

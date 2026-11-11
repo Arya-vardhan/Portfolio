@@ -10,6 +10,7 @@ node_modules/
 # Logs & temp
 *.log
 .temp/
+scratch/
 
 # IDE & Editor settings
 .vscode/
