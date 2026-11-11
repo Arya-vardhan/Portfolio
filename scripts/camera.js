@@ -31,6 +31,8 @@ export function initCamera(world, viewport) {
   setupDrag();
   setupTouch();
 
+  setTimeout(dismissHint, 4000);
+
   window.addEventListener('resize', () => {
     goToStop(currentStop, 0.4);
   });
@@ -64,7 +66,7 @@ export function flyCameraTo(targetX, targetY, targetScale, duration = 0.85) {
 
 export function goToStop(index, duration = 0.85) {
   if (index < 0) index = 0;
-  if (index >= STOPS.length) index = STOPS.length - 1;
+  if (index >= STOPS.length) index = 0;
   currentStop = index;
   markStopVisited(index);
 
@@ -86,8 +88,7 @@ export function goToStop(index, duration = 0.85) {
     elevatorThumb.style.top = `${percent}%`;
   }
 
-  const hint = document.getElementById('scroll-hint');
-  if (hint && index > 0) hint.style.opacity = '0';
+  dismissHint();
 
   const s = STOPS[index];
   let scale = s.scale;
@@ -99,8 +100,26 @@ export function goToStop(index, duration = 0.85) {
   flyCameraTo(s.x, s.y, scale, duration);
 }
 
+export function dismissHint() {
+  const hint = document.getElementById('scroll-hint');
+  if (hint && hint.style.opacity !== '0') {
+    hint.style.opacity = '0';
+    hint.style.pointerEvents = 'none';
+    setTimeout(() => {
+      if (hint) hint.style.display = 'none';
+    }, 400);
+  }
+}
+
 export function stepStop(dir) {
-  goToStop(currentStop + dir);
+  let next = currentStop + dir;
+  // Looping: Scrolling down past the last node (Stop 9: Comms Line) returns smoothly to Full Board (Stop 0)
+  if (next >= STOPS.length) {
+    next = 0;
+  } else if (next < 0) {
+    next = 0;
+  }
+  goToStop(next);
 }
 
 /* -------------------------------------------------------------
@@ -112,6 +131,7 @@ function setupWheel() {
   let isThrottled = false;
 
   window.addEventListener('wheel', (e) => {
+    dismissHint();
     // If modal is open, let user scroll inside modal
     const modal = document.getElementById('evidence-modal');
     if (modal && modal.classList.contains('active')) return;
@@ -141,6 +161,7 @@ function setupWheel() {
 
 function setupKeyboard() {
   window.addEventListener('keydown', (e) => {
+    dismissHint();
     const modal = document.getElementById('evidence-modal');
     if (modal && modal.classList.contains('active')) return;
 
@@ -166,6 +187,7 @@ function setupDrag() {
   let currentX = 0, currentY = 0;
 
   worldEl.addEventListener('mousedown', (e) => {
+    dismissHint();
     if (e.target.closest('button, a, input, textarea, .pushpin')) return;
     isDragging = true;
     worldEl.classList.add('dragging');
@@ -201,6 +223,7 @@ function setupTouch() {
   let touchStartX;
 
   window.addEventListener('touchstart', (e) => {
+    dismissHint();
     if (e.touches.length === 1 && !e.target.closest('button, a, input, textarea')) {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;

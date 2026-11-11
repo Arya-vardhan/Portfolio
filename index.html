@@ -145,8 +145,11 @@
   </nav>
 
   <!-- ==================== HINT OVERLAY ==================== -->
-  <div id="scroll-hint" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 pointer-events-none hud-element px-4 py-2 rounded-full text-xs font-mono text-[#d6c7b0] flex items-center gap-2 animate-bounce transition-opacity duration-500">
-    <span>Scroll wheel or click nodes to investigate</span>
+  <div id="scroll-hint" class="fixed bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 z-40 pointer-events-none px-3 py-1 rounded-full text-[11px] font-mono text-[#d6c7b0] bg-[#14100c]/90 border border-[#4a3b2c] shadow-2xl flex items-center gap-2 transition-all duration-300">
+    <span class="inline-block w-2.5 h-3.5 border border-[#a89880] rounded-full relative">
+      <span class="block w-0.5 h-1 bg-amber-400 rounded-full mx-auto mt-0.5 animate-pulse"></span>
+    </span>
+    <span>Scroll wheel or click pins to inspect clues</span>
     <span class="text-red-500 font-bold">↓</span>
   </div>
 
@@ -671,6 +674,283 @@
           <a href="mailto:aryavardhan.gelli@outlook.com?subject=Technical%20Inquiry%20via%20Investigation%20Board&body=Hello%20Arya," class="w-full py-2.5 rounded bg-stone-900 text-[#faf0dc] text-xs font-mono text-center font-bold tracking-wider hover:bg-stone-800 transition-colors block uppercase">
             Initiate Direct Dispatch Email →
           </a>
+        </div>
+      </div>
+
+      <!-- ==================== POPULATED AUTHENTIC EVIDENCE ITEMS & FIELD NOTES ==================== -->
+
+      <!-- 1. AUX EVIDENCE: AV TELEMATICS REGRESSION REPORT -->
+      <div id="aux-av-telematics" class="board-item cursor-pointer" style="top: 220px; left: 1020px; width: 270px;" onclick="openExamModal('av_telematics')">
+        <div id="pin-av-telematics" class="pushpin" style="top: -6px; left: 125px;" title="AV Telematics Pin"></div>
+        <div class="tape" style="top: -10px; left: 30px; width: 80px; height: 22px; transform: rotate(-3deg);"></div>
+
+        <div class="bg-[#f0f4ed] p-3.5 rounded shadow-xl border border-emerald-800/30 transform rotate-1 text-stone-900 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-emerald-900/30 pb-1">
+            <span class="text-emerald-900 font-bold uppercase tracking-wider">TELEMATICS LOG: AV SWQ</span>
+            <span class="stamp border-emerald-700 text-emerald-800 text-[8px] px-1 py-0.5">PASS 100%</span>
+          </div>
+          <div class="bg-[#121814] text-emerald-400 p-2 rounded text-[9px] space-y-0.5 border border-emerald-900/50">
+            <div>CAN 0x2A4: LAT_DEV=0.012m</div>
+            <div>HD_MAP_ALIGN: CORRIDOR_04</div>
+            <div>RADAR/LIDAR SYNC: 120k pts/s</div>
+            <div class="text-amber-300">REGRESSION #84: 0 CRIT FAILS</div>
+          </div>
+          <div class="text-[9px] text-stone-600 flex justify-between items-center pt-1 border-t border-stone-300">
+            <span>Cognizant Mobility Lab</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. STICKY NOTE: AV BEHAVIOR QA -->
+      <div class="board-item pointer-events-auto" style="top: 390px; left: 1100px; width: 200px;">
+        <div class="pushpin pushpin-blue" style="top: -6px; left: 90px;"></div>
+        <div class="sticky-note bg-sky-100 p-3 rounded-sm shadow-md transform rotate-3 border-l-4 border-sky-500 font-hand text-sm text-sky-950 leading-snug">
+          "Autonomous QA Focus: High-Definition Map road geometry verification & regression trace analysis across dynamic edge corridors."
+        </div>
+      </div>
+
+      <!-- 3. STICKY NOTE: OFFLINE INTEL & NOVELS -->
+      <div class="board-item pointer-events-auto" style="top: 550px; left: 1140px; width: 220px;">
+        <div class="pushpin pushpin-brass" style="top: -6px; left: 100px;"></div>
+        <div class="sticky-note bg-postitYellow p-3 rounded-sm shadow-md transform -rotate-3 border-l-4 border-amber-500 font-hand text-base text-stone-900 leading-snug">
+          "Offline Intel: Reads Fictional Crime & Murder Mystery Novels. Regular listener of Darknet Diaries & tech forensics podcasts!"
+        </div>
+      </div>
+
+      <!-- 4. AUX EVIDENCE: OSP FIELD FIBER SPEC -->
+      <div id="aux-cadsys-spec" class="board-item cursor-pointer" style="top: 160px; left: 1960px; width: 250px;" onclick="openExamModal('cadsys_spec')">
+        <div id="pin-cadsys-spec" class="pushpin pushpin-brass" style="top: -6px; left: 115px;" title="OSP Fiber Pin"></div>
+        <div class="tape" style="top: -10px; right: 20px; width: 80px; height: 22px; transform: rotate(2deg);"></div>
+
+        <div class="bg-manila p-3.5 rounded shadow-xl border border-amber-800/30 transform -rotate-2 text-stone-900 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-amber-900/30 pb-1">
+            <span class="text-amber-950 font-bold uppercase tracking-wider">FIELD SPEC: OSP 48-CORE</span>
+            <span class="stamp stamp-blue text-[8px] px-1 py-0.5">COMPLIANT</span>
+          </div>
+          <div class="space-y-1 text-stone-800">
+            <div>• Cable: Corning SMF-28e+ Single-Mode</div>
+            <div>• Catenary Sag: &lt;2.5% max span</div>
+            <div>• NESC Aerial Clearance: Verified OK</div>
+            <div>• Tool: Aramis-DT / Katapault</div>
+          </div>
+          <div class="text-[9px] text-amber-900 flex justify-between items-center pt-1 border-t border-amber-800/30">
+            <span>CADSYS Infrastructure</span>
+            <span class="text-blue-800 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. STICKY NOTE: TOOLING ARSENAL -->
+      <div class="board-item pointer-events-auto" style="top: 380px; left: 2000px; width: 215px;">
+        <div class="pushpin pushpin-blue" style="top: -6px; left: 100px;"></div>
+        <div class="sticky-note bg-postitGreen p-3 rounded-sm shadow-md transform rotate-2 border-l-4 border-emerald-500 font-hand text-base text-stone-900 leading-snug">
+          "Tooling Arsenal: Aramis-DT, Katapault GIS, Python 3, Linux (Ubuntu), Wireshark, SQL, Git & GitHub."
+        </div>
+      </div>
+
+      <!-- 6. AUX EVIDENCE: RVM CHUTE GATE MECHANISM -->
+      <div id="aux-rvm-schematic" class="board-item cursor-pointer" style="top: 880px; left: 950px; width: 260px;" onclick="openExamModal('rvm_schematic')">
+        <div id="pin-rvm-schematic" class="pushpin pushpin-blue" style="top: -6px; left: 120px;" title="RVM Mechanism Pin"></div>
+        <div class="tape" style="top: -10px; left: 30px; width: 75px; height: 20px; transform: rotate(4deg);"></div>
+
+        <div class="bg-blueprint p-3.5 rounded shadow-xl border border-sky-400/30 transform rotate-2 text-sky-100 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-sky-400/30 pb-1">
+            <span class="text-sky-300 font-bold uppercase tracking-wider">RVM ACTUATOR BLUEPRINT</span>
+            <span class="stamp border-amber-400 text-amber-400 text-[8px] px-1 py-0.5">PATENT</span>
+          </div>
+          <div class="bg-[#0f172a] p-2 rounded text-[9px] space-y-0.5 border border-sky-800">
+            <div>1. IR Inlet Trigger (GPIO 17)</div>
+            <div>2. Ultrasonic HC-SR04 (GPIO 23/24)</div>
+            <div>3. Servo 180° Gate (GPIO 18)</div>
+            <div class="text-emerald-400">STATUS: Cycle Verified</div>
+          </div>
+          <div class="text-[9px] text-sky-300 flex justify-between items-center pt-1 border-t border-sky-700/50">
+            <span>Vishnuspire R&amp;D Lab</span>
+            <span class="text-amber-300 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. AUX EVIDENCE: ROBO SOCCER 2ND PLACE TROPHY -->
+      <div id="aux-robosoccer" class="board-item cursor-pointer" style="top: 1200px; left: 1120px; width: 240px;" onclick="openExamModal('robosoccer')">
+        <div id="pin-robosoccer" class="pushpin pushpin-brass" style="top: -6px; left: 110px;" title="Robo Soccer Trophy Pin"></div>
+
+        <div class="polaroid bg-white border border-stone-300 shadow-2xl p-3 transform -rotate-2">
+          <div class="w-full h-36 bg-gradient-to-b from-stone-900 to-amber-950 rounded relative overflow-hidden flex flex-col items-center justify-center p-2 text-center">
+            <div class="text-amber-400 text-3xl mb-1">🏆</div>
+            <div class="font-news text-sm font-bold text-amber-200 tracking-wide">2ND POSITION</div>
+            <div class="font-mono text-[9px] text-stone-300 mt-0.5">ROBO SOCCER TOURNAMENT</div>
+            <div class="font-mono text-[8px] text-amber-400/80 mt-1">Vishnu Institute of Technology</div>
+          </div>
+          <div class="font-hand text-sm text-center font-bold text-stone-900 mt-2">
+            "Custom 4WD chassis with high-torque gear motors &amp; dribbler mechanism."
+          </div>
+          <div class="mt-1 pt-1 border-t border-stone-200 flex justify-between items-center text-[9px] font-mono text-stone-600">
+            <span>VIT Techfest</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. AUX EVIDENCE: SECONDARY & POLYTECHNIC RECORD -->
+      <div id="aux-secondary-edu" class="board-item cursor-pointer" style="top: 780px; left: 3080px; width: 280px;" onclick="openExamModal('secondary_edu')">
+        <div id="pin-secondary-edu" class="pushpin pushpin-brass" style="top: -6px; left: 130px;" title="Secondary Education Pin"></div>
+        <div class="tape" style="top: -10px; right: 40px; width: 85px; height: 22px; transform: rotate(-3deg);"></div>
+
+        <div class="bg-[#f7f2e7] p-4 rounded shadow-xl border border-stone-400/60 transform rotate-2 text-stone-900 text-xs space-y-2 relative">
+          <div class="flex items-center justify-between border-b border-stone-300 pb-1">
+            <span class="font-news text-base font-bold text-stone-950 uppercase">EDUCATION ARCHIVE</span>
+            <span class="stamp border-stone-700 text-stone-800 text-[8px] px-1 py-0.5">VERIFIED</span>
+          </div>
+          <div class="p-2 rounded bg-white border border-stone-300 text-[11px] space-y-0.5">
+            <div class="flex justify-between font-mono text-[9px] text-stone-500">
+              <span>2019 – 2022</span>
+              <span class="text-emerald-700 font-bold">DIPLOMA</span>
+            </div>
+            <div class="font-bold text-stone-900">Smt. B. Seetha Polytechnic</div>
+            <div class="text-stone-600 text-[10px]">Diploma in Electronics &amp; Communication</div>
+          </div>
+          <div class="p-2 rounded bg-white border border-stone-300 text-[11px] space-y-0.5">
+            <div class="flex justify-between font-mono text-[9px] text-stone-500">
+              <span>2018</span>
+              <span class="text-blue-700 font-bold">SSC</span>
+            </div>
+            <div class="font-bold text-stone-900">Sri Vaishnavi High School</div>
+            <div class="text-stone-600 text-[10px]">Secondary School Certificate (Distinction)</div>
+          </div>
+          <div class="text-[9px] font-mono text-stone-600 flex justify-between items-center pt-1 border-t border-stone-200">
+            <span>Foundational Ledger</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. STICKY NOTE: EXPO CO-ORGANIZER -->
+      <div class="board-item pointer-events-auto" style="top: 1180px; left: 3120px; width: 225px;">
+        <div class="pushpin pushpin-brass" style="top: -6px; left: 100px;"></div>
+        <div class="sticky-note bg-postitPink p-3 rounded-sm shadow-md transform rotate-3 border-l-4 border-pink-500 font-hand text-base text-stone-900 leading-snug">
+          "Expo Leadership: Co-organized Annual Engineering Project Expo — coordinated 40+ student tech booths & live demonstrations!"
+        </div>
+      </div>
+
+      <!-- 10. AUX EVIDENCE: CISCO NETACAD BADGES -->
+      <div id="aux-cisco-badges" class="board-item cursor-pointer" style="top: 1360px; left: 2140px; width: 280px;" onclick="openExamModal('cisco_badges')">
+        <div id="pin-cisco-badges" class="pushpin" style="top: -6px; left: 130px;" title="Cisco NetAcad Pin"></div>
+        <div class="tape" style="top: -10px; left: 40px; width: 85px; height: 22px; transform: rotate(2deg);"></div>
+
+        <div class="bg-white p-4 rounded shadow-xl border border-stone-300 transform -rotate-1 text-stone-900 font-mono text-[10px] space-y-2 relative">
+          <div class="flex items-center justify-between border-b-2 border-stone-900 pb-1">
+            <span class="font-bold text-stone-950 uppercase tracking-wider">CISCO NETACAD CLEARANCE</span>
+            <span class="stamp border-emerald-600 text-emerald-700 text-[8px] px-1 py-0.5">ACCREDITED</span>
+          </div>
+          <div class="space-y-1.5 text-[9px]">
+            <div class="p-1.5 bg-stone-50 border border-stone-200 rounded flex items-center justify-between">
+              <span class="font-bold text-emerald-800">Junior Cyber Analyst</span>
+              <span class="text-stone-500">[BADGE VERIFIED]</span>
+            </div>
+            <div class="p-1.5 bg-stone-50 border border-stone-200 rounded flex items-center justify-between">
+              <span class="font-bold text-emerald-800">Networking Basics</span>
+              <span class="text-stone-500">[BADGE VERIFIED]</span>
+            </div>
+            <div class="p-1.5 bg-stone-50 border border-stone-200 rounded flex items-center justify-between">
+              <span class="font-bold text-emerald-800">IT Essentials</span>
+              <span class="text-stone-500">[BADGE VERIFIED]</span>
+            </div>
+          </div>
+          <div class="text-[9px] text-stone-600 flex justify-between items-center pt-1 border-t border-stone-200">
+            <span>Cisco Academy Network</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. STICKY NOTE: CADSYS SAG -->
+      <div class="board-item pointer-events-auto" style="top: 1760px; left: 2180px; width: 220px;">
+        <div class="pushpin pushpin-blue" style="top: -6px; left: 100px;"></div>
+        <div class="sticky-note bg-postitYellow p-3 rounded-sm shadow-md transform -rotate-2 border-l-4 border-amber-500 font-hand text-base text-stone-900 leading-snug">
+          "CADSYS Discipline: Rigorous pole sag verification & aerial fiber clearance ensuring zero field compliance violations."
+        </div>
+      </div>
+
+      <!-- 12. AUX EVIDENCE: ESP32 I2C SENSOR BUS -->
+      <div id="aux-esp32" class="board-item cursor-pointer" style="top: 1640px; left: 1080px; width: 260px;" onclick="openExamModal('esp32_i2c')">
+        <div id="pin-esp32" class="pushpin pushpin-brass" style="top: -6px; left: 120px;" title="ESP32 Telemetry Pin"></div>
+        <div class="tape" style="top: -10px; left: 35px; width: 80px; height: 22px; transform: rotate(-3deg);"></div>
+
+        <div class="bg-[#fbfbf8] p-3.5 rounded shadow-xl border border-stone-400 transform rotate-1 text-stone-900 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-stone-300 pb-1">
+            <span class="font-bold text-stone-950 uppercase tracking-wider">I2C BUS TELEMETRY</span>
+            <span class="stamp border-stone-700 text-stone-700 text-[8px] px-1 py-0.5">ESP32</span>
+          </div>
+          <div class="bg-[#181a1b] text-emerald-400 p-2 rounded text-[9px] space-y-0.5 border border-stone-700">
+            <div>SDA: GPIO 21 | SCL: GPIO 22</div>
+            <div>0x3C: OLED 128x64 display</div>
+            <div>0x76: BMP280 Barometric Temp</div>
+            <div class="text-sky-300">Wi-Fi MQTT: 2.4GHz Uplink OK</div>
+          </div>
+          <div class="text-[9px] text-stone-600 flex justify-between items-center pt-1 border-t border-stone-200">
+            <span>IoT Weather Node (2023)</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13. AUX EVIDENCE: RPI TTS AUDIO WAVEFORM -->
+      <div id="aux-tts-waveform" class="board-item cursor-pointer" style="top: 2000px; left: 1060px; width: 270px;" onclick="openExamModal('tts_waveform')">
+        <div id="pin-tts-waveform" class="pushpin pushpin-brass" style="top: -6px; left: 125px;" title="TTS Waveform Pin"></div>
+        <div class="tape" style="top: -10px; right: 30px; width: 80px; height: 22px; transform: rotate(3deg);"></div>
+
+        <div class="bg-[#101418] text-sky-200 p-3.5 rounded shadow-xl border border-sky-800 transform -rotate-2 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-sky-800 pb-1">
+            <span class="font-bold text-sky-100 uppercase tracking-wider">RPi TTS AUDIO FORENSICS</span>
+            <span class="stamp border-rose-500 text-rose-400 text-[8px] px-1 py-0.5">EDGE PCM</span>
+          </div>
+          <!-- Simulated Audio Waveform -->
+          <div class="h-9 bg-black/60 rounded flex items-center justify-center gap-1 px-2 border border-sky-950">
+            <span class="w-1 bg-emerald-500 rounded-full h-3"></span>
+            <span class="w-1 bg-emerald-400 rounded-full h-5"></span>
+            <span class="w-1 bg-emerald-400 rounded-full h-7"></span>
+            <span class="w-1 bg-emerald-300 rounded-full h-4"></span>
+            <span class="w-1 bg-amber-400 rounded-full h-8"></span>
+            <span class="w-1 bg-amber-300 rounded-full h-6"></span>
+            <span class="w-1 bg-emerald-400 rounded-full h-3"></span>
+            <span class="w-1 bg-emerald-400 rounded-full h-7"></span>
+            <span class="w-1 bg-rose-400 rounded-full h-5"></span>
+            <span class="w-1 bg-emerald-400 rounded-full h-4"></span>
+            <span class="w-1 bg-emerald-500 rounded-full h-2"></span>
+          </div>
+          <div class="text-[9px] text-sky-300 space-y-0.5">
+            <div>• Host: RPi 4B Linux ALSA Engine</div>
+            <div>• Offline latency: &lt;180ms synthesis</div>
+          </div>
+          <div class="text-[9px] text-stone-400 flex justify-between items-center pt-1 border-t border-sky-900">
+            <span>Assistive Audio Node</span>
+            <span class="text-amber-300 font-bold hover:underline">Inspect ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14. AUX EVIDENCE: OFFICIAL DISPATCH ROUTING -->
+      <div id="aux-dispatch-slip" class="board-item cursor-pointer" style="top: 1660px; left: 3100px; width: 260px;" onclick="openExamModal('dispatch_slip')">
+        <div id="pin-dispatch-slip" class="pushpin" style="top: -6px; left: 120px;" title="Dispatch Memo Pin"></div>
+        <div class="tape" style="top: -10px; left: 30px; width: 80px; height: 22px; transform: rotate(-2deg);"></div>
+
+        <div class="bg-[#f5ede0] p-3.5 rounded shadow-xl border border-stone-400 transform rotate-2 text-stone-900 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-red-900/40 pb-1">
+            <span class="font-bold text-red-950 uppercase tracking-wider">DISPATCH WIRE ROUTE</span>
+            <span class="stamp border-red-700 text-red-700 text-[8px] px-1 py-0.5">DIRECT</span>
+          </div>
+          <div class="space-y-1 text-stone-800 text-[9px]">
+            <div>• Base: Hyderabad, Telangana (IST)</div>
+            <div>• Primary: aryavardhan.gelli@outlook.com</div>
+            <div>• Secure Wire: +91 9381074100</div>
+            <div>• Engagement: AV QA / Hardware / NetSec</div>
+          </div>
+          <div class="text-[9px] text-stone-600 flex justify-between items-center pt-1 border-t border-stone-300">
+            <span>Carrier Dispatch</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+          </div>
         </div>
       </div>
 

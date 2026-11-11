@@ -223,6 +223,248 @@ export const EVIDENCE_DETAILS = {
         </div>
       </div>
     `
+  },
+  robosoccer: {
+    id: "robosoccer",
+    pageUrl: "pages/academics.html",
+    title: "HONOR ARTIFACT: 2ND PLACE ROBO SOCCER",
+    subtitle: "INTER-COLLEGE TOURNAMENT // VISHNU INSTITUTE OF TECHNOLOGY",
+    stamp: "COMPETITION RUNNER-UP",
+    badge: "2ND POSITION // 2023",
+    summary: "Built and piloted an agile 4WD custom chassis combat robot in the inter-college Robo Soccer tournament at Vishnu Institute of Technology.",
+    content: `
+      <div class="space-y-4 text-xs">
+        <div class="p-3 bg-amber-50 rounded border border-amber-300 font-mono space-y-1">
+          <div class="font-bold text-amber-950 text-sm">ROBOT SPECIFICATIONS & ARCHITECTURE:</div>
+          <div>• Drivetrain: 4WD high-torque metal gear motors with differential drive</div>
+          <div>• Chassis: Custom lightweight aluminum alloy frame with shock dampening</div>
+          <div>• Ball Control: Front-mounted active roller dribbler mechanism</div>
+          <div>• Control Protocol: Low-latency RF transceivers with dual-stick remote</div>
+        </div>
+        <p>Competed across rounds of fast-paced robotic agility, ball trapping, and scoring against regional engineering college teams, securing <strong>2nd Position</strong> overall.</p>
+        <div class="pt-2">
+          <a href="pages/academics.html" class="px-3 py-1.5 bg-amber-950 hover:bg-amber-900 text-amber-200 rounded text-xs font-mono font-bold transition-colors inline-block">
+            View Academic & Award Ledger →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  secondary_edu: {
+    id: "secondary_edu",
+    pageUrl: "pages/academics.html",
+    title: "INSTITUTIONAL RECORD: SECONDARY & DIPLOMA",
+    subtitle: "ACADEMIC ARCHIVE // TECHNICAL FOUNDATION",
+    stamp: "VERIFIED INSTITUTIONS",
+    badge: "2018 – 2022 LEDGER",
+    summary: "Diploma in Electronics & Communication Engineering from Smt. B. Seetha Polytechnic, preceded by SSC from Sri Vaishnavi High School.",
+    content: `
+      <div class="space-y-3 text-xs">
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="font-bold text-stone-900 font-mono">1. Smt. B. Seetha Polytechnic, Vishnupur (2019 – 2022)</div>
+          <div>Diploma in Electronics &amp; Communication Engineering (ECE).</div>
+          <div class="text-stone-600">Core study: Microprocessors, analog communications, digital logic design, printed circuit design, and instrumentation.</div>
+        </div>
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="font-bold text-stone-900 font-mono">2. Sri Vaishnavi High School (2018)</div>
+          <div>Secondary School Certificate (SSC). Completed with distinction in science and mathematics.</div>
+        </div>
+        <div class="pt-2">
+          <a href="pages/academics.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded text-xs font-mono font-bold transition-colors inline-block">
+            View Complete Education Ledger →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  cisco_badges: {
+    id: "cisco_badges",
+    pageUrl: "pages/cybersecurity.html",
+    title: "CREDENTIAL RECORD: CISCO NETACAD ACCREDITATIONS",
+    subtitle: "OFFICIAL VERIFICATION // NETWORK DEFENSE & FORENSICS",
+    stamp: "OFFICIAL CLEARANCE",
+    badge: "CISCO NETACAD VERIFIED",
+    summary: "Multi-tier Cisco certifications spanning Junior Cybersecurity Analyst, Networking Basics, and IT Essentials.",
+    content: `
+      <div class="space-y-3 text-xs font-mono">
+        <div class="p-2.5 bg-stone-100 rounded border border-stone-300">
+          <div class="font-bold text-emerald-800">• Cisco Junior Cybersecurity Analyst Career Path</div>
+          <div class="text-stone-600 mt-1">Covers security operations, packet captures, threat hunting, vulnerability management, and host incident handling.</div>
+        </div>
+        <div class="p-2.5 bg-stone-100 rounded border border-stone-300">
+          <div class="font-bold text-emerald-800">• Cisco Networking Basics</div>
+          <div class="text-stone-600 mt-1">OSI model, TCP/IP, IP addressing (IPv4/IPv6 subnetting), VLAN topologies, router &amp; switch diagnostics.</div>
+        </div>
+        <div class="p-2.5 bg-stone-100 rounded border border-stone-300">
+          <div class="font-bold text-emerald-800">• Cisco IT Essentials: PC Hardware and Software</div>
+          <div class="text-stone-600 mt-1">Computer architecture, OS deployment, bus protocols, and system recovery.</div>
+        </div>
+        <div class="pt-2">
+          <a href="pages/cybersecurity.html" class="px-3 py-1.5 bg-emerald-900 hover:bg-emerald-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
+            Open Cybersecurity Case File →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  esp32_i2c: {
+    id: "esp32_i2c",
+    pageUrl: "pages/hardware-lab.html",
+    title: "HARDWARE TELEMETRY: ESP32 I2C SENSOR BUS",
+    subtitle: "CIRCUIT SCHEMATICS // ATMOSPHERIC WEATHER NODE",
+    stamp: "HARDWARE BENCH",
+    badge: "I2C PROTOCOL // 400KHZ",
+    summary: "Firmware and pinout architecture for real-time telemetry streaming from atmospheric sensors over I2C to an OLED display and Wi-Fi cloud broker.",
+    content: `
+      <div class="space-y-3 text-xs font-mono">
+        <div class="p-3 bg-stone-900 text-emerald-400 rounded space-y-1 border border-stone-700">
+          <div class="text-amber-300 font-bold">> ESP32_I2C_BUS_MAP:</div>
+          <div>• GPIO 21 (SDA) -> BMP280, SHT31, SSD1306</div>
+          <div>• GPIO 22 (SCL) -> Clock line (400kHz fast mode)</div>
+          <div>• 0x3C: SSD1306 128x64 Graphic Display</div>
+          <div>• 0x76: BMP280 Barometric Pressure &amp; Temp</div>
+          <div>• 0x44: SHT31 Precision Relative Humidity</div>
+          <div>• Wi-Fi MQTT: 2.4GHz 802.11b/g/n Telemetry Uplink</div>
+        </div>
+        <p class="text-stone-700 font-sans">Developed September 2023 with custom deep-sleep duty cycles to achieve ultra-low field power consumption.</p>
+        <div class="pt-2">
+          <a href="pages/hardware-lab.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-amber-300 rounded text-xs font-mono font-bold transition-colors inline-block">
+            Inspect Hardware Lab Bench →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  tts_waveform: {
+    id: "tts_waveform",
+    pageUrl: "pages/hardware-lab.html",
+    title: "AUDIO FORENSICS: RPi REAL-TIME TTS ENGINE",
+    subtitle: "EDGE AUDIO SYNTHESIS // EMBEDDED LINUX ALSA",
+    stamp: "EDGE COMPUTE",
+    badge: "OFFLINE INFERENCE",
+    summary: "Real-time edge text-to-speech synthesizer running locally on a Raspberry Pi 4 Model B without cloud dependency or network latency.",
+    content: `
+      <div class="space-y-3 text-xs">
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 font-mono space-y-1">
+          <div class="font-bold text-stone-900">EDGE BENCHMARK METRICS:</div>
+          <div>• Host Platform: Raspberry Pi 4 Model B (4GB RAM, Linux Kernel 6.x)</div>
+          <div>• Audio Interface: 3.5mm DAC / I2S audio amplifier</div>
+          <div>• Speech Synthesis Engine: Offline neural Piper &amp; eSpeak-NG C library</div>
+          <div>• Synthesis Latency: &lt;180ms from ASCII string input to DAC PCM buffer</div>
+          <div>• Cloud Dependency: 0% (Fully self-contained offline edge build)</div>
+        </div>
+        <p>Built between September 2023 and January 2024 to provide an offline voice output system for assistive communication devices.</p>
+        <div class="pt-2">
+          <a href="pages/hardware-lab.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded text-xs font-mono font-bold transition-colors inline-block">
+            Inspect Audio Hardware →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  rvm_schematic: {
+    id: "rvm_schematic",
+    pageUrl: "pages/rvm.html",
+    title: "PATENT ARTIFACT: RVM CHUTE GATE MECHANISM",
+    subtitle: "ACTUATOR SYSTEM // REVERSE VENDING MACHINE",
+    stamp: "PATENT ARTIFACT",
+    badge: "GPIO ACTUATION",
+    summary: "Mechanical and electronic sorting gate designed for automated plastic bottle separation based on optical sensor triggers.",
+    content: `
+      <div class="space-y-3 text-xs">
+        <div class="p-3 bg-sky-950 text-sky-100 rounded font-mono space-y-1 border border-sky-800">
+          <div class="text-emerald-400 font-bold">> RVM_SORTING_CYCLE:</div>
+          <div>1. IR Proximity Sensor (GPIO 17) detects bottle entry at inlet chute</div>
+          <div>2. Ultrasonic HC-SR04 (GPIO 23/24) checks container fullness</div>
+          <div>3. Python control daemon verifies object acceptance criteria</div>
+          <div>4. PWM pulse sent to Micro-Servo (GPIO 18) to divert gate to bin</div>
+          <div>5. Incentive token / credit generated via local system log</div>
+        </div>
+        <div class="pt-2">
+          <a href="pages/rvm.html" class="px-3 py-1.5 bg-emerald-900 hover:bg-emerald-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
+            View Complete RVM Patent Schematic →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  cadsys_spec: {
+    id: "cadsys_spec",
+    pageUrl: "pages/cadsys.html",
+    title: "FIELD SPEC: OSP 48-CORE OPTICAL FIBER RUN",
+    subtitle: "OUTSIDE PLANT TELECOM // CADSYS (INDIA) LTD",
+    stamp: "OSP COMPLIANT",
+    badge: "48-COUNT SM FIBER",
+    summary: "Production telecom engineering drawing specs for aerial fiber routing and structural pole sag clearance calculations.",
+    content: `
+      <div class="space-y-3 text-xs font-mono">
+        <div class="p-3 bg-amber-50 rounded border border-amber-300 space-y-1 text-amber-950">
+          <div class="font-bold">CADSYS OSP DRAFTING SPECIFICATION:</div>
+          <div>• Cable Type: Corning SMF-28e+ 48-Core Single-Mode Loose Tube</div>
+          <div>• Maximum Catenary Sag: &lt;2.5% span length at 30°C loaded conditions</div>
+          <div>• Clearance Standards: Met National Electrical Safety Code (NESC)</div>
+          <div>• Tooling: Aramis-DT GIS Work Print Generator, Katapault photogrammetry</div>
+        </div>
+        <div class="pt-2">
+          <a href="pages/cadsys.html" class="px-3 py-1.5 bg-blue-900 hover:bg-blue-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
+            Open CADSYS Case Blueprint →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  av_telematics: {
+    id: "av_telematics",
+    pageUrl: "pages/cognizant.html",
+    title: "TELEMATICS AUDIT: AUTONOMOUS VEHICLE SWQ",
+    subtitle: "COGNIZANT FIELD LAB // MAPPING REGRESSION REPORT",
+    stamp: "QA PASS 100%",
+    badge: "HYD_TEST_NODE_04",
+    summary: "Automated regression validation output confirming road geometry alignment, HD map validation, and zero safety anomaly flags.",
+    content: `
+      <div class="space-y-3 text-xs font-mono">
+        <div class="p-3 bg-stone-900 text-stone-100 rounded space-y-1">
+          <div class="text-emerald-400 font-bold">> AV_TELEMATICS_REGRESSION_EXECUTION:</div>
+          <div>[PASS] GPS / IMU dead-reckoning trajectory correlation: 99.8%</div>
+          <div>[PASS] Lane-boundary detection tolerance: &lt;1.8cm lateral error</div>
+          <div>[PASS] HD Map vector layer alignment across complex junctions</div>
+          <div>[PASS] Regression Suite #84 completed with 0 critical defects</div>
+        </div>
+        <div class="pt-2">
+          <a href="pages/cognizant.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-amber-300 rounded text-xs font-mono font-bold transition-colors inline-block">
+            Open Full Cognizant AV Report →
+          </a>
+        </div>
+      </div>
+    `
+  },
+  dispatch_slip: {
+    id: "dispatch_slip",
+    pageUrl: "pages/resume.html",
+    title: "OFFICIAL DISPATCH & TRANSMISSION ROUTE",
+    subtitle: "COMMUNICATION PROTOCOL // GELLI ARYA VARDHAN",
+    stamp: "DIRECT WIRE",
+    badge: "HYDERABAD, IN",
+    summary: "Official contact coordinates and communication routing for Arya Vardhan Gelli.",
+    content: `
+      <div class="space-y-3 text-xs font-mono">
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1.5">
+          <div>• Primary Email: <strong>aryavardhan.gelli@outlook.com</strong></div>
+          <div>• Secure Line: <strong>+91 9381074100</strong></div>
+          <div>• LinkedIn: <strong>linkedin.com/in/gelli-arya-vardhan/</strong></div>
+          <div>• GitHub: <strong>github.com/Arya-vardhan</strong></div>
+          <div>• Base: Hyderabad, Telangana, India (IST UTC+5:30)</div>
+        </div>
+        <div class="pt-2 flex gap-2">
+          <a href="mailto:aryavardhan.gelli@outlook.com" class="px-3 py-1.5 bg-red-900 hover:bg-red-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
+            Send Email Dispatch →
+          </a>
+          <a href="pages/resume.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded text-xs font-mono font-bold transition-colors inline-block">
+            Official Resume Dossier →
+          </a>
+        </div>
+      </div>
+    `
   }
 };
 

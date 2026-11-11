@@ -28,7 +28,7 @@ export function drawYarnNetwork() {
     { x: 2480 + 280, y: 1640 - 6 + 9 },  // Contact Comms
   ];
 
-  // Secondary cross-threads
+  // Secondary cross-threads between main clues
   const crossConnections = [
     [0, 2], // Cognizant -> RVM
     [2, 3], // RVM -> Hardware Lab
@@ -36,6 +36,33 @@ export function drawYarnNetwork() {
     [1, 6], // CADSYS -> Academics
     [4, 7], // Cyber -> Contact
     [5, 7], // Mystery -> Contact
+  ];
+
+  // Authentic Evidence Peripheral Pins
+  const auxPins = {
+    avTelematics: { x: 1020 + 135, y: 220 + 6 },
+    cadsysSpec: { x: 1980 + 125, y: 160 + 6 },
+    rvmSchematic: { x: 950 + 130, y: 880 + 6 },
+    robosoccer: { x: 1120 + 120, y: 1220 + 6 },
+    esp32: { x: 1080 + 130, y: 1640 + 6 },
+    ttsWaveform: { x: 1060 + 135, y: 2000 + 6 },
+    secondaryEdu: { x: 3080 + 140, y: 780 + 6 },
+    ciscoBadges: { x: 2140 + 140, y: 1360 + 6 },
+    dispatchSlip: { x: 3100 + 130, y: 1660 + 6 },
+  };
+
+  const auxConnections = [
+    { from: cluePins[0], to: auxPins.avTelematics, sag: 18 },  // Cognizant -> AV Telematics
+    { from: cluePins[1], to: auxPins.cadsysSpec, sag: 16 },    // CADSYS -> OSP Field Spec
+    { from: cluePins[2], to: auxPins.rvmSchematic, sag: 20 },  // RVM -> RVM Schematic
+    { from: cluePins[3], to: auxPins.esp32, sag: 22 },         // Hardware -> ESP32 I2C
+    { from: cluePins[3], to: auxPins.ttsWaveform, sag: 24 },   // Hardware -> RPi TTS
+    { from: cluePins[4], to: auxPins.ciscoBadges, sag: 20 },   // Cyber -> Cisco Badges
+    { from: cluePins[6], to: auxPins.robosoccer, sag: 34 },    // Academics -> Robo Soccer
+    { from: cluePins[6], to: auxPins.secondaryEdu, sag: 22 },  // Academics -> Secondary Edu
+    { from: cluePins[7], to: auxPins.dispatchSlip, sag: 22 },  // Contact -> Dispatch Memo
+    { from: centerPin, to: auxPins.robosoccer, sag: 28 },      // Center -> Robo Soccer Trophy
+    { from: centerPin, to: auxPins.ciscoBadges, sag: 26 },     // Center -> Cisco Badges
   ];
 
   function drawThread(p1, p2, sagAmount = 26, color = '#dc2626') {
@@ -85,6 +112,11 @@ export function drawYarnNetwork() {
     const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
     const sag = Math.min(32, Math.max(12, dist * 0.02));
     drawThread(p1, p2, sag, '#b91c1c');
+  });
+
+  // Authentic Evidence Peripheral Threads
+  auxConnections.forEach(({ from, to, sag }) => {
+    drawThread(from, to, sag, '#c02626');
   });
 }
 
