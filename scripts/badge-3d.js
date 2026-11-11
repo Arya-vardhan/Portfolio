@@ -2,6 +2,7 @@
 // Uses Three.js to render authentic, physical 3D interactive credential medallions
 const THREE = window.THREE || (typeof globalThis !== 'undefined' ? globalThis.THREE : null);
 import { playTypewriterClick } from './audio.js';
+import { BADGE_BASE64 } from './data/badge-images.js';
 
 export const BADGE_DATA = [
   {
@@ -11,10 +12,8 @@ export const BADGE_DATA = [
     recipient: 'Arya vardhan Gelli',
     badgeId: 'baf50dae-b67b-41f2-a45f-c1f854e6567e',
     verifyUrl: 'https://www.credly.com/badges/baf50dae-b67b-41f2-a45f-c1f854e6567e',
-    imgSrc: 'assets/badges/cisco-junior-cybersecurity-analyst.png',
     accentColor: '#00bceb',
     metalColor: 0xd4af37, // Burnished Gold
-    edgeColor: 0xaa8c2c,
     description: 'Cisco verifies successful completion of the Junior Cybersecurity Analyst Career Path. Proficient in monitoring and protecting networks, firewalls, cloud security, cryptography, vulnerability assessment, risk management, and forensic incident response.',
     skills: ['Vulnerability Assessment', 'Threat Intelligence', 'Network Monitoring', 'Incident Response', 'Cryptography', 'Cloud Defense']
   },
@@ -25,10 +24,8 @@ export const BADGE_DATA = [
     recipient: 'Arya vardhan Gelli',
     badgeId: '0aa99b23-f8f8-4e09-b4ab-2ee9e76d9331',
     verifyUrl: 'https://www.credly.com/badges/0aa99b23-f8f8-4e09-b4ab-2ee9e76d9331',
-    imgSrc: 'assets/badges/cisco-networking-basics.png',
     accentColor: '#00bceb',
     metalColor: 0x3a6073, // Cyber Steel Blue
-    edgeColor: 0x243b47,
     description: 'Cisco verifies completion of Networking Basics. Covers network architecture, packet transport, IP addressing (IPv4/IPv6 subnetting), transport & application protocols, and 13 Cisco Packet Tracer activities.',
     skills: ['IPv4 / IPv6 Addressing', 'Subnetting & Topologies', 'Packet Tracer Labs', 'Routing & Switching', 'Network Protocols']
   },
@@ -39,151 +36,39 @@ export const BADGE_DATA = [
     recipient: 'Arya Vardhan Gelli',
     badgeId: 'ba738bc3-efc1-11ef-864f-bea50ffe6cb4',
     verifyUrl: 'https://academy.hackthebox.com/achievement/badge/ba738bc3-efc1-11ef-864f-bea50ffe6cb4',
-    imgSrc: 'assets/badges/htb-network-foundations.png',
     accentColor: '#9fef00',
-    metalColor: 0x223322, // Stealth Dark Titanium with Green Edge
-    edgeColor: 0x182618,
+    metalColor: 0x223322, // Stealth Dark Titanium with Green Sheen
     description: 'Awarded by Hack The Box Academy for successfully passing the Network Foundations module. Validated practical skills in network traffic inspection, protocol analysis, and penetration testing foundations.',
     skills: ['Packet Analysis (Wireshark)', 'Protocol Stack Anatomy', 'Network Reconnaissance', 'Offensive Security Fundamentals']
   }
 ];
 
 let currentBadgeIndex = 0;
-let scene, camera, renderer, badgeMesh;
+let scene, camera, renderer, coinGroup;
+let frontMesh, backMesh, rimMesh;
+let edgeMaterial, frontMaterial, backMaterial;
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 let autoRotate = true;
-let targetRotation = { x: 0.15, y: -0.2 };
+let targetRotation = { x: 0.12, y: -0.2 };
 let pointLight, spotLight;
 let animFrameId = null;
 
-export function init3DBadgeViewer() {
-  const container = document.getElementById('badge-3d-canvas-container');
-  if (!container || !THREE) return;
+// Texture cache to prevent redundant re-creation
+const TEXTURE_CACHE = {};
 
-  const width = container.clientWidth || 420;
-  const height = container.clientHeight || 420;
-
-  // Scene & Camera
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-  camera.position.set(0, 0, 7.5);
-
-  // Renderer
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-  // Clear container and append
-  container.innerHTML = '';
-  container.appendChild(renderer.domElement);
-
-  // Lights
-  const ambientLight = new THREE.AmbientLight(0xfff6e8, 0.9);
-  scene.add(ambientLight);
-
-  pointLight = new THREE.PointLight(0xffeedd, 1.8, 20);
-  pointLight.position.set(3, 4, 5);
-  scene.add(pointLight);
-
-  spotLight = new THREE.SpotLight(0x00bceb, 2.2);
-  spotLight.position.set(-4, -3, 4);
-  spotLight.angle = Math.PI / 4;
-  spotLight.penumbra = 0.6;
-  scene.add(spotLight);
-
-  const backLight = new THREE.DirectionalLight(0xffffff, 0.6);
-  backLight.position.set(0, 0, -6);
-  scene.add(backLight);
-
-  // Setup interaction listeners
-  setupBadgeInteractions(container);
-
-  // Load first badge
-  loadBadgeModel(0);
-
-  // Start Animation Loop
-  animate();
-
-  // Resize listener
-  window.addEventListener('resize', onViewerResize);
-}
-
-function onViewerResize() {
-  const container = document.getElementById('badge-3d-canvas-container');
-  if (!container || !renderer || !camera) return;
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-  if (width === 0 || height === 0) return;
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-  renderer.setSize(width, height);
-}
-
-function setupBadgeInteractions(container) {
-  // Drag to rotate
-  container.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    autoRotate = false;
-    previousMousePosition = { x: e.clientX, y: e.clientY };
-  });
-
-  window.addEventListener('mousemove', (e) => {
-    // Dynamic light movement
-    if (pointLight && container) {
-      const rect = container.getBoundingClientRect();
-      const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const normY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      pointLight.position.x = normX * 4 + 1;
-      pointLight.position.y = normY * 4 + 2;
+function getBadgeImage(badgeId) {
+  return new Promise((resolve) => {
+    const dataUri = BADGE_BASE64[badgeId];
+    if (!dataUri) {
+      resolve(null);
+      return;
     }
-
-    if (!isDragging || !badgeMesh) return;
-    const deltaX = e.clientX - previousMousePosition.x;
-    const deltaY = e.clientY - previousMousePosition.y;
-
-    targetRotation.y += deltaX * 0.012;
-    targetRotation.x += deltaY * 0.012;
-
-    previousMousePosition = { x: e.clientX, y: e.clientY };
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = dataUri;
   });
-
-  window.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
-
-  // Touch controls for mobile
-  container.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 1) {
-      isDragging = true;
-      autoRotate = false;
-      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }
-  }, { passive: true });
-
-  window.addEventListener('touchmove', (e) => {
-    if (!isDragging || !badgeMesh || e.touches.length !== 1) return;
-    const deltaX = e.touches[0].clientX - previousMousePosition.x;
-    const deltaY = e.touches[0].clientY - previousMousePosition.y;
-
-    targetRotation.y += deltaX * 0.014;
-    targetRotation.x += deltaY * 0.014;
-
-    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-  }, { passive: true });
-
-  window.addEventListener('touchend', () => {
-    isDragging = false;
-  });
-
-  // Wheel zoom
-  container.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    if (!camera) return;
-    camera.position.z = Math.max(4.5, Math.min(10, camera.position.z + e.deltaY * 0.005));
-  }, { passive: false });
 }
 
 function createFrontFaceCanvas(badge, img) {
@@ -192,11 +77,11 @@ function createFrontFaceCanvas(badge, img) {
   c.height = 512;
   const ctx = c.getContext('2d');
 
-  // Background disk with radial gradient
+  // Background disk with subtle radial gradient
   const grad = ctx.createRadialGradient(256, 256, 30, 256, 256, 256);
-  grad.addColorStop(0, '#1c1b18');
-  grad.addColorStop(0.75, '#120f0d');
-  grad.addColorStop(1, '#090807');
+  grad.addColorStop(0, '#1c1814');
+  grad.addColorStop(0.7, '#120e0a');
+  grad.addColorStop(1, '#080605');
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.arc(256, 256, 254, 0, Math.PI * 2);
@@ -204,43 +89,54 @@ function createFrontFaceCanvas(badge, img) {
 
   // Outer bezel rings
   ctx.strokeStyle = badge.accentColor;
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 4.5;
   ctx.beginPath();
   ctx.arc(256, 256, 246, 0, Math.PI * 2);
   ctx.stroke();
 
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+  ctx.strokeStyle = 'rgba(255, 230, 180, 0.35)';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.arc(256, 256, 238, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Subtle engraved micro-dots around perimeter
+  // Perimeter micro-studs
   for (let i = 0; i < 36; i++) {
     const angle = (i / 36) * Math.PI * 2;
     const x = 256 + Math.cos(angle) * 230;
     const y = 256 + Math.sin(angle) * 230;
-    ctx.fillStyle = (i % 3 === 0) ? badge.accentColor : 'rgba(255, 255, 255, 0.35)';
+    ctx.fillStyle = (i % 3 === 0) ? badge.accentColor : 'rgba(255, 255, 255, 0.4)';
     ctx.beginPath();
     ctx.arc(x, y, 2.5, 0, Math.PI * 2);
     ctx.fill();
   }
 
-  // Draw official badge image centered
+  // Draw official badge image centered & crisp
   if (img) {
     const size = 370;
     const offset = (512 - size) / 2;
     ctx.drawImage(img, offset, offset, size, size);
+  } else {
+    ctx.fillStyle = badge.accentColor;
+    ctx.font = 'bold 28px "Courier New", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(badge.title.slice(0, 18), 256, 256);
   }
 
-  // Specular glass shine curve across upper medallion
-  const glassGrad = ctx.createLinearGradient(0, 50, 0, 260);
-  glassGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
+  // Subtle curved glass reflection on top arc
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(256, 256, 242, Math.PI * 1.1, Math.PI * 1.9);
+  ctx.lineTo(256, 256);
+  ctx.closePath();
+  ctx.clip();
+  const glassGrad = ctx.createLinearGradient(256, 20, 256, 256);
+  glassGrad.addColorStop(0, 'rgba(255, 255, 255, 0.16)');
   glassGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
   ctx.fillStyle = glassGrad;
-  ctx.beginPath();
-  ctx.arc(256, 256, 240, Math.PI * 1.05, Math.PI * 1.95);
-  ctx.fill();
+  ctx.fillRect(0, 0, 512, 512);
+  ctx.restore();
 
   return c;
 }
@@ -253,9 +149,9 @@ function createBackFaceCanvas(badge) {
 
   // Metallic brushed plate background
   const grad = ctx.createRadialGradient(256, 256, 20, 256, 256, 256);
-  grad.addColorStop(0, '#2b231a');
-  grad.addColorStop(0.7, '#191410');
-  grad.addColorStop(1, '#0e0b09');
+  grad.addColorStop(0, '#282016');
+  grad.addColorStop(0.7, '#16120e');
+  grad.addColorStop(1, '#0b0907');
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.arc(256, 256, 254, 0, Math.PI * 2);
@@ -263,7 +159,7 @@ function createBackFaceCanvas(badge) {
 
   // Concentric fine micro-grooves
   for (let r = 40; r < 240; r += 16) {
-    ctx.strokeStyle = 'rgba(255, 230, 180, 0.05)';
+    ctx.strokeStyle = 'rgba(255, 220, 160, 0.06)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(256, 256, r, 0, Math.PI * 2);
@@ -277,7 +173,7 @@ function createBackFaceCanvas(badge) {
   ctx.arc(256, 256, 244, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Top Arc: Security Classification
+  // Security Classification Header
   ctx.fillStyle = '#f4e4c1';
   ctx.font = 'bold 15px "Courier New", monospace';
   ctx.textAlign = 'center';
@@ -288,8 +184,8 @@ function createBackFaceCanvas(badge) {
   ctx.font = '11px "Courier New", monospace';
   ctx.fillText('SECURITY CLEARANCE & ACCREDITATION', 256, 96);
 
-  // Center Plate Box
-  ctx.fillStyle = 'rgba(10, 8, 6, 0.85)';
+  // Center Metal Plate Box
+  ctx.fillStyle = 'rgba(10, 8, 6, 0.88)';
   ctx.strokeStyle = '#c5a059';
   ctx.lineWidth = 1.5;
   ctx.strokeRect(60, 120, 392, 230);
@@ -307,7 +203,7 @@ function createBackFaceCanvas(badge) {
   // Badge Name
   ctx.fillStyle = badge.accentColor;
   ctx.font = 'bold 13px monospace';
-  const displayTitle = badge.title.length > 32 ? badge.title.slice(0, 30) + '...' : badge.title;
+  const displayTitle = badge.title.length > 30 ? badge.title.slice(0, 28) + '...' : badge.title;
   ctx.fillText(displayTitle.toUpperCase(), 256, 212);
 
   // Issuer
@@ -318,7 +214,7 @@ function createBackFaceCanvas(badge) {
   // Badge ID hash
   ctx.fillStyle = '#8f806e';
   ctx.font = '10px monospace';
-  ctx.fillText(`CREDENTIAL UUID: ${badge.badgeId.slice(0, 24)}...`, 256, 268);
+  ctx.fillText(`CREDENTIAL UUID: ${badge.badgeId.slice(0, 22)}...`, 256, 268);
 
   // Verified Stamp in Center Box
   ctx.strokeStyle = '#22c55e';
@@ -343,83 +239,226 @@ function createBackFaceCanvas(badge) {
   return c;
 }
 
-export function loadBadgeModel(index) {
-  if (!THREE || !scene) return;
-  currentBadgeIndex = index;
-  const badge = BADGE_DATA[index];
-
-  // Update UI texts in modal
-  updateModalBadgeDetails(badge);
-
-  // Remove existing mesh
-  if (badgeMesh) {
-    scene.remove(badgeMesh);
-    if (badgeMesh.geometry) badgeMesh.geometry.dispose();
-    badgeMesh = null;
+async function getOrCreateTextures(badge) {
+  if (TEXTURE_CACHE[badge.id]) {
+    return TEXTURE_CACHE[badge.id];
   }
 
-  // Update spotLight color to badge accent
-  if (spotLight) {
-    spotLight.color.set(badge.accentColor);
-  }
-
-  // Load badge image and create textures
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    buildMeshWithTextures(badge, img);
-  };
-  img.onerror = () => {
-    buildMeshWithTextures(badge, null);
-  };
-  img.src = badge.imgSrc;
-}
-
-function buildMeshWithTextures(badge, img) {
+  const img = await getBadgeImage(badge.id);
   const frontCanvas = createFrontFaceCanvas(badge, img);
   const backCanvas = createBackFaceCanvas(badge);
 
   const frontTexture = new THREE.CanvasTexture(frontCanvas);
+  frontTexture.anisotropy = 4;
+
   const backTexture = new THREE.CanvasTexture(backCanvas);
-  // Mirror U for back texture so text reads normally on back face
-  backTexture.wrapS = THREE.RepeatWrapping;
-  backTexture.repeat.x = -1;
+  backTexture.anisotropy = 4;
 
-  // Cylinder: radiusTop 2.3, radiusBottom 2.3, thickness 0.22, 64 segments
-  const geometry = new THREE.CylinderGeometry(2.35, 2.35, 0.24, 64);
+  TEXTURE_CACHE[badge.id] = {
+    front: frontTexture,
+    back: backTexture
+  };
 
-  // Materials: 0 = side rim, 1 = top (front), 2 = bottom (back)
-  const edgeMaterial = new THREE.MeshStandardMaterial({
-    color: badge.metalColor,
+  return TEXTURE_CACHE[badge.id];
+}
+
+export function init3DBadgeViewer() {
+  const container = document.getElementById('badge-3d-canvas-container');
+  if (!container || !THREE) return;
+
+  const width = container.clientWidth || 400;
+  const height = container.clientHeight || 360;
+
+  // Scene & Camera
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+  camera.position.set(0, 0, 7.2);
+
+  // Renderer
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Container setup
+  container.innerHTML = '';
+  container.appendChild(renderer.domElement);
+
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xfff8ee, 1.2);
+  scene.add(ambientLight);
+
+  pointLight = new THREE.PointLight(0xffeedd, 2.2, 20);
+  pointLight.position.set(3, 4, 5);
+  scene.add(pointLight);
+
+  spotLight = new THREE.SpotLight(0x00bceb, 2.4);
+  spotLight.position.set(-4, -3, 4);
+  spotLight.angle = Math.PI / 4;
+  spotLight.penumbra = 0.5;
+  scene.add(spotLight);
+
+  const backLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  backLight.position.set(0, 0, -6);
+  scene.add(backLight);
+
+  // Coin Group: Single parent holding the 3D medallion components
+  coinGroup = new THREE.Group();
+  scene.add(coinGroup);
+
+  const radius = 2.35;
+  const halfThickness = 0.11;
+
+  // Materials
+  edgeMaterial = new THREE.MeshStandardMaterial({
+    color: 0xd4af37,
     metalness: 0.9,
-    roughness: 0.22,
-    bumpScale: 0.05
+    roughness: 0.2
   });
 
-  const frontMaterial = new THREE.MeshStandardMaterial({
-    map: frontTexture,
+  frontMaterial = new THREE.MeshStandardMaterial({
     metalness: 0.35,
-    roughness: 0.25,
-    clearcoat: 0.4,
-    clearcoatRoughness: 0.1
+    roughness: 0.25
   });
 
-  const backMaterial = new THREE.MeshStandardMaterial({
-    map: backTexture,
+  backMaterial = new THREE.MeshStandardMaterial({
     metalness: 0.75,
-    roughness: 0.3
+    roughness: 0.32
   });
 
-  badgeMesh = new THREE.Mesh(geometry, [edgeMaterial, frontMaterial, backMaterial]);
-  badgeMesh.castShadow = true;
-  badgeMesh.receiveShadow = true;
+  // 1. Front Disk: CircleGeometry facing directly +Z
+  const frontGeo = new THREE.CircleGeometry(radius, 64);
+  frontMesh = new THREE.Mesh(frontGeo, frontMaterial);
+  frontMesh.position.z = halfThickness;
+  coinGroup.add(frontMesh);
 
-  // Orient so front face (+Y of cylinder) faces +Z towards camera
-  badgeMesh.rotation.x = Math.PI / 2;
-  scene.add(badgeMesh);
+  // 2. Back Disk: CircleGeometry facing directly -Z
+  const backGeo = new THREE.CircleGeometry(radius, 64);
+  backMesh = new THREE.Mesh(backGeo, backMaterial);
+  backMesh.position.z = -halfThickness;
+  backMesh.rotation.y = Math.PI;
+  coinGroup.add(backMesh);
 
-  // Reset rotation targets
-  targetRotation = { x: 0.18, y: -0.25 };
+  // 3. Metallic Outer Rim: Open-ended Cylinder tube
+  const rimGeo = new THREE.CylinderGeometry(radius, radius, halfThickness * 2, 64, 1, true);
+  rimMesh = new THREE.Mesh(rimGeo, edgeMaterial);
+  rimMesh.rotation.x = Math.PI / 2;
+  coinGroup.add(rimMesh);
+
+  // Interaction handlers
+  setupBadgeInteractions(container);
+
+  // Load selected badge
+  loadBadgeModel(currentBadgeIndex);
+
+  // Start Animation Loop
+  if (!animFrameId) {
+    animate();
+  }
+
+  window.addEventListener('resize', onViewerResize);
+}
+
+function onViewerResize() {
+  const container = document.getElementById('badge-3d-canvas-container');
+  if (!container || !renderer || !camera) return;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  if (width === 0 || height === 0) return;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+
+function setupBadgeInteractions(container) {
+  // Drag to rotate
+  container.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    autoRotate = false;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (pointLight && container) {
+      const rect = container.getBoundingClientRect();
+      const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const normY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      pointLight.position.x = normX * 4 + 1;
+      pointLight.position.y = normY * 4 + 2;
+    }
+
+    if (!isDragging || !coinGroup) return;
+    const deltaX = e.clientX - previousMousePosition.x;
+    const deltaY = e.clientY - previousMousePosition.y;
+
+    targetRotation.y += deltaX * 0.012;
+    targetRotation.x += deltaY * 0.012;
+
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  // Touch controls for mobile
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      autoRotate = false;
+      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging || !coinGroup || e.touches.length !== 1) return;
+    const deltaX = e.touches[0].clientX - previousMousePosition.x;
+    const deltaY = e.touches[0].clientY - previousMousePosition.y;
+
+    targetRotation.y += deltaX * 0.014;
+    targetRotation.x += deltaY * 0.014;
+
+    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    isDragging = false;
+  });
+
+  // Wheel zoom
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (!camera) return;
+    camera.position.z = Math.max(4.5, Math.min(9.5, camera.position.z + e.deltaY * 0.005));
+  }, { passive: false });
+}
+
+export async function loadBadgeModel(index) {
+  if (index < 0 || index >= BADGE_DATA.length) index = 0;
+  currentBadgeIndex = index;
+  const badge = BADGE_DATA[index];
+
+  // Update UI texts in modal immediately
+  updateModalBadgeDetails(badge);
+
+  // Update light color to badge accent
+  if (spotLight) {
+    spotLight.color.set(badge.accentColor);
+  }
+
+  // Fetch or create textures from embedded base64 cache
+  const textures = await getOrCreateTextures(badge);
+
+  // Apply textures to existing mesh in place (zero race conditions, zero duplicate meshes)
+  if (frontMaterial && backMaterial && edgeMaterial) {
+    frontMaterial.map = textures.front;
+    frontMaterial.needsUpdate = true;
+
+    backMaterial.map = textures.back;
+    backMaterial.needsUpdate = true;
+
+    edgeMaterial.color.set(badge.metalColor);
+    edgeMaterial.needsUpdate = true;
+  }
 }
 
 function updateModalBadgeDetails(badge) {
@@ -457,17 +496,17 @@ function updateModalBadgeDetails(badge) {
 function animate() {
   animFrameId = requestAnimationFrame(animate);
 
-  if (badgeMesh) {
+  if (coinGroup) {
     if (autoRotate && !isDragging) {
       targetRotation.y += 0.007;
     }
 
-    // Smooth lerp rotation
-    badgeMesh.rotation.y += (targetRotation.y - badgeMesh.rotation.y) * 0.08;
-    badgeMesh.rotation.x += (Math.PI / 2 + targetRotation.x - badgeMesh.rotation.x) * 0.08;
+    // Smooth lerp rotation around vertical Y axis and horizontal X tilt
+    coinGroup.rotation.y += (targetRotation.y - coinGroup.rotation.y) * 0.08;
+    coinGroup.rotation.x += (targetRotation.x - coinGroup.rotation.x) * 0.08;
 
     // Gentle floating bob
-    badgeMesh.position.y = Math.sin(Date.now() * 0.002) * 0.08;
+    coinGroup.position.y = Math.sin(Date.now() * 0.002) * 0.06;
   }
 
   if (renderer && scene && camera) {
@@ -520,7 +559,7 @@ export function toggleBadgeAutoRotate() {
 }
 
 export function flipBadge3D() {
-  if (!badgeMesh) return;
+  if (!coinGroup) return;
   autoRotate = false;
   targetRotation.y += Math.PI;
 }
