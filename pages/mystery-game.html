@@ -32,6 +32,7 @@
       </div>
     </div>
 
+    <!-- Overview Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <!-- Game 1: Bored? -->
       <div class="p-6 bg-[#1a1510] text-[#eddcb5] rounded-lg shadow border-2 border-amber-900/60 space-y-3">
@@ -64,12 +65,108 @@
       </div>
     </div>
 
+    <!-- ==================== INTERACTIVE PLAYABLE MINI-CASE ==================== -->
+    <div class="p-6 sm:p-8 bg-[#fdfbf7] rounded-lg border-2 border-dashed border-stone-400 space-y-6 shadow-inner">
+      <div class="flex items-center justify-between border-b border-stone-300 pb-3">
+        <div>
+          <div class="font-mono text-xs text-red-700 font-bold uppercase tracking-wider">LIVE INTERACTIVE DEMO</div>
+          <h2 class="font-news text-2xl font-bold text-stone-950 uppercase mt-0.5">
+            PLAYABLE MINI-CASE: THE EXFILTRATED FIRMWARE
+          </h2>
+        </div>
+        <span class="stamp text-[10px] border-amber-700 text-amber-700">SOLVE THE CASE</span>
+      </div>
+
+      <p class="text-xs sm:text-sm text-stone-800 leading-relaxed">
+        <strong>The Incident:</strong> At 02:45 AM, an encrypted microcontroller firmware binary was exfiltrated from the telemetry server. Three individuals had facility badges. Read their alibis, inspect the forensic evidence logs, and make your deduction!
+      </p>
+
+      <!-- Alibis -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="font-bold text-stone-900 font-mono">SUSPECT A: THE CONTRACTOR</div>
+          <div class="text-stone-700 italic">"I was outside all night checking utility pole sag calculations down the road."</div>
+        </div>
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="font-bold text-stone-900 font-mono">SUSPECT B: THE QA LEAD</div>
+          <div class="text-stone-700 italic">"I was in the lab running automated corridor regression test suites on the AV rig."</div>
+        </div>
+        <div class="p-3 bg-stone-100 rounded border border-stone-300 space-y-1">
+          <div class="font-bold text-stone-900 font-mono">SUSPECT C: THE INTERN</div>
+          <div class="text-stone-700 italic">"I was in the mechanical shop tuning the RVM bottle sorting chute motor."</div>
+        </div>
+      </div>
+
+      <!-- Evidence Clues to Inspect -->
+      <div class="space-y-2">
+        <div class="font-mono text-xs font-bold text-stone-700">CLICK EVIDENCE ITEMS TO INSPECT FORENSIC LOGS:</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button onclick="inspectClue('badge')" class="p-2.5 bg-stone-200 hover:bg-stone-300 rounded font-mono text-xs text-left text-stone-800 transition-colors border border-stone-400">
+            📋 Clue 1: Badge Door Scan Log
+          </button>
+          <button onclick="inspectClue('ssh')" class="p-2.5 bg-stone-200 hover:bg-stone-300 rounded font-mono text-xs text-left text-stone-800 transition-colors border border-stone-400">
+            💻 Clue 2: SSH Console Log
+          </button>
+          <button onclick="inspectClue('rvm')" class="p-2.5 bg-stone-200 hover:bg-stone-300 rounded font-mono text-xs text-left text-stone-800 transition-colors border border-stone-400">
+            ⚙️ Clue 3: RVM Motor Power Log
+          </button>
+        </div>
+        <div id="clue-display" class="p-3 bg-stone-900 text-stone-100 rounded font-mono text-xs hidden">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Accusation Buttons -->
+      <div class="border-t border-stone-300 pt-4 space-y-3">
+        <div class="font-mono text-xs font-bold text-stone-700 uppercase">IDENTIFY THE CULPRIT:</div>
+        <div class="flex flex-wrap gap-3">
+          <button onclick="accuse('A')" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-amber-300 rounded font-mono text-xs font-bold transition-colors">
+            Accuse Suspect A (Contractor)
+          </button>
+          <button onclick="accuse('B')" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-amber-300 rounded font-mono text-xs font-bold transition-colors">
+            Accuse Suspect B (QA Lead)
+          </button>
+          <button onclick="accuse('C')" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-amber-300 rounded font-mono text-xs font-bold transition-colors">
+            Accuse Suspect C (Intern)
+          </button>
+        </div>
+        <div id="verdict-display" class="p-4 rounded font-mono text-xs hidden"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
     <div class="mt-8 pt-4 border-t border-stone-300 flex items-center justify-between text-xs font-mono">
       <a href="hardware-lab.html" class="text-stone-900 font-bold hover:underline">← Previous: Hardware Lab</a>
       <a href="academics.html" class="text-stone-900 font-bold hover:underline">Next: Academic Record →</a>
     </div>
   </div>
 
+  <script>
+    const CLUES = {
+      badge: "LOG: [02:43:18 AM] Server Room East Door Reader scanned BADGE #044 (Registered to: Suspect A / Contractor). Badge status: GRANTED. Contradicts his claim of being down the road!",
+      ssh: "LOG: [02:44:50 AM] SSH Session active from IP 192.168.1.104 (AV Rig #02). Running regression suite: 'test_av_perception.py'. Matches Suspect B's alibi.",
+      rvm: "LOG: [02:42:00 AM - 03:00:00 AM] RVM Bench Power Rail: Active draw 1.8A. Micro-servo PWM signals logged at 50Hz. Matches Suspect C's alibi."
+    };
+
+    function inspectClue(key) {
+      const display = document.getElementById('clue-display');
+      display.textContent = CLUES[key];
+      display.classList.remove('hidden');
+    }
+
+    function accuse(suspect) {
+      const verdict = document.getElementById('verdict-display');
+      verdict.classList.remove('hidden');
+
+      if (suspect === 'A') {
+        verdict.className = "p-4 rounded font-mono text-xs bg-emerald-950 text-emerald-200 border-2 border-emerald-500";
+        verdict.innerHTML = "★ CASE SOLVED! EXCELLENT DEDUCTION! ★<br>Suspect A claimed he was outside checking pole sag calculations, but the badge access log placed him entering the server room 2 minutes before the exfiltration! Demonstrates the logic deduction powering Arya's mystery games.";
+      } else {
+        verdict.className = "p-4 rounded font-mono text-xs bg-red-950 text-red-200 border-2 border-red-500";
+        verdict.innerHTML = "INCORRECT DEDUCTION! Re-examine the badge and telemetry logs to find the false alibi.";
+      }
+    }
+  </script>
+
 </body>
 </html>
-

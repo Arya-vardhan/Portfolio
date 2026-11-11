@@ -14,6 +14,16 @@ window.toggleAudio = toggleAudio;
 window.openExamModal = openExamModal;
 window.closeExamModal = closeExamModal;
 
+window.handleElevatorClick = function(e) {
+  const track = document.getElementById('elevator-track');
+  if (!track) return;
+  const rect = track.getBoundingClientRect();
+  const clickY = e.clientY - rect.top;
+  const percent = Math.max(0, Math.min(1, clickY / rect.height));
+  const stopIndex = Math.round(percent * 9);
+  goToStop(stopIndex);
+};
+
 window.copyContact = function(text, btn) {
   playTypewriterClick();
   navigator.clipboard.writeText(text).then(() => {

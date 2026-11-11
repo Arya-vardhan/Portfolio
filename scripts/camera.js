@@ -1,5 +1,7 @@
 /* ==================== GSAP CAMERA CONTROLLER ==================== */
-import { gsap } from 'gsap';
+// Safe global reference to GSAP (works both with bundler and native browser CDN)
+const gsap = window.gsap || (typeof globalThis !== 'undefined' ? globalThis.gsap : null);
+
 import { playCameraSwoosh } from './audio.js';
 import { markStopVisited } from './tracker.js';
 
@@ -38,7 +40,7 @@ export function getCurrentStop() {
   return currentStop;
 }
 
-export function flyCameraTo(targetX, targetY, targetScale, duration = 1.0) {
+export function flyCameraTo(targetX, targetY, targetScale, duration = 0.85) {
   playCameraSwoosh();
   const vpW = viewportEl.clientWidth;
   const vpH = viewportEl.clientHeight;
@@ -46,17 +48,21 @@ export function flyCameraTo(targetX, targetY, targetScale, duration = 1.0) {
   const finalX = (vpW / 2) - (targetX * targetScale);
   const finalY = (vpH / 2) - (targetY * targetScale);
 
-  gsap.to(worldEl, {
-    x: finalX,
-    y: finalY,
-    scale: targetScale,
-    duration: duration,
-    ease: 'power3.out',
-    overwrite: 'auto'
-  });
+  if (gsap) {
+    gsap.to(worldEl, {
+      x: finalX,
+      y: finalY,
+      scale: targetScale,
+      duration: duration,
+      ease: 'power2.out',
+      overwrite: 'auto'
+    });
+  } else {
+    worldEl.style.transform = `translate(${finalX}px, ${finalY}px) scale(${targetScale})`;
+  }
 }
 
-export function goToStop(index, duration = 1.0) {
+export function goToStop(index, duration = 0.85) {
   if (index < 0) index = 0;
   if (index >= STOPS.length) index = STOPS.length - 1;
   currentStop = index;
@@ -72,6 +78,13 @@ export function goToStop(index, duration = 1.0) {
       btn.classList.add('text-[#a89880]');
     }
   });
+
+  // Update vertical elevator tracker if present
+  const elevatorThumb = document.getElementById('elevator-thumb');
+  if (elevatorThumb) {
+    const percent = (index / (STOPS.length - 1)) * 100;
+    elevatorThumb.style.top = `${percent}%`;
+  }
 
   const hint = document.getElementById('scroll-hint');
   if (hint && index > 0) hint.style.opacity = '0';
@@ -90,20 +103,38 @@ export function stepStop(dir) {
   goToStop(currentStop + dir);
 }
 
+/* -------------------------------------------------------------
+   SMOOTH WHEEL & TRACKPAD INTERACTION
+   Uses delta accumulator with decay so both mouse wheel and trackpad feel natural
+   ------------------------------------------------------------- */
 function setupWheel() {
-  let wheelCooldown = false;
+  let deltaAccumulator = 0;
+  let isThrottled = false;
+
   window.addEventListener('wheel', (e) => {
+    // If modal is open, let user scroll inside modal
     const modal = document.getElementById('evidence-modal');
     if (modal && modal.classList.contains('active')) return;
 
     e.preventDefault();
-    if (wheelCooldown) return;
 
-    if (Math.abs(e.deltaY) > 25) {
-      wheelCooldown = true;
-      if (e.deltaY > 0) stepStop(1);
-      else stepStop(-1);
-      setTimeout(() => { wheelCooldown = false; }, 600);
+    deltaAccumulator += e.deltaY;
+
+    if (isThrottled) return;
+
+    // Responsive threshold for mouse wheel vs trackpad
+    const THRESHOLD = 35;
+
+    if (deltaAccumulator > THRESHOLD) {
+      isThrottled = true;
+      deltaAccumulator = 0;
+      stepStop(1);
+      setTimeout(() => { isThrottled = false; }, 320);
+    } else if (deltaAccumulator < -THRESHOLD) {
+      isThrottled = true;
+      deltaAccumulator = 0;
+      stepStop(-1);
+      setTimeout(() => { isThrottled = false; }, 320);
     }
   }, { passive: false });
 }
@@ -113,10 +144,19 @@ function setupKeyboard() {
     const modal = document.getElementById('evidence-modal');
     if (modal && modal.classList.contains('active')) return;
 
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') stepStop(1);
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') stepStop(-1);
-    else if (e.key === 'Home') goToStop(0);
-    else if (e.key === 'End') goToStop(STOPS.length - 1);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      stepStop(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      stepStop(-1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goToStop(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goToStop(STOPS.length - 1);
+    }
   });
 }
 
@@ -131,15 +171,21 @@ function setupDrag() {
     worldEl.classList.add('dragging');
     startX = e.clientX;
     startY = e.clientY;
-    currentX = gsap.getProperty(worldEl, 'x');
-    currentY = gsap.getProperty(worldEl, 'y');
+    if (gsap) {
+      currentX = gsap.getProperty(worldEl, 'x');
+      currentY = gsap.getProperty(worldEl, 'y');
+    }
   });
 
   window.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
-    gsap.set(worldEl, { x: currentX + dx, y: currentY + dy });
+    if (gsap) {
+      gsap.set(worldEl, { x: currentX + dx, y: currentY + dy });
+    } else {
+      worldEl.style.transform = `translate(${currentX + dx}px, ${currentY + dy}px)`;
+    }
   });
 
   window.addEventListener('mouseup', () => {
@@ -151,22 +197,24 @@ function setupDrag() {
 }
 
 function setupTouch() {
-  let touchStartX, touchStartY;
+  let touchStartY;
+  let touchStartX;
+
   window.addEventListener('touchstart', (e) => {
     if (e.touches.length === 1 && !e.target.closest('button, a, input, textarea')) {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
     }
-  });
+  }, { passive: true });
+
   window.addEventListener('touchmove', (e) => {
-    if (e.touches.length === 1 && touchStartX !== undefined) {
+    if (e.touches.length === 1 && touchStartY !== undefined) {
       const dy = e.touches[0].clientY - touchStartY;
-      if (Math.abs(dy) > 40) {
+      if (Math.abs(dy) > 35) {
         if (dy < 0) stepStop(1);
         else stepStop(-1);
-        touchStartX = undefined;
+        touchStartY = undefined;
       }
     }
-  });
+  }, { passive: true });
 }
-
