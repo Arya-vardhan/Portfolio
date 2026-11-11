@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arya Vardhan Gelli — Autonomous Vehicle SWQ & Systems Engineer</title>
+  <meta name="description" content="Portfolio of Arya Vardhan Gelli. PE Autonomous Vehicle SWQ at Cognizant, Embedded Systems (Raspberry Pi, ESP32), and Cisco-Certified Network Security.">
+
+  <!-- Typography: IBM Plex Sans & IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+          colors: {
+            // Unslop "Ink" Neutral Ramp
+            ink: {
+              deepest: '#07080d',
+              bg: '#0b0d14',
+              card: '#11141c',
+              raised: '#1a1e28',
+              hover: '#222836',
+              hairline: 'rgba(238, 240, 245, 0.08)',
+              hairlineHover: 'rgba(238, 240, 245, 0.16)',
+              primary: '#eef0f5',
+              secondary: '#a3a9b8',
+              muted: '#7a8296',
+            },
+            // Accents: calibrated for the hardware & telemetry world
+            telemetry: {
+              green: '#4cc38a',
+              amber: '#f59e0b',
+              blue: '#38bdf8',
+              red: '#e5484d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Unslop Base Tokens & Reset */
+    :root {
+      color-scheme: dark;
+    }
+    body {
+      background-color: #0b0d14;
+      color: #eef0f5;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Hairline borders as specified by Unslop design tokens */
+    .hairline {
+      border: 1px solid rgba(238, 240, 245, 0.08);
+    }
+    .hairline-b {
+      border-bottom: 1px solid rgba(238, 240, 245, 0.08);
+    }
+    .hairline-t {
+      border-top: 1px solid rgba(238, 240, 245, 0.08);
+    }
+    .hairline-r {
+      border-right: 1px solid rgba(238, 240, 245, 0.08);
+    }
+    /* Subtle dot grid for engineering hardware feel, zero blur/glow */
+    .bg-grid-bench {
+      background-image: radial-gradient(rgba(238, 240, 245, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07080d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1a1e28;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2a3142;
+    }
+    /* Printable clean resume view */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .hairline {
+        border-color: #ddd !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-ink-bg text-ink-primary font-sans antialiased min-h-screen selection:bg-telemetry-green selection:text-ink-deepest">
+
+  <!-- TOP TELEMETRY STATUS BAR (Unslop Signature Detail) -->
+  <aside class="no-print w-full bg-ink-deepest hairline-b text-xs font-mono py-2 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-ink-muted">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 text-telemetry-green font-medium">
+          <span class="inline-block w-2 h-2 rounded-full bg-telemetry-green"></span>
+          SYS_ONLINE
+        </span>
+        <span class="text-ink-hairline">|</span>
+        <span>NODE: HYDERABAD_IN</span>
+        <span class="hidden md:inline text-ink-hairline">|</span>
+        <span class="hidden md:inline">ACTIVE_ROLE: PE AUTONOMOUS VEHICLE SWQ @ COGNIZANT</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hidden sm:inline">DEGREE: B.TECH ECE [2022–2025]</span>
+        <span class="text-ink-hairline">|</span>
+        <span id="system-time" class="text-ink-secondary tabular-nums">00:00:00 UTC</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVIGATION -->
+  <header class="no-print sticky top-0 z-40 bg-ink-bg/90 backdrop-blur-md hairline-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+      <!-- Identity -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-8 h-8 rounded bg-ink-card hairline flex items-center justify-center font-mono font-medium text-sm text-ink-primary group-hover:border-ink-hairlineHover transition-colors">
+          AG
+        </div>
+        <div>
+          <span class="block font-medium text-sm text-ink-primary tracking-tight">Arya Vardhan Gelli</span>
+          <span class="block font-mono text-[11px] text-ink-muted">Embedded &amp; AV Systems</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1 font-mono text-xs">
+        <a href="#experience" class="px-3 py-1.5 text-ink-secondary hover:text-ink-primary hover:bg-ink-raised rounded transition-colors">Experience</a>
+        <a href="#projects" class="px-3 py-1.5 text-ink-secondary hover:text-ink-primary hover:bg-ink-raised rounded transition-colors">Projects</a>
+        <a href="#skills" class="px-3 py-1.5 text-ink-secondary hover:text-ink-primary hover:bg-ink-raised rounded transition-colors">Technical Stack</a>
+        <a href="#certifications" class="px-3 py-1.5 text-ink-secondary hover:text-ink-primary hover:bg-ink-raised rounded transition-colors">Certifications</a>
+        <a href="#education" class="px-3 py-1.5 text-ink-secondary hover:text-ink-primary hover:bg-ink-raised rounded transition-colors">Education</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-2">
+        <a href="mailto:aryavardhan.gelli@outlook.com" class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded bg-ink-raised hairline text-xs font-mono text-ink-primary hover:bg-ink-hover hover:border-ink-hairlineHover transition-colors">
+          <svg class="w-3.5 h-3.5 text-telemetry-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <span>Contact</span>
+        </a>
+        <button onclick="window.print()" title="Print / Save Clean Resume" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-ink-primary text-ink-deepest text-xs font-mono font-medium hover:bg-white transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span class="hidden sm:inline">Export PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-10 space-y-24">
+
+    <!-- HERO SECTION: Asymmetric split, calm space, verified tokens -->
+    <section id="hero" class="pt-6 sm:pt-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        
+        <!-- Left: Statement & Action -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-ink-card hairline text-xs font-mono text-ink-secondary">
+            <span class="w-1.5 h-1.5 rounded-full bg-telemetry-green"></span>
+            <span>Autonomous Vehicle SWQ • Embedded Hardware • Network Security</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-ink-primary leading-[1.12]">
+            Engineering reliable systems for autonomous vehicle software quality and embedded hardware.
+          </h1>
+
+          <p class="text-base sm:text-lg text-ink-secondary leading-relaxed max-w-2xl">
+            I am a final-year Electronics and Communication Engineering graduate with hands-on expertise in autonomous system verification at <span class="text-ink-primary font-medium">Cognizant</span>, telecommunications OSP infrastructure design at <span class="text-ink-primary font-medium">CADSYS</span>, and hardware automation using Raspberry Pi and ESP32 microcontrollers.
+          </p>
+
+          <!-- Metrics / Facts Rack -->
+          <div class="grid grid-cols-3 gap-4 pt-4 border-t border-ink-hairline">
+            <div>
+              <div class="font-mono text-xl sm:text-2xl text-ink-primary font-medium tabular-nums">11+ Mos</div>
+              <div class="text-xs text-ink-muted mt-0.5">AV SWQ Experience</div>
+            </div>
+            <div>
+              <div class="font-mono text-xl sm:text-2xl text-ink-primary font-medium tabular-nums">4+ Systems</div>
+              <div class="text-xs text-ink-muted mt-0.5">Hardware IoT Builds</div>
+            </div>
+            <div>
+              <div class="font-mono text-xl sm:text-2xl text-telemetry-green font-medium tabular-nums">Cisco</div>
+              <div class="text-xs text-ink-muted mt-0.5">Certified NetSec Analyst</div>
+            </div>
+          </div>
+
+          <!-- Direct CTA & Contact Links -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <a href="#projects" class="px-5 py-2.5 rounded bg-ink-primary text-ink-deepest text-sm font-medium hover:bg-white transition-colors flex items-center gap-2">
+              <span>Inspect Hardware &amp; Projects</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </a>
+            <div class="flex items-center gap-2">
+              <button onclick="copyToClipboard('aryavardhan.gelli@outlook.com', this)" class="px-3.5 py-2.5 rounded bg-ink-card hairline text-xs font-mono text-ink-secondary hover:text-ink-primary hover:border-ink-hairlineHover transition-colors flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-telemetry-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                <span class="copy-label">Copy Email</span>
+              </button>
+              <a href="https://www.linkedin.com/in/gelli-arya-vardhan/" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded bg-ink-card hairline text-ink-secondary hover:text-ink-primary hover:border-ink-hairlineHover transition-colors" title="LinkedIn Profile">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+              <a href="https://github.com/Arya-vardhan" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded bg-ink-card hairline text-ink-secondary hover:text-ink-primary hover:border-ink-hairlineHover transition-colors" title="GitHub Profile">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Real Engineering System Monitor (Moment of Craft) -->
+        <div class="lg:col-span-5 bg-ink-card rounded-lg hairline p-5 space-y-4 font-mono text-xs shadow-2xl">
+          <div class="flex items-center justify-between pb-3 hairline-b">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-telemetry-green animate-pulse"></span>
+              <span class="font-medium text-ink-primary">TELEM_CONSOLE://HYD_NODE</span>
+            </div>
+            <span class="text-ink-muted">LOG_REV: 2026.11</span>
+          </div>
+
+          <!-- Diagnostic Telemetry Matrix -->
+          <div class="space-y-2 text-[11px]">
+            <div class="flex justify-between py-1 px-2 rounded bg-ink-deepest hairline">
+              <span class="text-ink-muted">CLIENT_DOMAIN</span>
+              <span class="text-ink-primary">AUTONOMOUS_VEHICLE_SWQ</span>
+            </div>
+            <div class="flex justify-between py-1 px-2 rounded bg-ink-deepest hairline">
+              <span class="text-ink-muted">SYS_VERIFICATION</span>
+              <span class="text-telemetry-green">HD_MAP_ACCURACY_PASS</span>
+            </div>
+            <div class="flex justify-between py-1 px-2 rounded bg-ink-deepest hairline">
+              <span class="text-ink-muted">CORE_CONTROLLER</span>
+              <span class="text-ink-primary">RASPBERRY_PI_4B / ESP32</span>
+            </div>
+            <div class="flex justify-between py-1 px-2 rounded bg-ink-deepest hairline">
+              <span class="text-ink-muted">OSP_CAD_SUITE</span>
+              <span class="text-ink-primary">ARAMIS-DT // KATAPAULT</span>
+            </div>
+            <div class="flex justify-between py-1 px-2 rounded bg-ink-deepest hairline">
+              <span class="text-ink-muted">SECURITY_LEDGER</span>
+              <span class="text-telemetry-amber">CISCO_NETACAD_VERIFIED</span>
+            </div>
+          </div>
+
+          <!-- Simulated Live Log Window -->
+          <div class="pt-2">
+            <div class="text-[10px] uppercase text-ink-muted mb-1 tracking-wider">Live System Stream</div>
+            <div class="h-28 overflow-hidden rounded bg-ink-deepest hairline p-2.5 text-[10px] space-y-1 font-mono leading-tight text-ink-secondary" id="console-stream">
+              <div><span class="text-ink-muted">[11:34:01]</span> <span class="text-telemetry-green">INIT</span> Kernel diagnostics loaded successfully</div>
+              <div><span class="text-ink-muted">[11:34:02]</span> <span class="text-ink-primary">AV_SWQ</span> Parsing spatial mapping telemetry matrix...</div>
+              <div><span class="text-ink-muted">[11:34:03]</span> <span class="text-telemetry-green">VALID</span> Zero coordinate deviation detected (OK)</div>
+              <div><span class="text-ink-muted">[11:34:04]</span> <span class="text-telemetry-amber">RVM_BOT</span> Proximity IR &amp; ultrasonic sensors ready</div>
+              <div><span class="text-ink-muted">[11:34:05]</span> <span class="text-ink-primary">NETSEC</span> Packet routing table inspection complete</div>
+            </div>
+          </div>
+
+          <!-- Direct Status Callout -->
+          <div class="p-2.5 rounded bg-ink-raised hairline flex items-center justify-between text-[11px]">
+            <span class="text-ink-muted">Status: Open for roles in AV / Embedded / Security</span>
+            <a href="#contact" class="text-telemetry-green hover:underline">Reach Out →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WORK EXPERIENCE: Clear technical hierarchy, exact timeline -->
+    <section id="experience" class="space-y-6">
+      <div class="flex items-baseline justify-between border-b border-ink-hairline pb-3">
+        <div>
+          <h2 class="text-xl font-medium text-ink-primary tracking-tight">Work Experience</h2>
+          <p class="text-xs font-mono text-ink-muted mt-1">Industrial roles in autonomous vehicle software quality, telecom design, and automation</p>
+        </div>
+        <span class="font-mono text-xs text-ink-muted">03 Positions</span>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- Role 1: Cognizant -->
+        <article class="p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-telemetry-green"></span>
+                <h3 class="text-base font-medium text-ink-primary">PE - Autonomous Vehicle SWQ (Software Quality)</h3>
+              </div>
+              <p class="text-sm text-ink-secondary mt-0.5">Cognizant • Hyderabad, Telangana, India</p>
+            </div>
+            <div class="font-mono text-xs text-ink-muted bg-ink-deepest px-2.5 py-1 rounded hairline self-start sm:self-auto">
+              January 2026 – Present <span class="text-telemetry-green font-medium">(11 mos)</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-ink-secondary leading-relaxed">
+            Responsible for analyzing autonomous vehicle system behaviors for enterprise client engagements. Operating specialized mapping verification tools, performing regression validation, and conducting system safety and software quality evaluations across sensor and routing telemetry datasets.
+          </p>
+
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Autonomous Vehicle SWQ</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Mapping Tools</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">System Behavior Analysis</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Quality Assurance</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Python</span>
+          </div>
+        </article>
+
+        <!-- Role 2: CADSYS -->
+        <article class="p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-ink-muted"></span>
+                <h3 class="text-base font-medium text-ink-primary">Junior Design Engineer</h3>
+              </div>
+              <p class="text-sm text-ink-secondary mt-0.5">CADSYS (India) Limited • Hyderabad, Telangana, India</p>
+            </div>
+            <div class="font-mono text-xs text-ink-muted bg-ink-deepest px-2.5 py-1 rounded hairline self-start sm:self-auto">
+              April 2025 – November 2025 <span class="text-ink-secondary">(8 mos)</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-ink-secondary leading-relaxed">
+            Delivered precision Outside Plant (OSP) telecommunications infrastructure designs. Worked extensively on engineering drafting, terminal address verifications, structural sag validation, and optical fiber route planning utilizing industry CAD suites including Aramis-DT and Katapault.
+          </p>
+
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Aramis-DT</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">OSP Fiber Routing</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Sag Validation</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Katapault Job Planning</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Work Prints Drafting</span>
+          </div>
+        </article>
+
+        <!-- Role 3: Vishnuspire -->
+        <article class="p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-ink-muted"></span>
+                <h3 class="text-base font-medium text-ink-primary">Product Development Intern</h3>
+              </div>
+              <p class="text-sm text-ink-secondary mt-0.5">Vishnuspire • Bhimavaram, Andhra Pradesh, India</p>
+            </div>
+            <div class="font-mono text-xs text-ink-muted bg-ink-deepest px-2.5 py-1 rounded hairline self-start sm:self-auto">
+              June 2024 – August 2024 <span class="text-ink-secondary">(3 mos)</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-ink-secondary leading-relaxed">
+            Engineered and prototyped an automated Reverse Vending Machine (RVM) using a Raspberry Pi controller for municipal plastic bottle sorting and recycling. Implemented sensor-based item detection, automated motorized gate actuation, and localized telemetry storage.
+          </p>
+
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Raspberry Pi</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Hardware Interfacing</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Sensors &amp; Actuators</span>
+            <span class="px-2 py-1 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Python Automation</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- PROJECTS: Hardware & Systems Rack with Technical Details -->
+    <section id="projects" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-ink-hairline pb-3 gap-2">
+        <div>
+          <h2 class="text-xl font-medium text-ink-primary tracking-tight">Engineering Projects</h2>
+          <p class="text-xs font-mono text-ink-muted mt-1">Embedded hardware builds, IoT sensor networks, and interactive platforms</p>
+        </div>
+        
+        <!-- Filter Tabs -->
+        <div class="flex items-center gap-1 font-mono text-xs bg-ink-card p-1 rounded hairline self-start sm:self-auto">
+          <button onclick="filterProjects('all', this)" class="project-filter-btn px-2.5 py-1 rounded bg-ink-raised text-ink-primary transition-colors">All</button>
+          <button onclick="filterProjects('hardware', this)" class="project-filter-btn px-2.5 py-1 rounded text-ink-muted hover:text-ink-primary transition-colors">Hardware &amp; IoT</button>
+          <button onclick="filterProjects('software', this)" class="project-filter-btn px-2.5 py-1 rounded text-ink-muted hover:text-ink-primary transition-colors">Software &amp; Web</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">
+
+        <!-- Project 1: Reverse Vending Machine -->
+        <div class="project-card hardware p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span class="text-telemetry-green font-medium">HARDWARE_01</span>
+              <span>Jun 2024 – Aug 2024</span>
+            </div>
+            <h3 class="text-lg font-medium text-ink-primary">Reverse Vending Machine (RVM)</h3>
+            <p class="text-sm text-ink-secondary leading-relaxed">
+              Standalone automation station running on Raspberry Pi to collect, detect, and sort plastic bottles. Integrated proximity and ultrasonic sensors to verify bottle placement and trigger servo-actuated sorting chutes for environmental waste management.
+            </p>
+            <div class="p-3 rounded bg-ink-deepest hairline font-mono text-xs space-y-1 text-ink-muted">
+              <div class="flex justify-between"><span>Microcontroller:</span> <span class="text-ink-primary">Raspberry Pi 4B</span></div>
+              <div class="flex justify-between"><span>Sensor Peripherals:</span> <span class="text-ink-primary">Ultrasonic, IR Proximity</span></div>
+              <div class="flex justify-between"><span>Actuation:</span> <span class="text-ink-primary">Servo Sorting Gate</span></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-2 border-t border-ink-hairline">
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Raspberry Pi</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Python</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">GPIO Interfacing</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">System Automation</span>
+          </div>
+        </div>
+
+        <!-- Project 2: IoT Weather Monitoring -->
+        <div class="project-card hardware p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span class="text-telemetry-green font-medium">HARDWARE_02</span>
+              <span>Sep 2023</span>
+            </div>
+            <h3 class="text-lg font-medium text-ink-primary">IoT Weather Telemetry Station</h3>
+            <p class="text-sm text-ink-secondary leading-relaxed">
+              Real-time environmental telemetry platform powered by an ESP32 microcontroller. Acquired temperature, humidity, and barometric pressure data via I2C sensor bus and transmitted telemetry over Wi-Fi with low power sleep cycles.
+            </p>
+            <div class="p-3 rounded bg-ink-deepest hairline font-mono text-xs space-y-1 text-ink-muted">
+              <div class="flex justify-between"><span>SoC:</span> <span class="text-ink-primary">ESP32-WROOM-32</span></div>
+              <div class="flex justify-between"><span>Bus Protocol:</span> <span class="text-ink-primary">I2C / SPI Sensors</span></div>
+              <div class="flex justify-between"><span>Networking:</span> <span class="text-ink-primary">Wi-Fi Telemetry Stream</span></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-2 border-t border-ink-hairline">
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">ESP32</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Embedded C / Arduino</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">IoT Protocols</span>
+          </div>
+        </div>
+
+        <!-- Project 3: Health and Vitals Monitoring -->
+        <div class="project-card hardware p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span class="text-telemetry-green font-medium">HARDWARE_03</span>
+              <span>May 2023 – Jul 2023</span>
+            </div>
+            <h3 class="text-lg font-medium text-ink-primary">Health &amp; Vitals Telemetry Node</h3>
+            <p class="text-sm text-ink-secondary leading-relaxed">
+              Biometric sensor acquisition system designed to sample, condition, and monitor physiological vitals (pulse rate and temperature). Implemented filtering algorithms to clean noisy sensor inputs before presenting readings on local OLED and serial logging streams.
+            </p>
+            <div class="p-3 rounded bg-ink-deepest hairline font-mono text-xs space-y-1 text-ink-muted">
+              <div class="flex justify-between"><span>Sensors:</span> <span class="text-ink-primary">Pulse Oximetry / Temp</span></div>
+              <div class="flex justify-between"><span>Processing:</span> <span class="text-ink-primary">Arduino / ADC Filtering</span></div>
+              <div class="flex justify-between"><span>Output:</span> <span class="text-ink-primary">Serial Telemetry &amp; Display</span></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-2 border-t border-ink-hairline">
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Arduino</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Biometric Sensors</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Signal Conditioning</span>
+          </div>
+        </div>
+
+        <!-- Project 4: Raspberry Pi TTS -->
+        <div class="project-card hardware p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span class="text-telemetry-green font-medium">HARDWARE_04</span>
+              <span>Sep 2023 – Jan 2024</span>
+            </div>
+            <h3 class="text-lg font-medium text-ink-primary">Real-Time Text-to-Speech Engine</h3>
+            <p class="text-sm text-ink-secondary leading-relaxed">
+              Standalone embedded assistive device utilizing a Raspberry Pi for edge text-to-speech audio synthesis. Optimized speech synthesis pipelines for low-latency processing without external cloud dependencies.
+            </p>
+            <div class="p-3 rounded bg-ink-deepest hairline font-mono text-xs space-y-1 text-ink-muted">
+              <div class="flex justify-between"><span>Host Machine:</span> <span class="text-ink-primary">Raspberry Pi (Linux OS)</span></div>
+              <div class="flex justify-between"><span>Audio Pipeline:</span> <span class="text-ink-primary">ALSA / eSpeak Engine</span></div>
+              <div class="flex justify-between"><span>Execution:</span> <span class="text-ink-primary">Fully Offline Edge Processing</span></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-2 border-t border-ink-hairline">
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Raspberry Pi</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Linux Audio</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Python</span>
+          </div>
+        </div>
+
+        <!-- Project 5: Mini-Games-Mania -->
+        <div class="project-card software p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span class="text-telemetry-amber font-medium">SOFTWARE_01</span>
+              <span>Active Project</span>
+            </div>
+            <h3 class="text-lg font-medium text-ink-primary">Mini-Games-Mania</h3>
+            <p class="text-sm text-ink-secondary leading-relaxed">
+              Interactive web platform featuring casual party and multiplayer mini-games engineered to spark conversation among friends. Built using responsive web architecture and cloud state management.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-2 border-t border-ink-hairline">
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Web Platform</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Firebase Studio</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Vercel Deployment</span>
+          </div>
+        </div>
+
+        <!-- Project 6: Bored? Mystery Solver -->
+        <div class="project-card software p-6 rounded-lg bg-ink-card hairline hover:border-ink-hairlineHover transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span class="text-telemetry-amber font-medium">SOFTWARE_02</span>
+              <span>Active Project</span>
+            </div>
+            <h3 class="text-lg font-medium text-ink-primary">Bored? Mystery Solving Game</h3>
+            <p class="text-sm text-ink-secondary leading-relaxed">
+              Deduction game providing interactive case files, evidence tracking, and reasoning mechanics for players to solve mystery narratives through clue verification.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-2 border-t border-ink-hairline">
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Deduction Logic</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Frontend State</span>
+            <span class="px-2 py-0.5 rounded bg-ink-deepest hairline text-[11px] font-mono text-ink-secondary">Interactive Storytelling</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TECHNICAL STACK & PROFICIENCIES -->
+    <section id="skills" class="space-y-6">
+      <div class="border-b border-ink-hairline pb-3">
+        <h2 class="text-xl font-medium text-ink-primary tracking-tight">Technical Stack &amp; Core Disciplines</h2>
+        <p class="text-xs font-mono text-ink-muted mt-1">Grounded capabilities across hardware prototyping, automotive SWQ, network security, and CAD</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Col 1: Hardware & Embedded -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-4">
+          <div class="flex items-center gap-2 font-mono text-xs text-ink-primary pb-2 hairline-b">
+            <svg class="w-4 h-4 text-telemetry-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+            <span>Embedded &amp; IoT</span>
+          </div>
+          <ul class="space-y-2 text-sm text-ink-secondary">
+            <li class="flex items-center justify-between"><span>Raspberry Pi 4 / Linux</span> <span class="text-xs font-mono text-ink-muted">Advanced</span></li>
+            <li class="flex items-center justify-between"><span>ESP32 SoC (Wi-Fi/BLE)</span> <span class="text-xs font-mono text-ink-muted">Proficient</span></li>
+            <li class="flex items-center justify-between"><span>Arduino Microcontrollers</span> <span class="text-xs font-mono text-ink-muted">Proficient</span></li>
+            <li class="flex items-center justify-between"><span>Sensors &amp; Actuators</span> <span class="text-xs font-mono text-ink-muted">I2C / SPI / GPIO</span></li>
+            <li class="flex items-center justify-between"><span>Hardware Prototyping</span> <span class="text-xs font-mono text-ink-muted">Lab Bench</span></li>
+          </ul>
+        </div>
+
+        <!-- Col 2: AV & Quality Verification -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-4">
+          <div class="flex items-center gap-2 font-mono text-xs text-ink-primary pb-2 hairline-b">
+            <svg class="w-4 h-4 text-telemetry-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>AV SWQ &amp; Systems</span>
+          </div>
+          <ul class="space-y-2 text-sm text-ink-secondary">
+            <li class="flex items-center justify-between"><span>Autonomous SW Quality</span> <span class="text-xs font-mono text-ink-muted">Cognizant</span></li>
+            <li class="flex items-center justify-between"><span>System Behavior Analysis</span> <span class="text-xs font-mono text-ink-muted">Core</span></li>
+            <li class="flex items-center justify-between"><span>HD Mapping Verification</span> <span class="text-xs font-mono text-ink-muted">Specialized</span></li>
+            <li class="flex items-center justify-between"><span>Quality Regression Suites</span> <span class="text-xs font-mono text-ink-muted">Standard</span></li>
+            <li class="flex items-center justify-between"><span>System Validation</span> <span class="text-xs font-mono text-ink-muted">Production</span></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Telecom & OSP Engineering -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-4">
+          <div class="flex items-center gap-2 font-mono text-xs text-ink-primary pb-2 hairline-b">
+            <svg class="w-4 h-4 text-telemetry-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>OSP &amp; Telecom CAD</span>
+          </div>
+          <ul class="space-y-2 text-sm text-ink-secondary">
+            <li class="flex items-center justify-between"><span>Aramis-DT CAD Suite</span> <span class="text-xs font-mono text-ink-muted">Experienced</span></li>
+            <li class="flex items-center justify-between"><span>Katapault Job Planning</span> <span class="text-xs font-mono text-ink-muted">Field / Plan</span></li>
+            <li class="flex items-center justify-between"><span>Optical Fiber Routing</span> <span class="text-xs font-mono text-ink-muted">OSP Design</span></li>
+            <li class="flex items-center justify-between"><span>Structural Sag Validation</span> <span class="text-xs font-mono text-ink-muted">Calculations</span></li>
+            <li class="flex items-center justify-between"><span>Work Prints Drafting</span> <span class="text-xs font-mono text-ink-muted">Engineering</span></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Network Security & Code -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-4">
+          <div class="flex items-center gap-2 font-mono text-xs text-ink-primary pb-2 hairline-b">
+            <svg class="w-4 h-4 text-telemetry-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <span>Network &amp; Security</span>
+          </div>
+          <ul class="space-y-2 text-sm text-ink-secondary">
+            <li class="flex items-center justify-between"><span>Networking Basics (IP/TCP)</span> <span class="text-xs font-mono text-ink-muted">Cisco NetAcad</span></li>
+            <li class="flex items-center justify-between"><span>Cybersecurity Analysis</span> <span class="text-xs font-mono text-ink-muted">Cisco Analyst</span></li>
+            <li class="flex items-center justify-between"><span>Linux Environment</span> <span class="text-xs font-mono text-ink-muted">Daily Driver</span></li>
+            <li class="flex items-center justify-between"><span>Python Scripting</span> <span class="text-xs font-mono text-ink-muted">Automation</span></li>
+            <li class="flex items-center justify-between"><span>SQL &amp; Git Versioning</span> <span class="text-xs font-mono text-ink-muted">Foundations</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS LEDGER: Cisco NetAcad & Security Verified -->
+    <section id="certifications" class="space-y-6">
+      <div class="flex items-baseline justify-between border-b border-ink-hairline pb-3">
+        <div>
+          <h2 class="text-xl font-medium text-ink-primary tracking-tight">Verified Certifications</h2>
+          <p class="text-xs font-mono text-ink-muted mt-1">Accredited security, networking, and systems administration coursework</p>
+        </div>
+        <span class="font-mono text-xs text-ink-muted">04 Credentials</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Cert 1: Cisco Networking Basics -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs text-telemetry-green font-medium">CISCO NETACAD</span>
+            <span class="font-mono text-xs text-ink-muted">Verified</span>
+          </div>
+          <h3 class="text-base font-medium text-ink-primary">Networking Basics</h3>
+          <p class="text-sm text-ink-secondary">
+            Network configuration, troubleshooting protocols, IPv4/IPv6 subnetting, switches, and IP packet addressing foundations.
+          </p>
+        </div>
+
+        <!-- Cert 2: Cisco Junior Cybersecurity Analyst -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs text-telemetry-green font-medium">CISCO NETACAD</span>
+            <span class="font-mono text-xs text-ink-muted">Verified</span>
+          </div>
+          <h3 class="text-base font-medium text-ink-primary">Junior Cybersecurity Analyst Career Path</h3>
+          <p class="text-sm text-ink-secondary">
+            Vulnerability analysis, threat intelligence fundamentals, host defense, security monitoring, and incident mitigation strategies.
+          </p>
+        </div>
+
+        <!-- Cert 3: Cisco IT Essentials -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs text-telemetry-green font-medium">CISCO NETACAD</span>
+            <span class="font-mono text-xs text-ink-muted">Verified</span>
+          </div>
+          <h3 class="text-base font-medium text-ink-primary">IT Essentials: PC Hardware and Software</h3>
+          <p class="text-sm text-ink-secondary">
+            Hardware architecture diagnostics, operating systems installation, component troubleshooting, and system integration.
+          </p>
+        </div>
+
+        <!-- Cert 4: Ethical Hacking -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs text-telemetry-amber font-medium">UDEMY</span>
+            <span class="font-mono text-xs text-ink-muted">Completed</span>
+          </div>
+          <h3 class="text-base font-medium text-ink-primary">Ethical Hacking Course</h3>
+          <p class="text-sm text-ink-secondary">
+            Fundamentals of penetration testing, network packet inspection, attack vectors, and reconnaissance methodology.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EDUCATION & ACHIEVEMENTS: Clean chronological ledger -->
+    <section id="education" class="space-y-6">
+      <div class="border-b border-ink-hairline pb-3">
+        <h2 class="text-xl font-medium text-ink-primary tracking-tight">Education &amp; Achievements</h2>
+        <p class="text-xs font-mono text-ink-muted mt-1">Academic records in Electronics and Communication Engineering</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Degree: B.Tech -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-2">
+          <span class="font-mono text-xs text-telemetry-green font-medium">2022 – 2025</span>
+          <h3 class="text-base font-medium text-ink-primary">B.Tech in Electronics &amp; Communication</h3>
+          <p class="text-sm text-ink-secondary">Vishnu Institute of Technology (Autonomous)</p>
+          <p class="text-xs text-ink-muted pt-2 border-t border-ink-hairline">
+            Specialized in embedded systems, microprocessors, digital signal routing, and telemetry architectures.
+          </p>
+        </div>
+
+        <!-- Diploma -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-2">
+          <span class="font-mono text-xs text-ink-muted">2019 – 2022</span>
+          <h3 class="text-base font-medium text-ink-primary">Diploma in ECE</h3>
+          <p class="text-sm text-ink-secondary">Smt. B. Seetha Polytechnic</p>
+          <p class="text-xs text-ink-muted pt-2 border-t border-ink-hairline">
+            Rigorous fundamentals in analog &amp; digital circuits, instrumentation, and microcontroller programming.
+          </p>
+        </div>
+
+        <!-- Honors / Extra -->
+        <div class="p-5 rounded-lg bg-ink-card hairline space-y-2">
+          <span class="font-mono text-xs text-telemetry-amber font-medium">ACHIEVEMENTS</span>
+          <h3 class="text-base font-medium text-ink-primary">Competitions &amp; Leadership</h3>
+          <ul class="text-xs text-ink-secondary space-y-1.5 pt-1">
+            <li class="flex items-start gap-1.5">
+              <span class="text-telemetry-green mt-0.5">•</span>
+              <span><strong>2nd Position:</strong> Inter-College Robo Soccer tournament at Vishnu Institute of Technology.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <span class="text-telemetry-green mt-0.5">•</span>
+              <span><strong>Co-Organizer:</strong> Project Expo at college annual engineering festival.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT / COMMAND DISPATCH -->
+    <section id="contact" class="p-8 rounded-lg bg-ink-card hairline space-y-6">
+      <div class="max-w-2xl space-y-2">
+        <div class="inline-flex items-center gap-2 text-xs font-mono text-telemetry-green">
+          <span class="w-1.5 h-1.5 rounded-full bg-telemetry-green"></span>
+          <span>COMMUNICATION_LINK</span>
+        </div>
+        <h2 class="text-2xl font-medium text-ink-primary tracking-tight">Initiate Technical Inquiry</h2>
+        <p class="text-sm text-ink-secondary leading-relaxed">
+          I am actively exploring career opportunities across Autonomous Vehicle Software Quality, Embedded Hardware &amp; IoT Engineering, and Network Defense. Feel free to connect directly.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+
+        <!-- Direct Email -->
+        <div class="p-4 rounded bg-ink-deepest hairline space-y-1">
+          <div class="text-[11px] font-mono text-ink-muted uppercase">Primary Email</div>
+          <div class="text-sm font-mono text-ink-primary truncate" title="aryavardhan.gelli@outlook.com">aryavardhan.gelli@outlook.com</div>
+          <button onclick="copyToClipboard('aryavardhan.gelli@outlook.com', this)" class="text-[11px] font-mono text-telemetry-green hover:underline pt-1 block">
+            Copy Address
+          </button>
+        </div>
+
+        <!-- Secondary Email -->
+        <div class="p-4 rounded bg-ink-deepest hairline space-y-1">
+          <div class="text-[11px] font-mono text-ink-muted uppercase">Alternate Email</div>
+          <div class="text-sm font-mono text-ink-primary truncate" title="aryahackasol55@gmail.com">aryahackasol55@gmail.com</div>
+          <button onclick="copyToClipboard('aryahackasol55@gmail.com', this)" class="text-[11px] font-mono text-telemetry-green hover:underline pt-1 block">
+            Copy Address
+          </button>
+        </div>
+
+        <!-- Phone -->
+        <div class="p-4 rounded bg-ink-deepest hairline space-y-1">
+          <div class="text-[11px] font-mono text-ink-muted uppercase">Telephone / WhatsApp</div>
+          <div class="text-sm font-mono text-ink-primary">+91 9381074100</div>
+          <a href="tel:+919381074100" class="text-[11px] font-mono text-telemetry-green hover:underline pt-1 block">
+            Call Direct
+          </a>
+        </div>
+
+        <!-- Location -->
+        <div class="p-4 rounded bg-ink-deepest hairline space-y-1">
+          <div class="text-[11px] font-mono text-ink-muted uppercase">Base Location</div>
+          <div class="text-sm font-mono text-ink-primary">Hyderabad, India</div>
+          <span class="text-[11px] font-mono text-ink-muted pt-1 block">Telangana, 500081</span>
+        </div>
+
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-ink-hairline">
+        <div class="flex items-center gap-4 text-xs font-mono text-ink-muted">
+          <a href="https://www.linkedin.com/in/gelli-arya-vardhan/" target="_blank" rel="noopener noreferrer" class="text-ink-secondary hover:text-ink-primary transition-colors">LinkedIn Profile ↗</a>
+          <span>•</span>
+          <a href="https://github.com/Arya-vardhan" target="_blank" rel="noopener noreferrer" class="text-ink-secondary hover:text-ink-primary transition-colors">GitHub Repositories ↗</a>
+          <span>•</span>
+          <a href="https://arya-vardhan.github.io" target="_blank" rel="noopener noreferrer" class="text-ink-secondary hover:text-ink-primary transition-colors">arya-vardhan.github.io ↗</a>
+        </div>
+        <div class="text-xs font-mono text-ink-muted">
+          Designed with <span class="text-ink-secondary">Unslop</span> methodology • Zero template bloat
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="no-print fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200 bg-ink-raised hairline text-xs font-mono text-ink-primary py-2 px-4 rounded shadow-2xl flex items-center gap-2">
+    <span class="w-1.5 h-1.5 rounded-full bg-telemetry-green"></span>
+    <span id="toast-text">Copied to clipboard</span>
+  </div>
+
+  <!-- CLIENT SCRIPTS -->
+  <script>
+    // System time ticker (UTC)
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toISOString().slice(11, 19) + ' UTC';
+      const el = document.getElementById('system-time');
+      if (el) el.textContent = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Clipboard copy with visual toast
+    function copyToClipboard(text, triggerEl) {
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+        toastText.textContent = `Copied "${text}" to clipboard`;
+        toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+        
+        setTimeout(() => {
+          toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+        }, 2600);
+      });
+    }
+
+    // Filter projects rack
+    function filterProjects(category, btn) {
+      const cards = document.querySelectorAll('.project-card');
+      const buttons = document.querySelectorAll('.project-filter-btn');
+
+      buttons.forEach(b => {
+        b.classList.remove('bg-ink-raised', 'text-ink-primary');
+        b.classList.add('text-ink-muted');
+      });
+      btn.classList.add('bg-ink-raised', 'text-ink-primary');
+      btn.classList.remove('text-ink-muted');
+
+      cards.forEach(card => {
+        if (category === 'all' || card.classList.contains(category)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Interactive simulated live log cycle for moment of craft
+    const logMessages = [
+      "AV_SWQ: Validated 1,480 frame sequences across test corridors",
+      "RVM_TELEMETRY: Optical sensor threshold set to 850nm",
+      "NETSEC: Cisco threat signature audit passed without warnings",
+      "OSP_ARAMIS: Sag and tension calculations aligned with local spec",
+      "ESP32_NODE: Wi-Fi RSSI at -48 dBm with 0% packet dropped",
+      "SYS_HEARTBEAT: Memory consumption at 14.2% nominal"
+    ];
+    let logIndex = 0;
+    setInterval(() => {
+      const stream = document.getElementById('console-stream');
+      if (stream) {
+        const now = new Date();
+        const time = now.toTimeString().slice(0, 8);
+        const newEntry = document.createElement('div');
+        newEntry.innerHTML = `<span class="text-ink-muted">[${time}]</span> <span class="text-telemetry-green">DIAG</span> ${logMessages[logIndex % logMessages.length]}`;
+        stream.appendChild(newEntry);
+        stream.scrollTop = stream.scrollHeight;
+        logIndex++;
+      }
+    }, 4500);
+  </script>
+</body>
+</html>
+
