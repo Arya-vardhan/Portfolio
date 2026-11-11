@@ -1,50 +1,87 @@
-# Arya Vardhan Gelli — Engineering Portfolio
+# Arya Vardhan Gelli — The Investigation Board Portfolio
 
-A high-performance, precision portfolio website crafted with the **Unslop** design philosophy for **Arya Vardhan Gelli** (PE Autonomous Vehicle SWQ @ Cognizant, Embedded Systems, Network Security).
+An interactive, cinematic **Detective Investigation Board Portfolio** crafted for **Arya Vardhan Gelli** (PE Autonomous Vehicle SWQ @ Cognizant, Embedded Systems, Network Security).
 
----
-
-## Design System & Unslop Implementation
-
-Designed strictly following the [Unslop](https://github.com/heydamir/unslop) system to eliminate generic AI/template tells:
-
-- **Zero Slop Tells**: No purple gradients, no blurry background glowing blobs, no floating emoji badges (`✨`, `🚀`), and no hyperbolic copy.
-- **World & Palette**: Engineered with the **Ink Neutral Ramp** (`#07080d`, `#0b0d14`, `#11141c`, `#1a1e28`) matched to a hardware lab bench and autonomous vehicle telematics workstation.
-- **Accents**: High-contrast, deliberate telemetry signals (phosphor green `#4cc38a` and amber `#f59e0b`) covering $< 3\%$ of the interface.
-- **Typography**: Dual-family pairing with **IBM Plex Sans** (for calm, precise editorial hierarchy) and **IBM Plex Mono** (for technical parameters, tabular numbers, and diagnostic feeds).
-- **Moments of Craft**: 
-  - Live simulated **Telemetry & Systems Diagnostic Terminal** with real-time log ingestion.
-  - Interactive **Hardware Project Rack** (Reverse Vending Machine with Raspberry Pi, ESP32 IoT Node, Health Biometrics).
-  - Verifiable **Cisco NetAcad Certification Ledger** and Outside Plant (OSP) Engineering credentials.
+Modeled on a classic detective conspiracy pinboard with an interactive corkboard, dynamic red yarn string network, 3D ambient dust motes (Three.js), cinematic zoom-and-pan camera navigation, and modular case file dossiers.
 
 ---
 
-## Local Preview
+## Architecture & Project Structure
 
-You can preview the portfolio using any local web server:
+The project has been modularized into separate stylesheets, ES6 JavaScript modules, dedicated case dossier pages, and a Vite production build pipeline:
 
-```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node.js
-npx serve .
+```
+Portfolio/
+├── index.html                  # Main Investigation Board Entry Point
+├── package.json                # Dependencies (Vite, Three.js, GSAP)
+├── vite.config.js              # Multi-page build configuration
+│
+├── pages/                      # Dedicated In-Depth Case Files
+│   ├── cognizant.html          # Case 01: Cognizant AV SWQ (Corridor Logs & Tools)
+│   ├── cadsys.html             # Case 02: CADSYS OSP Telecom (Blueprints & Sag Calcs)
+│   ├── rvm.html                # Case 03: Vishnuspire Reverse Vending Machine (RPi GPIO)
+│   ├── cybersecurity.html      # Case 04: Cisco NetAcad & Forensics Ledger
+│   ├── hardware-lab.html       # Case 05: Embedded IoT Bench (ESP32, Health, TTS)
+│   ├── mystery-game.html       # Case 06: "Bored?" Mystery Engine & Mini-Games
+│   ├── academics.html          # Case 07: Academic & Robotics Competition Archive
+│   └── resume.html             # Official Classified Resume / PDF Export View
+│
+├── styles/                     # Modular CSS
+│   ├── base.css                # Typography & global resets
+│   ├── corkboard.css           # Cork texture, lighting, pushpins & tape
+│   ├── dossier.css             # Manila folders, typewriter styling, blueprints
+│   ├── hud.css                 # Detective radar, flashlight & audio controls
+│   └── modal.css               # Evidence examination lightbox
+│
+└── scripts/                    # Modular ES6 JavaScript
+    ├── main.js                 # App coordinator & event orchestration
+    ├── camera.js               # GSAP smooth camera glide & stop coordinates
+    ├── yarn.js                 # HTML5 Canvas 2D red thread catenary physics
+    ├── torch.js                # Dynamic flashlight / desk lamp cursor tracking
+    ├── audio.js                # Web Audio API procedural sound engine
+    ├── three-ambient.js        # Three.js 3D ambient dust motes & lighting
+    ├── data/
+    │   └── cases.js            # Structured case data & evidence records
+    ├── modal.js                # Evidence lightbox modal controller
+    └── tracker.js              # Case checklist & "Case Solved" unlock banner
 ```
 
-Then visit: `http://localhost:8000`
+---
+
+## Running Locally
+
+### Option 1: Using Vite Dev Server (Recommended)
+```bash
+npm run dev
+```
+
+### Option 2: Using Python HTTP Server
+```bash
+python -m http.server 8000
+```
+Open: `http://localhost:8000`
+
+---
+
+## Production Build
+
+To bundle the entire project into the optimized `dist/` directory:
+```bash
+npm run build
+```
+Preview the production build:
+```bash
+npm run preview
+```
 
 ---
 
 ## Deployment to GitHub Pages
 
-To update your existing GitHub Pages site (`arya-vardhan.github.io`):
+To deploy your portfolio to `https://arya-vardhan.github.io`:
 
 ```bash
-git init
 git add .
-git commit -m "feat: redesign portfolio with unslop engineering design system"
-git branch -M main
-git remote add origin https://github.com/Arya-vardhan/arya-vardhan.github.io.git
-git push -u origin main --force
+git commit -m "feat: deploy modular investigation board portfolio"
+git push -u origin main
 ```
-
