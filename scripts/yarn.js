@@ -10,6 +10,10 @@ export function initYarn(canvasEl) {
 }
 
 export function drawYarnNetwork() {
+  if (!canvas) {
+    canvas = document.getElementById('yarn-canvas');
+    if (canvas) ctx = canvas.getContext('2d');
+  }
   if (!ctx || !canvas) return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 

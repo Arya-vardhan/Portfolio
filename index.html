@@ -63,6 +63,131 @@
 </head>
 <body class="font-typewriter bg-[#120e0a] text-inkBlack">
 
+  <!-- ==================== SYNCHRONOUS CASE FOLDER SCRIPT ==================== -->
+  <script>
+    (function() {
+      var isOpening = false;
+
+      window.openCaseFolder = function(e) {
+        if (e && e.stopPropagation) e.stopPropagation();
+        if (isOpening) return;
+        isOpening = true;
+
+        try { sessionStorage.setItem('case_folder_opened', 'true'); } catch (err) {}
+
+        var introEl = document.getElementById('case-folder-intro');
+        var tape = document.querySelector('.evidence-seal-tape');
+        var cover = document.querySelector('.folder-cover');
+        var stage = document.querySelector('.folder-stage');
+
+        try {
+          if (typeof window.playFolderRustle === 'function') window.playFolderRustle();
+          if (typeof window.playTypewriterClick === 'function') window.playTypewriterClick();
+        } catch (err) {}
+
+        // Step 1: Evidence seal tape pops & tears away
+        if (tape) {
+          tape.style.transition = 'all 0.22s ease-out';
+          tape.style.transform = 'translateY(-16px) rotate(9deg) scale(1.15)';
+          tape.style.opacity = '0';
+        }
+
+        // Step 2: Folder cover hinges open in 3D perspective
+        if (cover) {
+          cover.style.transition = 'transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)';
+          cover.style.transformOrigin = 'left center';
+          cover.style.transform = 'rotateY(-125deg)';
+        }
+
+        // Step 3: Camera dives smoothly into folder interior documents
+        setTimeout(function() {
+          if (stage) {
+            stage.style.transition = 'all 0.5s ease-in';
+            stage.style.transform = 'scale(1.35)';
+            stage.style.opacity = '0';
+          }
+        }, 260);
+
+        // Step 4: Fade out intro backdrop and hand off to main board
+        setTimeout(function() {
+          if (introEl) {
+            introEl.style.transition = 'opacity 0.4s ease-out';
+            introEl.style.opacity = '0';
+
+            setTimeout(function() {
+              introEl.classList.add('intro-hidden');
+              introEl.style.display = 'none';
+              introEl.style.pointerEvents = 'none';
+
+              if (typeof window.drawYarnNetwork === 'function') {
+                try { window.drawYarnNetwork(); } catch (err) {}
+              }
+              if (typeof window.goToStop === 'function') {
+                try { window.goToStop(0, 0.8); } catch (err) {}
+              }
+              isOpening = false;
+            }, 400);
+          } else {
+            isOpening = false;
+          }
+        }, 550);
+      };
+
+      window.skipIntro = function(e) {
+        if (e && e.stopPropagation) e.stopPropagation();
+        try { sessionStorage.setItem('case_folder_opened', 'true'); } catch (err) {}
+
+        var introEl = document.getElementById('case-folder-intro');
+        if (introEl) {
+          introEl.classList.add('intro-hidden');
+          introEl.style.display = 'none';
+          introEl.style.pointerEvents = 'none';
+        }
+
+        if (typeof window.drawYarnNetwork === 'function') {
+          try { window.drawYarnNetwork(); } catch (err) {}
+        }
+        if (typeof window.goToStop === 'function') {
+          try { window.goToStop(0, 0.4); } catch (err) {}
+        }
+      };
+
+      window.reopenCaseFolder = function() {
+        try { sessionStorage.removeItem('case_folder_opened'); } catch (err) {}
+        location.reload();
+      };
+
+      // Keyboard support: Enter/Space opens, Escape skips
+      window.addEventListener('keydown', function(e) {
+        var introEl = document.getElementById('case-folder-intro');
+        if (!introEl || introEl.style.display === 'none' || introEl.classList.contains('intro-hidden')) return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          window.skipIntro();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.openCaseFolder();
+        }
+      });
+
+      // Bind direct event listeners as DOM elements load
+      function bindIntroListeners() {
+        var btnOpen = document.getElementById('btn-open-case');
+        var btnSkip = document.getElementById('btn-skip-intro');
+        var folder = document.getElementById('dossier-folder');
+        if (btnOpen) btnOpen.addEventListener('click', window.openCaseFolder);
+        if (btnSkip) btnSkip.addEventListener('click', window.skipIntro);
+        if (folder) folder.addEventListener('click', window.openCaseFolder);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindIntroListeners);
+      } else {
+        bindIntroListeners();
+      }
+    })();
+  </script>
+
   <!-- ==================== CASE FOLDER INTRO SEQUENCE ==================== -->
   <div id="case-folder-intro">
     <!-- Top Skip Action -->

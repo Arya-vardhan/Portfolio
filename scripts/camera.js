@@ -43,7 +43,12 @@ export function getCurrentStop() {
 }
 
 export function flyCameraTo(targetX, targetY, targetScale, duration = 0.85) {
-  playCameraSwoosh();
+  try { playCameraSwoosh(); } catch (e) {}
+  if (!viewportEl || !worldEl) {
+    worldEl = document.getElementById('corkboard-world');
+    viewportEl = document.getElementById('viewport');
+  }
+  if (!viewportEl || !worldEl) return;
   const vpW = viewportEl.clientWidth;
   const vpH = viewportEl.clientHeight;
 
@@ -93,8 +98,11 @@ export function goToStop(index, duration = 0.85) {
   const s = STOPS[index];
   let scale = s.scale;
   if (index === 0) {
-    const fitScaleX = viewportEl.clientWidth / 3600;
-    const fitScaleY = viewportEl.clientHeight / 2400;
+    if (!viewportEl) viewportEl = document.getElementById('viewport');
+    const vpW = viewportEl ? viewportEl.clientWidth : window.innerWidth;
+    const vpH = viewportEl ? viewportEl.clientHeight : window.innerHeight;
+    const fitScaleX = vpW / 3600;
+    const fitScaleY = vpH / 2400;
     scale = Math.min(fitScaleX, fitScaleY) * 0.95;
   }
   flyCameraTo(s.x, s.y, scale, duration);
