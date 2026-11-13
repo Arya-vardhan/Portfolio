@@ -118,34 +118,34 @@ function getBadgeShape(badgeId) {
 
 function createFrontFaceCanvas(badge, img) {
   const c = document.createElement('canvas');
-  c.width = 512;
-  c.height = 512;
+  c.width = 1024;
+  c.height = 1024;
   const ctx = c.getContext('2d');
 
   // Satin dark cardstock / backing plate background
   ctx.fillStyle = '#14100c';
-  ctx.fillRect(0, 0, 512, 512);
+  ctx.fillRect(0, 0, 1024, 1024);
 
   // Subtle interior border matching badge accent (satin, non-neon)
   ctx.strokeStyle = badge.accentColor;
-  ctx.lineWidth = 3;
-  ctx.strokeRect(12, 12, 488, 488);
+  ctx.lineWidth = 4;
+  ctx.strokeRect(20, 20, 984, 984);
 
   ctx.strokeStyle = 'rgba(255, 235, 200, 0.15)';
-  ctx.lineWidth = 1.5;
-  ctx.strokeRect(18, 18, 476, 476);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(28, 28, 968, 968);
 
   // Draw official badge image centered & crisp with high fidelity
   if (img) {
-    const size = 460;
-    const offset = (512 - size) / 2;
+    const size = 920;
+    const offset = (1024 - size) / 2;
     ctx.drawImage(img, offset, offset, size, size);
   } else {
     ctx.fillStyle = badge.accentColor;
-    ctx.font = 'bold 26px "Courier New", monospace';
+    ctx.font = 'bold 44px "Courier New", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(badge.title.slice(0, 20), 256, 256);
+    ctx.fillText(badge.title.slice(0, 20), 512, 512);
   }
 
   return c;
@@ -153,93 +153,93 @@ function createFrontFaceCanvas(badge, img) {
 
 function createBackFaceCanvas(badge) {
   const c = document.createElement('canvas');
-  c.width = 512;
-  c.height = 512;
+  c.width = 1024;
+  c.height = 1024;
   const ctx = c.getContext('2d');
 
   // Metallic satin brushed plate background
   ctx.fillStyle = '#181410';
-  ctx.fillRect(0, 0, 512, 512);
+  ctx.fillRect(0, 0, 1024, 1024);
 
   // Subtle brushed metal horizontal lines
   ctx.strokeStyle = 'rgba(255, 225, 180, 0.05)';
-  ctx.lineWidth = 1;
-  for (let y = 10; y < 512; y += 8) {
+  ctx.lineWidth = 1.5;
+  for (let y = 16; y < 1024; y += 12) {
     ctx.beginPath();
-    ctx.moveTo(10, y);
-    ctx.lineTo(502, y);
+    ctx.moveTo(20, y);
+    ctx.lineTo(1004, y);
     ctx.stroke();
   }
 
   // Outer border
   ctx.strokeStyle = '#c5a059';
-  ctx.lineWidth = 3;
-  ctx.strokeRect(14, 14, 484, 484);
+  ctx.lineWidth = 5;
+  ctx.strokeRect(24, 24, 976, 976);
 
   // Security Classification Header
   ctx.fillStyle = '#f4e4c1';
-  ctx.font = 'bold 15px "Courier New", monospace';
+  ctx.font = 'bold 28px "Courier New", monospace';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('★ OFFICIAL FORENSIC CREDENTIAL ★', 256, 65);
+  ctx.fillText('★ OFFICIAL FORENSIC CREDENTIAL ★', 512, 120);
 
   ctx.fillStyle = '#a89880';
-  ctx.font = '11px "Courier New", monospace';
-  ctx.fillText('SECURITY CLEARANCE & ACCREDITATION', 256, 88);
+  ctx.font = '20px "Courier New", monospace';
+  ctx.fillText('SECURITY CLEARANCE & ACCREDITATION', 512, 165);
 
   // Center Metal Plate Box
   ctx.fillStyle = 'rgba(10, 8, 6, 0.9)';
   ctx.strokeStyle = '#c5a059';
-  ctx.lineWidth = 1.5;
-  ctx.strokeRect(40, 115, 432, 240);
-  ctx.fillRect(40, 115, 432, 240);
+  ctx.lineWidth = 2.5;
+  ctx.strokeRect(80, 220, 864, 480);
+  ctx.fillRect(80, 220, 864, 480);
 
   // Recipient Name
   ctx.fillStyle = '#c5a059';
-  ctx.font = 'bold 11px monospace';
-  ctx.fillText('AUTHENTICATED RECIPIENT:', 256, 142);
+  ctx.font = 'bold 20px monospace';
+  ctx.fillText('AUTHENTICATED RECIPIENT:', 512, 275);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 19px "Courier New", monospace';
-  ctx.fillText(badge.recipient.toUpperCase(), 256, 170);
+  ctx.font = 'bold 36px "Courier New", monospace';
+  ctx.fillText(badge.recipient.toUpperCase(), 512, 330);
 
   // Badge Name
   ctx.fillStyle = badge.accentColor;
-  ctx.font = 'bold 13px monospace';
+  ctx.font = 'bold 26px monospace';
   const displayTitle = badge.title.length > 32 ? badge.title.slice(0, 30) + '...' : badge.title;
-  ctx.fillText(displayTitle.toUpperCase(), 256, 208);
+  ctx.fillText(displayTitle.toUpperCase(), 512, 405);
 
   // Issuer
   ctx.fillStyle = '#e2d3be';
-  ctx.font = '12px monospace';
-  ctx.fillText(`ISSUER: ${badge.issuer.toUpperCase()}`, 256, 235);
+  ctx.font = '22px monospace';
+  ctx.fillText(`ISSUER: ${badge.issuer.toUpperCase()}`, 512, 460);
 
   // Badge ID hash
   ctx.fillStyle = '#8f806e';
-  ctx.font = '10px monospace';
-  ctx.fillText(`CREDENTIAL UUID: ${badge.badgeId.slice(0, 24)}...`, 256, 265);
+  ctx.font = '18px monospace';
+  ctx.fillText(`CREDENTIAL UUID: ${badge.badgeId.slice(0, 24)}...`, 512, 520);
 
   // Verified Stamp in Center Box
   ctx.strokeStyle = '#22c55e';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(110, 288, 292, 36);
+  ctx.lineWidth = 3;
+  ctx.strokeRect(220, 565, 584, 72);
   ctx.fillStyle = '#22c55e';
-  ctx.font = 'bold 13px monospace';
-  ctx.fillText('✓ OFFICIALLY VERIFIED & ACTIVE', 256, 306);
+  ctx.font = 'bold 24px monospace';
+  ctx.fillText('✓ OFFICIALLY VERIFIED & ACTIVE', 512, 602);
 
   // Simulated Laser Barcode at bottom
   ctx.fillStyle = '#d5c5a8';
-  let barX = 90;
-  const widths = [2, 4, 1, 3, 5, 2, 1, 4, 2, 3, 1, 5, 3, 2, 4, 1, 3, 2, 5, 1, 4, 2, 3, 4, 1, 2, 4, 2, 5, 3, 2, 4];
+  let barX = 180;
+  const widths = [3, 7, 2, 5, 8, 3, 2, 6, 3, 5, 2, 8, 5, 3, 6, 2, 5, 3, 8, 2, 6, 3, 5, 6, 2, 3, 6, 3, 8, 5, 3, 6];
   for (let i = 0; i < widths.length; i++) {
     const w = widths[i];
-    ctx.fillRect(barX, 385, w, 32);
-    barX += w + 6;
+    ctx.fillRect(barX, 760, w, 55);
+    barX += w + 11;
   }
 
   ctx.fillStyle = '#a89880';
-  ctx.font = '9px monospace';
-  ctx.fillText(`VERIFICATION HASH // ${badge.badgeId.slice(0, 18).toUpperCase()}`, 256, 435);
+  ctx.font = '16px monospace';
+  ctx.fillText(`VERIFICATION HASH // ${badge.badgeId.slice(0, 22).toUpperCase()}`, 512, 860);
 
   return c;
 }
@@ -269,6 +269,26 @@ async function getOrCreateTextures(badge) {
 
 let keyLight;
 
+function assignNormalizedUVs(geometry, isMirrored = false) {
+  geometry.computeBoundingBox();
+  const bbox = geometry.boundingBox;
+  const rangeX = bbox.max.x - bbox.min.x || 1;
+  const rangeY = bbox.max.y - bbox.min.y || 1;
+  const pos = geometry.attributes.position;
+  const uv = geometry.attributes.uv;
+
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const y = pos.getY(i);
+    const u = isMirrored 
+      ? 1 - (x - bbox.min.x) / rangeX 
+      : (x - bbox.min.x) / rangeX;
+    const v = (y - bbox.min.y) / rangeY;
+    uv.setXY(i, u, v);
+  }
+  uv.needsUpdate = true;
+}
+
 function rebuildBadgeMesh(badge) {
   if (!coinGroup) return;
 
@@ -281,20 +301,22 @@ function rebuildBadgeMesh(badge) {
     if (child.geometry) child.geometry.dispose();
   }
 
-  // 1. Front Face Mesh (ShapeGeometry automatically creates planar UVs)
+  // 1. Front Face Mesh (ShapeGeometry with normalized [0, 1] planar UVs)
   const frontGeo = new THREE.ShapeGeometry(shape);
+  assignNormalizedUVs(frontGeo, false);
   frontMesh = new THREE.Mesh(frontGeo, frontMaterial);
-  frontMesh.position.z = 0.114;
+  frontMesh.position.z = 0.152;
   coinGroup.add(frontMesh);
 
-  // 2. Back Face Mesh (ShapeGeometry with Y-180 rotation for authentic credential back)
+  // 2. Back Face Mesh (ShapeGeometry with normalized UVs for proper text reading)
   const backGeo = new THREE.ShapeGeometry(shape);
+  assignNormalizedUVs(backGeo, false);
   backMesh = new THREE.Mesh(backGeo, backMaterial);
-  backMesh.position.z = -0.114;
+  backMesh.position.z = -0.152;
   backMesh.rotation.y = Math.PI;
   coinGroup.add(backMesh);
 
-  // 3. Metallic Outer Rim (ExtrudeGeometry with satin bevel)
+  // 3. Metallic Outer Rim (ExtrudeGeometry with satin bevel - caps hidden so front/back meshes show)
   const extrudeSettings = {
     depth: 0.22,
     bevelEnabled: true,
@@ -304,7 +326,8 @@ function rebuildBadgeMesh(badge) {
     bevelThickness: 0.04
   };
   const rimGeo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-  rimMesh = new THREE.Mesh(rimGeo, edgeMaterial);
+  const invisibleCapMat = new THREE.MeshBasicMaterial({ visible: false });
+  rimMesh = new THREE.Mesh(rimGeo, [invisibleCapMat, edgeMaterial]);
   rimMesh.position.z = -0.11;
   coinGroup.add(rimMesh);
 }

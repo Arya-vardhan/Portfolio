@@ -411,32 +411,6 @@
 
     <!-- Controls -->
     <div class="flex items-center gap-2 pointer-events-auto">
-      <button id="btn-3d-badges" onclick="open3DBadgeInspector('cisco-analyst')" class="hud-element px-2.5 sm:px-3 py-2 rounded text-xs font-mono bg-gradient-to-r from-red-950 via-stone-900 to-amber-950 border border-amber-600/50 text-amber-300 hover:text-amber-100 hover:border-amber-400 flex items-center gap-1.5 transition-all shadow-lg cursor-pointer" title="Examine 3D Badges (360° Spin)">
-        <span class="text-amber-400">⚡</span>
-        <span class="font-bold hidden sm:inline">EXAMINE 3D BADGES</span>
-        <span class="font-bold sm:hidden">3D BADGES</span>
-      </button>
-
-      <button id="btn-torch" onclick="toggleTorch()" class="hud-element px-2.5 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors" title="Toggle Detective Flashlight">
-        <span>🔦</span>
-        <span class="hidden sm:inline" id="torch-label">TORCH: OFF</span>
-      </button>
-
-      <button id="btn-audio" onclick="toggleAudio()" class="hud-element px-2.5 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors" title="Toggle Sound FX">
-        <svg id="audio-icon-on" class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
-        <span class="hidden sm:inline" id="audio-label">FX: ON</span>
-      </button>
-
-      <button onclick="goToStop(0)" class="hud-element px-3 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors">
-        <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-        <span class="hidden sm:inline">FULL BOARD</span>
-      </button>
-
-      <button onclick="reopenCaseFolder()" class="hud-element px-2.5 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors" title="Replay Case Folder Intro">
-        <span>📁</span>
-        <span class="hidden xl:inline">CASE FILE</span>
-      </button>
-
       <a href="pages/resume.html" class="hud-element px-3 py-2 rounded text-xs font-mono bg-red-950/80 hover:bg-red-900 border-red-700/50 text-red-200 flex items-center gap-1.5 transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
         <span class="hidden md:inline">OFFICIAL RESUME</span>
@@ -1297,59 +1271,65 @@
       </div>
 
       <!-- 12. AUX EVIDENCE: ESP32 I2C SENSOR BUS -->
-      <div id="aux-esp32" class="board-item cursor-pointer" style="top: 1640px; left: 1080px; width: 260px;" onclick="openExamModal('esp32_i2c')">
-        <div id="pin-esp32" class="pushpin pushpin-brass" style="top: -6px; left: 120px;" title="ESP32 Telemetry Pin"></div>
+      <div id="aux-esp32" class="board-item cursor-pointer" style="top: 1640px; left: 1080px; width: 270px;" onclick="openExamModal('esp32_i2c')">
+        <div id="pin-esp32" class="pushpin pushpin-brass" style="top: -6px; left: 125px;" title="ESP32 Telemetry Pin"></div>
         <div class="tape" style="top: -10px; left: 35px; width: 80px; height: 22px; transform: rotate(-3deg);"></div>
 
-        <div class="bg-[#fbfbf8] p-3.5 rounded shadow-xl border border-stone-400 transform rotate-1 text-stone-900 font-mono text-[10px] space-y-1.5 relative">
-          <div class="flex items-center justify-between border-b border-stone-300 pb-1">
-            <span class="font-bold text-stone-950 uppercase tracking-wider">I2C BUS TELEMETRY</span>
-            <span class="stamp border-stone-700 text-stone-700 text-[8px] px-1 py-0.5">ESP32</span>
+        <div class="bg-[#f8f5ee] p-3.5 rounded shadow-xl border border-[#b89b70] transform rotate-1 text-stone-900 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-[#b89b70]/40 pb-1">
+            <div>
+              <span class="text-[7.5px] text-stone-500 uppercase tracking-widest block font-bold">SPECIMEN #HW-02</span>
+              <span class="font-bold text-stone-950 uppercase tracking-wider text-[10.5px]">I2C BUS HARDWARE LOG</span>
+            </div>
+            <span class="stamp border-red-700 text-red-700 text-[8px] px-1 py-0.5">VERIFIED</span>
           </div>
-          <div class="bg-[#181a1b] text-emerald-400 p-2 rounded text-[9px] space-y-0.5 border border-stone-700">
-            <div>SDA: GPIO 21 | SCL: GPIO 22</div>
-            <div>0x3C: OLED 128x64 display</div>
-            <div>0x76: BMP280 Barometric Temp</div>
-            <div class="text-sky-300">Wi-Fi MQTT: 2.4GHz Uplink OK</div>
+          <div class="bg-[#ede5d5] p-2 rounded text-[8.5px] space-y-1 border border-[#c5b59a] text-stone-900">
+            <div><span class="font-bold text-stone-700">CONTROLLER:</span> ESP32 (Xtensa Dual-Core 240MHz)</div>
+            <div><span class="font-bold text-stone-700">BUS ROUTING:</span> GPIO 21 (SDA) • GPIO 22 (SCL)</div>
+            <div><span class="font-bold text-stone-700">SENSORS:</span> BMP280 Barometric + SSD1306 OLED</div>
+            <div class="text-emerald-800 font-semibold">• 2.4GHz Wi-Fi Telemetry: Stream Active</div>
           </div>
-          <div class="text-[9px] text-stone-600 flex justify-between items-center pt-1 border-t border-stone-200">
-            <span>IoT Weather Node (2023)</span>
-            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+          <div class="text-[8.5px] text-stone-600 flex justify-between items-center pt-1 border-t border-[#b89b70]/30">
+            <span>Atmospheric Node (2023)</span>
+            <span class="text-red-800 font-bold hover:underline">Inspect Specimen ↗</span>
           </div>
         </div>
       </div>
 
       <!-- 13. AUX EVIDENCE: RPI TTS AUDIO WAVEFORM -->
-      <div id="aux-tts-waveform" class="board-item cursor-pointer" style="top: 2000px; left: 1060px; width: 270px;" onclick="openExamModal('tts_waveform')">
-        <div id="pin-tts-waveform" class="pushpin pushpin-brass" style="top: -6px; left: 125px;" title="TTS Waveform Pin"></div>
+      <div id="aux-tts-waveform" class="board-item cursor-pointer" style="top: 2000px; left: 1060px; width: 280px;" onclick="openExamModal('tts_waveform')">
+        <div id="pin-tts-waveform" class="pushpin pushpin-brass" style="top: -6px; left: 130px;" title="TTS Waveform Pin"></div>
         <div class="tape" style="top: -10px; right: 30px; width: 80px; height: 22px; transform: rotate(3deg);"></div>
 
-        <div class="bg-[#101418] text-sky-200 p-3.5 rounded shadow-xl border border-sky-800 transform -rotate-2 font-mono text-[10px] space-y-1.5 relative">
-          <div class="flex items-center justify-between border-b border-sky-800 pb-1">
-            <span class="font-bold text-sky-100 uppercase tracking-wider">RPi TTS AUDIO FORENSICS</span>
-            <span class="stamp border-rose-500 text-rose-400 text-[8px] px-1 py-0.5">EDGE PCM</span>
+        <div class="bg-[#fbf8f2] p-3.5 rounded shadow-xl border border-[#b89b70] transform -rotate-2 font-mono text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-[#b89b70]/40 pb-1">
+            <div>
+              <span class="text-[7.5px] text-stone-500 uppercase tracking-widest block font-bold">SPECIMEN #HW-03</span>
+              <span class="font-bold text-stone-950 uppercase tracking-wider text-[10.5px]">RPi EDGE AUDIO FORENSICS</span>
+            </div>
+            <span class="stamp border-stone-700 text-stone-700 text-[8px] px-1 py-0.5">AIR-GAPPED</span>
           </div>
-          <!-- Simulated Audio Waveform -->
-          <div class="h-9 bg-black/60 rounded flex items-center justify-center gap-1 px-2 border border-sky-950">
-            <span class="w-1 bg-emerald-500 rounded-full h-3"></span>
-            <span class="w-1 bg-emerald-400 rounded-full h-5"></span>
-            <span class="w-1 bg-emerald-400 rounded-full h-7"></span>
-            <span class="w-1 bg-emerald-300 rounded-full h-4"></span>
-            <span class="w-1 bg-amber-400 rounded-full h-8"></span>
-            <span class="w-1 bg-amber-300 rounded-full h-6"></span>
-            <span class="w-1 bg-emerald-400 rounded-full h-3"></span>
-            <span class="w-1 bg-emerald-400 rounded-full h-7"></span>
-            <span class="w-1 bg-rose-400 rounded-full h-5"></span>
-            <span class="w-1 bg-emerald-400 rounded-full h-4"></span>
-            <span class="w-1 bg-emerald-500 rounded-full h-2"></span>
+          <!-- Forensic Waveform Oscillogram on Paper -->
+          <div class="h-8 bg-[#ede4d2] rounded flex items-center justify-center gap-1.5 px-3 border border-[#cbbca3]">
+            <span class="w-1 bg-stone-700 rounded-full h-2"></span>
+            <span class="w-1 bg-stone-800 rounded-full h-4"></span>
+            <span class="w-1 bg-red-800 rounded-full h-6"></span>
+            <span class="w-1 bg-stone-900 rounded-full h-3"></span>
+            <span class="w-1 bg-red-900 rounded-full h-7"></span>
+            <span class="w-1 bg-stone-800 rounded-full h-5"></span>
+            <span class="w-1 bg-stone-700 rounded-full h-3"></span>
+            <span class="w-1 bg-red-800 rounded-full h-6"></span>
+            <span class="w-1 bg-stone-800 rounded-full h-4"></span>
+            <span class="w-1 bg-stone-700 rounded-full h-2"></span>
           </div>
-          <div class="text-[9px] text-sky-300 space-y-0.5">
-            <div>• Host: RPi 4B Linux ALSA Engine</div>
-            <div>• Offline latency: &lt;180ms synthesis</div>
+          <div class="text-[8.5px] text-stone-800 space-y-0.5">
+            <div>• Platform: RPi 4B / ALSA Kernel Audio Stack</div>
+            <div>• Synthesis Latency: &lt;180ms Direct DAC Output</div>
+            <div>• Cloud Dependency: 0% (Fully Autonomous Edge)</div>
           </div>
-          <div class="text-[9px] text-stone-400 flex justify-between items-center pt-1 border-t border-sky-900">
+          <div class="text-[8.5px] text-stone-600 flex justify-between items-center pt-1 border-t border-[#b89b70]/30">
             <span>Assistive Audio Node</span>
-            <span class="text-amber-300 font-bold hover:underline">Inspect ↗</span>
+            <span class="text-red-800 font-bold hover:underline">Inspect Specimen ↗</span>
           </div>
         </div>
       </div>

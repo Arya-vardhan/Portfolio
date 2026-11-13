@@ -341,18 +341,20 @@ export const EVIDENCE_DETAILS = {
     summary: "Firmware and pinout architecture for real-time telemetry streaming from atmospheric sensors over I2C to an OLED display and Wi-Fi cloud broker.",
     content: `
       <div class="space-y-3 text-xs font-mono">
-        <div class="p-3 bg-stone-900 text-emerald-400 rounded space-y-1 border border-stone-700">
-          <div class="text-amber-300 font-bold">> ESP32_I2C_BUS_MAP:</div>
-          <div>• GPIO 21 (SDA) -> BMP280, SHT31, SSD1306</div>
-          <div>• GPIO 22 (SCL) -> Clock line (400kHz fast mode)</div>
-          <div>• 0x3C: SSD1306 128x64 Graphic Display</div>
-          <div>• 0x76: BMP280 Barometric Pressure &amp; Temp</div>
-          <div>• 0x44: SHT31 Precision Relative Humidity</div>
-          <div>• Wi-Fi MQTT: 2.4GHz 802.11b/g/n Telemetry Uplink</div>
+        <div class="p-4 bg-[#faf6ed] text-stone-900 rounded font-typewriter space-y-2 border border-stone-300 shadow-inner">
+          <div class="text-amber-950 font-bold border-b border-stone-300 pb-1 flex justify-between items-center">
+            <span>LAB BENCH SPECIMEN // I2C SENSOR BUS:</span>
+            <span class="stamp border-emerald-700 text-emerald-800 text-[9px] px-1 py-0.2">TEST BENCH PASS</span>
+          </div>
+          <div><strong>• Bus Routing:</strong> SDA on GPIO 21, SCL on GPIO 22 (400kHz fast-mode hardware sync).</div>
+          <div><strong>• Graphic Node (0x3C):</strong> SSD1306 128x64 display panel logging telemetry readings.</div>
+          <div><strong>• Barometric Sensor (0x76):</strong> BMP280 calibrated pressure and temperature cell.</div>
+          <div><strong>• Humidity Cell (0x44):</strong> SHT31 precision relative humidity transducer.</div>
+          <div><strong>• Field Uplink:</strong> 2.4GHz 802.11b/g/n Wi-Fi bridge streaming to telemetry broker.</div>
         </div>
-        <p class="text-stone-700 font-sans">Developed September 2023 with custom deep-sleep duty cycles to achieve ultra-low field power consumption.</p>
+        <p class="text-stone-700 font-sans text-xs">Aged bench calibration specimen (Sep 2023). Configured with ultra-low deep-sleep duty cycles for field battery deployment.</p>
         <div class="pt-2">
-          <a href="pages/hardware-lab.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-amber-300 rounded text-xs font-mono font-bold transition-colors inline-block">
+          <a href="pages/hardware-lab.html" class="px-3 py-1.5 bg-amber-950 hover:bg-amber-900 text-amber-200 rounded text-xs font-mono font-bold transition-colors inline-block">
             Inspect Hardware Lab Bench →
           </a>
         </div>
