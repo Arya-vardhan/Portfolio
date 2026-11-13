@@ -15,18 +15,21 @@ export function initIntro() {
   if (alreadyOpened) {
     introEl.classList.add('intro-hidden');
     introEl.style.display = 'none';
+    introEl.style.pointerEvents = 'none';
     return;
   }
 
-  // Bind clicks
+  // Ensure intro element is fully clickable
+  introEl.style.display = 'flex';
+  introEl.style.pointerEvents = 'auto';
+
+  // Bind clicks as secondary attachment to inline onclick
   const folder = document.getElementById('dossier-folder');
   const openBtn = document.getElementById('btn-open-case');
   const skipBtn = document.getElementById('btn-skip-intro');
 
   if (folder) {
-    folder.addEventListener('click', (e) => {
-      openCaseFolder();
-    });
+    folder.addEventListener('click', () => openCaseFolder());
   }
 
   if (openBtn) {
@@ -49,7 +52,7 @@ export function initIntro() {
 
 function handleIntroKeydown(e) {
   const introEl = document.getElementById('case-folder-intro');
-  if (!introEl || introEl.classList.contains('intro-hidden')) return;
+  if (!introEl || introEl.classList.contains('intro-hidden') || introEl.style.display === 'none') return;
 
   if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
     e.preventDefault();
@@ -65,8 +68,10 @@ export function openCaseFolder() {
   if (isOpening) return;
   isOpening = true;
 
-  playFolderRustle();
-  playTypewriterClick();
+  try {
+    playFolderRustle();
+    playTypewriterClick();
+  } catch (err) {}
 
   const introEl = document.getElementById('case-folder-intro');
   const tape = document.querySelector('.evidence-seal-tape');
@@ -76,67 +81,83 @@ export function openCaseFolder() {
   sessionStorage.setItem('case_folder_opened', 'true');
   window.removeEventListener('keydown', handleIntroKeydown);
 
-  if (gsap) {
-    const tl = gsap.timeline({
-      onComplete: () => {
-        if (introEl) {
-          introEl.classList.add('intro-hidden');
-          introEl.style.display = 'none';
-        }
-        // Smoothly draw yarn threads and land camera on full investigation board
-        drawYarnNetwork();
-        goToStop(0, 0.8);
-      }
-    });
+  let finished = false;
+  const completeHandoff = () => {
+    if (finished) return;
+    finished = true;
 
-    // 1. Evidence seal rips / pops
-    if (tape) {
-      tl.to(tape, {
-        scale: 1.12,
-        opacity: 0,
-        y: -10,
-        rotate: 8,
-        duration: 0.25,
-        ease: 'power2.out'
-      }, 0);
-    }
-
-    // 2. Folder cover hinges open in 3D perspective
-    if (cover) {
-      tl.to(cover, {
-        rotateY: -130,
-        duration: 0.85,
-        ease: 'power2.inOut'
-      }, 0.1);
-    }
-
-    // 3. Camera dives smoothly into folder documents
-    if (stage) {
-      tl.to(stage, {
-        scale: 1.45,
-        opacity: 0,
-        duration: 0.65,
-        ease: 'power2.in'
-      }, 0.45);
-    }
-
-    // 4. Fade out intro overlay to reveal active investigation corkboard
-    if (introEl) {
-      tl.to(introEl, {
-        opacity: 0,
-        duration: 0.45,
-        ease: 'power1.out'
-      }, 0.7);
-    }
-
-  } else {
-    // Fallback if GSAP is unavailable
     if (introEl) {
       introEl.classList.add('intro-hidden');
       introEl.style.display = 'none';
+      introEl.style.pointerEvents = 'none';
     }
-    drawYarnNetwork();
-    goToStop(0, 0.4);
+
+    try {
+      drawYarnNetwork();
+    } catch (e) {}
+
+    try {
+      goToStop(0, 0.8);
+    } catch (e) {}
+
+    isOpening = false;
+  };
+
+  if (gsap && cover) {
+    try {
+      gsap.set(cover, { transformOrigin: 'left center', transformStyle: 'preserve-3d' });
+
+      const tl = gsap.timeline({
+        onComplete: completeHandoff
+      });
+
+      // 1. Evidence seal rips / pops
+      if (tape) {
+        tl.to(tape, {
+          scale: 1.15,
+          opacity: 0,
+          y: -12,
+          rotation: 8,
+          duration: 0.22,
+          ease: 'power2.out'
+        }, 0);
+      }
+
+      // 2. Folder cover hinges open in 3D perspective
+      tl.to(cover, {
+        rotationY: -125,
+        duration: 0.8,
+        ease: 'power2.inOut'
+      }, 0.08);
+
+      // 3. Camera dives smoothly into folder documents
+      if (stage) {
+        tl.to(stage, {
+          scale: 1.35,
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power2.in'
+        }, 0.35);
+      }
+
+      // 4. Fade out intro overlay to reveal active investigation corkboard
+      if (introEl) {
+        tl.to(introEl, {
+          opacity: 0,
+          duration: 0.45,
+          ease: 'power1.out'
+        }, 0.55);
+      }
+
+      // Guaranteed fallback safety timeout (in case of tab backgrounding or GSAP hiccup)
+      setTimeout(completeHandoff, 1400);
+
+    } catch (e) {
+      completeHandoff();
+    }
+  } else {
+    // Fallback if GSAP is unavailable
+    completeHandoff();
   }
 }
 
@@ -149,16 +170,26 @@ export function skipIntro() {
   if (introEl) {
     introEl.classList.add('intro-hidden');
     introEl.style.display = 'none';
+    introEl.style.pointerEvents = 'none';
   }
 
-  drawYarnNetwork();
-  goToStop(0, 0.4);
+  try {
+    drawYarnNetwork();
+  } catch (e) {}
+
+  try {
+    goToStop(0, 0.4);
+  } catch (e) {}
+
+  isOpening = false;
 }
 
-// Window global helper to replay intro if user desires
-if (typeof window !== 'undefined') {
-  window.reopenCaseFolder = function() {
-    sessionStorage.removeItem('case_folder_opened');
-    location.reload();
-  };
-}
+// Window global exposure for inline HTML events
+window.openCaseFolder = openCaseFolder;
+window.skipIntro = skipIntro;
+window.reopenCaseFolder = function() {
+  sessionStorage.removeItem('case_folder_opened');
+  location.reload();
+};
+
+

@@ -66,7 +66,7 @@
   <!-- ==================== CASE FOLDER INTRO SEQUENCE ==================== -->
   <div id="case-folder-intro">
     <!-- Top Skip Action -->
-    <button id="btn-skip-intro" class="skip-intro-btn" title="Skip Intro Animation">
+    <button id="btn-skip-intro" onclick="event.stopPropagation(); skipIntro()" class="skip-intro-btn" title="Skip Intro Animation">
       SKIP INTRO ➔
     </button>
 
@@ -75,7 +75,7 @@
 
     <!-- 3D Folder Stage -->
     <div class="folder-stage">
-      <div id="dossier-folder" class="manila-folder" title="Click to unseal and inspect case file">
+      <div id="dossier-folder" onclick="openCaseFolder()" class="manila-folder" title="Click to unseal and inspect case file">
         <!-- Top Tab -->
         <div class="folder-tab">FILE #2026-AV // HYD_NODE</div>
 
@@ -131,7 +131,7 @@
             <div class="font-mono text-[10px] text-stone-600">
               STATUS: <span class="text-emerald-800 font-bold">READY FOR REVIEW</span>
             </div>
-            <button id="btn-open-case" class="open-case-btn" type="button">
+            <button id="btn-open-case" onclick="event.stopPropagation(); openCaseFolder()" class="open-case-btn" type="button">
               <span class="animate-pulse">⚡</span>
               <span>UNSEAL &amp; OPEN DOSSIER</span>
             </button>

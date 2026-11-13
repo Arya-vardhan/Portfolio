@@ -48,7 +48,7 @@ window.copyContact = function(text, btn) {
   });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+function bootApp() {
   const world = document.getElementById('corkboard-world');
   const viewport = document.getElementById('viewport');
   const yarnCanvas = document.getElementById('yarn-canvas');
@@ -87,5 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial Camera Landing
   goToStop(0, 0.1);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootApp);
+} else {
+  bootApp();
+}
 
