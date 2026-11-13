@@ -20,8 +20,8 @@ window.close3DBadgeInspector = close3DBadgeInspector;
 window.loadBadgeModel = loadBadgeModel;
 window.flipBadge3D = flipBadge3D;
 window.toggleBadgeAutoRotate = toggleBadgeAutoRotate;
-window.openCaseFolder = openCaseFolder;
-window.skipIntro = skipIntro;
+if (!window.openCaseFolder) window.openCaseFolder = openCaseFolder;
+if (!window.skipIntro) window.skipIntro = skipIntro;
 
 window.handleElevatorClick = function(e) {
   const track = document.getElementById('elevator-track');

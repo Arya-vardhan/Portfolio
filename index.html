@@ -70,10 +70,9 @@
 
       window.openCaseFolder = function(e) {
         if (e && e.stopPropagation) e.stopPropagation();
-        if (isOpening) return;
+        if (isOpening || window.isOpeningFolder) return;
         isOpening = true;
-
-        try { sessionStorage.setItem('case_folder_opened', 'true'); } catch (err) {}
+        window.isOpeningFolder = true;
 
         var introEl = document.getElementById('case-folder-intro');
         var tape = document.querySelector('.evidence-seal-tape');
@@ -85,52 +84,73 @@
           if (typeof window.playTypewriterClick === 'function') window.playTypewriterClick();
         } catch (err) {}
 
-        // Step 1: Evidence seal tape pops & tears away
+        // Step 1: Evidence seal tape pops & tears away smoothly
         if (tape) {
-          tape.style.transition = 'all 0.22s ease-out';
-          tape.style.transform = 'translateY(-16px) rotate(9deg) scale(1.15)';
+          tape.style.transition = 'all 0.35s ease-out';
+          tape.style.transform = 'translateY(-20px) rotate(10deg) scale(1.15)';
           tape.style.opacity = '0';
         }
 
-        // Step 2: Folder cover hinges open in 3D perspective
+        // Step 2: Folder cover hinges open smoothly in 3D perspective (1.25s)
         if (cover) {
-          cover.style.transition = 'transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)';
+          cover.style.transition = 'transform 1.25s cubic-bezier(0.25, 1, 0.5, 1)';
           cover.style.transformOrigin = 'left center';
-          cover.style.transform = 'rotateY(-125deg)';
+          cover.style.transform = 'rotateY(-128deg)';
         }
 
-        // Step 3: Camera dives smoothly into folder interior documents
-        setTimeout(function() {
+        // Step 3: Generous inspection window (~1.7s after open) to examine internal documents
+        var hasDived = false;
+        function performDive() {
+          if (hasDived) return;
+          hasDived = true;
+
           if (stage) {
-            stage.style.transition = 'all 0.5s ease-in';
-            stage.style.transform = 'scale(1.35)';
+            stage.style.transition = 'all 0.85s cubic-bezier(0.4, 0, 0.2, 1)';
+            stage.style.transform = 'scale(1.42)';
             stage.style.opacity = '0';
           }
-        }, 260);
 
-        // Step 4: Fade out intro backdrop and hand off to main board
-        setTimeout(function() {
-          if (introEl) {
-            introEl.style.transition = 'opacity 0.4s ease-out';
-            introEl.style.opacity = '0';
+          setTimeout(function() {
+            if (introEl) {
+              introEl.style.transition = 'opacity 0.65s ease-out';
+              introEl.style.opacity = '0';
 
-            setTimeout(function() {
-              introEl.classList.add('intro-hidden');
-              introEl.style.display = 'none';
-              introEl.style.pointerEvents = 'none';
+              setTimeout(function() {
+                introEl.classList.add('intro-hidden');
+                introEl.style.display = 'none';
+                introEl.style.pointerEvents = 'none';
+                try { sessionStorage.setItem('case_folder_opened', 'true'); } catch (err) {}
 
-              if (typeof window.drawYarnNetwork === 'function') {
-                try { window.drawYarnNetwork(); } catch (err) {}
-              }
-              if (typeof window.goToStop === 'function') {
-                try { window.goToStop(0, 0.8); } catch (err) {}
-              }
+                if (typeof window.drawYarnNetwork === 'function') {
+                  try { window.drawYarnNetwork(); } catch (err) {}
+                }
+                if (typeof window.goToStop === 'function') {
+                  try { window.goToStop(0, 0.8); } catch (err) {}
+                }
+                window.isOpeningFolder = false;
+                isOpening = false;
+              }, 650);
+            } else {
+              window.isOpeningFolder = false;
               isOpening = false;
-            }, 400);
-          } else {
-            isOpening = false;
-          }
-        }, 550);
+            }
+          }, 300);
+        }
+
+        // Automatic dive after 2.95s total inspection time
+        var diveTimer = setTimeout(performDive, 2950);
+
+        // Click-to-dive shortcut: clicking during inspection skips the remaining wait
+        if (stage) {
+          var onStageClick = function() {
+            clearTimeout(diveTimer);
+            stage.removeEventListener('click', onStageClick);
+            performDive();
+          };
+          setTimeout(function() {
+            stage.addEventListener('click', onStageClick, { once: true });
+          }, 500);
+        }
       };
 
       window.skipIntro = function(e) {
@@ -207,15 +227,117 @@
         <!-- Back Panel (Holds internal evidence documents revealed on open) -->
         <div class="folder-back-panel">
           <div class="inside-preview-grid">
-            <div class="inside-doc">
-              <div class="text-[9px] font-mono text-stone-500 uppercase">SUBJECT DOSSIER</div>
-              <div class="font-bold text-stone-900 text-xs mt-1">GELLI ARYA VARDHAN</div>
-              <div class="text-[10px] text-stone-600 mt-1">PE Autonomous Vehicle SWQ @ Cognizant • Embedded Systems • Cybersecurity Analyst</div>
+            <!-- Left Sheet: Subject Intelligence & Profile -->
+            <div class="inside-doc inside-doc-left relative">
+              <div class="paperclip-graphic"></div>
+
+              <!-- Sheet Header -->
+              <div class="flex items-center justify-between border-b border-stone-300 pb-1.5 mb-2">
+                <div>
+                  <div class="text-[8px] font-mono text-stone-500 tracking-wider uppercase">HYD-TIB // EXHIBIT 01-A</div>
+                  <div class="font-bold text-stone-900 text-xs font-news tracking-wide">SUBJECT INTELLIGENCE BRIEF</div>
+                </div>
+                <span class="red-ink-stamp text-[8px]">VERIFIED</span>
+              </div>
+
+              <!-- Subject Card with Mini Photo Silhouette -->
+              <div class="flex items-start gap-2.5 bg-[#f4ede2] p-2 rounded border border-[#d5c3a3] mb-2">
+                <div class="w-12 h-14 bg-stone-900 rounded flex-shrink-0 flex flex-col items-center justify-center relative overflow-hidden border border-stone-400">
+                  <svg class="w-7 h-7 text-stone-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  </svg>
+                  <span class="text-[6px] font-mono text-amber-300 tracking-tight">ARYA</span>
+                </div>
+                <div class="text-[10px] leading-tight text-stone-800 space-y-0.5">
+                  <div class="font-bold text-stone-950 text-[11px]">GELLI ARYA VARDHAN</div>
+                  <div class="font-mono text-[9px] text-red-900 font-semibold">PE Autonomous Vehicle SWQ</div>
+                  <div class="text-stone-600 text-[9px]">Cognizant Technology Solutions</div>
+                  <div class="text-stone-500 text-[8px]">Hyderabad, Telangana • IN</div>
+                </div>
+              </div>
+
+              <!-- Field Deployments & Projects -->
+              <div class="space-y-1.5 text-[9px] text-stone-700 leading-snug">
+                <div class="border-l-2 border-red-800/60 pl-1.5">
+                  <span class="font-bold text-stone-900 block font-mono text-[8px] uppercase text-red-900">1. Autonomous Vehicle Software QA:</span>
+                  <span>Cognizant (11+ Mos): Fleet simulation validation, sensor telemetry logs &amp; regression testing.</span>
+                </div>
+                <div class="border-l-2 border-stone-400 pl-1.5">
+                  <span class="font-bold text-stone-900 block font-mono text-[8px] uppercase text-stone-600">2. Outside Plant (OSP) Engineering:</span>
+                  <span>CADSYS (8 Mos): Fiber route surveying, GIS spatial mapping &amp; network infrastructure.</span>
+                </div>
+                <div class="border-l-2 border-amber-700 pl-1.5">
+                  <span class="font-bold text-stone-900 block font-mono text-[8px] uppercase text-amber-800">3. Embedded Hardware Systems:</span>
+                  <span>Reverse Vending Machine (Patented actuator), ESP32 I2C sensor node &amp; RPi 4 offline TTS.</span>
+                </div>
+              </div>
+
+              <!-- Bottom Academic Stamp -->
+              <div class="mt-2 pt-1.5 border-t border-stone-300/80 flex items-center justify-between text-[8px] font-mono text-stone-500">
+                <span>B.Tech ECE (2022–2025)</span>
+                <span class="text-emerald-800 font-semibold">2nd Robo Soccer Trophy</span>
+              </div>
             </div>
-            <div class="inside-doc">
-              <div class="text-[9px] font-mono text-stone-500 uppercase">VERIFIED CREDENTIALS</div>
-              <div class="font-bold text-stone-900 text-xs mt-1">CISCO &amp; HTB ACADEMY</div>
-              <div class="text-[10px] text-stone-600 mt-1">Official Badges, Physical Specimen Models, &amp; Credly Validation Records Enclosed.</div>
+
+            <!-- Right Sheet: Verified Chain of Custody & Accreditations -->
+            <div class="inside-doc inside-doc-right relative">
+              <div class="staple-graphic"></div>
+
+              <!-- Sheet Header -->
+              <div class="flex items-center justify-between border-b border-stone-300 pb-1.5 mb-2">
+                <div>
+                  <div class="text-[8px] font-mono text-stone-500 tracking-wider uppercase">HYD-TIB // EXHIBIT 01-B</div>
+                  <div class="font-bold text-stone-900 text-xs font-news tracking-wide">CHAIN OF CUSTODY // EVIDENCE LOG</div>
+                </div>
+                <div class="seal-badge-stamp">
+                  <span>OFFICIAL</span>
+                  <span>VERIFIED</span>
+                </div>
+              </div>
+
+              <!-- 9 Master Board Clues Index -->
+              <div class="bg-[#f5ede0] p-1.5 rounded border border-[#d5c3a3] mb-2 font-mono text-[8px] space-y-0.5 text-stone-800">
+                <div class="font-bold text-[9px] text-red-950 uppercase mb-0.5">EVIDENTIARY RECEPTACLES (9 NODES):</div>
+                <div class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[8px]">
+                  <div><span class="text-red-700 font-bold">✓</span> 01. Subject Hub</div>
+                  <div><span class="text-red-700 font-bold">✓</span> 02. Cognizant AV</div>
+                  <div><span class="text-red-700 font-bold">✓</span> 03. CADSYS OSP</div>
+                  <div><span class="text-red-700 font-bold">✓</span> 04. RVM Patents</div>
+                  <div><span class="text-red-700 font-bold">✓</span> 05. Hardware Lab</div>
+                  <div><span class="text-red-700 font-bold">✓</span> 06. 3D Badges</div>
+                  <div><span class="text-red-700 font-bold">✓</span> 07. Mystery Game</div>
+                  <div><span class="text-red-700 font-bold">✓</span> 08. Academics</div>
+                </div>
+              </div>
+
+              <!-- Verified Accreditations & Credentials -->
+              <div class="space-y-1 mb-2">
+                <div class="text-[8px] font-mono text-stone-600 uppercase font-bold tracking-wider">OFFICIAL CYBER ACCREDITATIONS:</div>
+                <div class="p-1.5 bg-white/90 rounded border border-stone-300 space-y-1">
+                  <div class="flex items-center justify-between text-[8.5px]">
+                    <span class="font-bold text-stone-900 font-mono">Cisco Junior Cyber Analyst</span>
+                    <span class="text-emerald-700 font-mono text-[7.5px] font-bold">CREDLY ID: baf50dae</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[8.5px]">
+                    <span class="font-bold text-stone-900 font-mono">Cisco Networking Basics</span>
+                    <span class="text-emerald-700 font-mono text-[7.5px] font-bold">CREDLY ID: 0aa99b23</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[8.5px]">
+                    <span class="font-bold text-stone-900 font-mono">HTB Network Foundations</span>
+                    <span class="text-emerald-700 font-mono text-[7.5px] font-bold">HTB ID: ba738bc3</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Handwritten Directive -->
+              <div class="pt-1.5 border-t border-stone-300/80 flex items-center justify-between">
+                <div class="font-hand text-xs font-bold text-red-900">
+                  "Evidence verified. Unsealing corkboard..."
+                </div>
+                <div class="text-[7.5px] font-mono text-stone-500 uppercase tracking-widest">
+                  DEPT OF FORENSIC SWQ
+                </div>
+              </div>
             </div>
           </div>
         </div>
