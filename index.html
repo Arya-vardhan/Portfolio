@@ -45,6 +45,7 @@
   <link rel="stylesheet" href="styles/dossier.css">
   <link rel="stylesheet" href="styles/hud.css">
   <link rel="stylesheet" href="styles/modal.css">
+  <link rel="stylesheet" href="styles/intro.css">
 
   <!-- GSAP & Three.js via CDN for instant zero-config browser compatibility -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -61,6 +62,86 @@
   </script>
 </head>
 <body class="font-typewriter bg-[#120e0a] text-inkBlack">
+
+  <!-- ==================== CASE FOLDER INTRO SEQUENCE ==================== -->
+  <div id="case-folder-intro">
+    <!-- Top Skip Action -->
+    <button id="btn-skip-intro" class="skip-intro-btn" title="Skip Intro Animation">
+      SKIP INTRO ➔
+    </button>
+
+    <!-- Warm Overhead Desk Glow -->
+    <div class="desk-lamp-glow"></div>
+
+    <!-- 3D Folder Stage -->
+    <div class="folder-stage">
+      <div id="dossier-folder" class="manila-folder" title="Click to unseal and inspect case file">
+        <!-- Top Tab -->
+        <div class="folder-tab">FILE #2026-AV // HYD_NODE</div>
+
+        <!-- Back Panel (Holds internal evidence documents revealed on open) -->
+        <div class="folder-back-panel">
+          <div class="inside-preview-grid">
+            <div class="inside-doc">
+              <div class="text-[9px] font-mono text-stone-500 uppercase">SUBJECT DOSSIER</div>
+              <div class="font-bold text-stone-900 text-xs mt-1">GELLI ARYA VARDHAN</div>
+              <div class="text-[10px] text-stone-600 mt-1">PE Autonomous Vehicle SWQ @ Cognizant • Embedded Systems • Cybersecurity Analyst</div>
+            </div>
+            <div class="inside-doc">
+              <div class="text-[9px] font-mono text-stone-500 uppercase">VERIFIED CREDENTIALS</div>
+              <div class="font-bold text-stone-900 text-xs mt-1">CISCO &amp; HTB ACADEMY</div>
+              <div class="text-[10px] text-stone-600 mt-1">Official Badges, Physical Specimen Models, &amp; Credly Validation Records Enclosed.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Front Flap / Cover (Hinges open in 3D) -->
+        <div class="folder-cover">
+          <!-- Evidence Tamper-Evident Tape Seal -->
+          <div class="evidence-seal-tape">
+            RESTRICTED // SEALED
+          </div>
+
+          <div>
+            <!-- Agency Header -->
+            <div class="flex items-center justify-between border-b-2 border-amber-900/40 pb-2 mb-4">
+              <div>
+                <div class="font-mono text-[9px] sm:text-[10px] text-amber-900 tracking-widest uppercase">HYDERABAD TECHNICAL INVESTIGATION BUREAU</div>
+                <div class="font-news text-base sm:text-lg font-bold text-amber-950 uppercase tracking-wide">CONFIDENTIAL CASE FILE #2026-AV</div>
+              </div>
+              <span class="stamp">CLASSIFIED</span>
+            </div>
+
+            <!-- Subject Particulars -->
+            <div class="space-y-2 text-xs sm:text-sm text-stone-900">
+              <div>
+                <span class="font-mono text-[11px] text-stone-600 uppercase tracking-wider block">SUBJECT IDENTIFIER:</span>
+                <span class="font-news text-xl sm:text-2xl font-black tracking-wide text-stone-950">GELLI ARYA VARDHAN</span>
+              </div>
+              <div class="font-mono text-[11px] text-stone-800 bg-[#e7d4b4] p-2.5 rounded border border-[#b89b70] space-y-1">
+                <div><span class="text-stone-500">PRIMARY FIELD:</span> PE Autonomous Vehicle SWQ @ Cognizant</div>
+                <div><span class="text-stone-500">SUBSYSTEMS:</span> Embedded Systems • Outside Plant Telecom • IoT Hardware</div>
+                <div><span class="text-stone-500">ACCREDITATION:</span> Cisco Junior Cyber Analyst • HTB Academy Foundations</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action -->
+          <div class="pt-4 border-t border-amber-900/30 flex items-center justify-between">
+            <div class="font-mono text-[10px] text-stone-600">
+              STATUS: <span class="text-emerald-800 font-bold">READY FOR REVIEW</span>
+            </div>
+            <button id="btn-open-case" class="open-case-btn" type="button">
+              <span class="animate-pulse">⚡</span>
+              <span>UNSEAL &amp; OPEN DOSSIER</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 
   <!-- ==================== AMBIENT & 3D PARTICLE OVERLAYS ==================== -->
   <div id="ambient-overlay"></div>
@@ -102,6 +183,11 @@
       <button onclick="goToStop(0)" class="hud-element px-3 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors">
         <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
         <span class="hidden sm:inline">FULL BOARD</span>
+      </button>
+
+      <button onclick="reopenCaseFolder()" class="hud-element px-2.5 py-2 rounded text-xs font-mono flex items-center gap-1.5 hover:bg-[#251d16] transition-colors" title="Replay Case Folder Intro">
+        <span>📁</span>
+        <span class="hidden xl:inline">CASE FILE</span>
       </button>
 
       <a href="pages/resume.html" class="hud-element px-3 py-2 rounded text-xs font-mono bg-red-950/80 hover:bg-red-900 border-red-700/50 text-red-200 flex items-center gap-1.5 transition-colors">
@@ -311,14 +397,20 @@
           </div>
 
           <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-6 bg-blueprint p-3 rounded text-sky-100 font-mono text-[10px] space-y-1 shadow-inner border border-sky-800">
-              <div class="text-amber-400 font-bold border-b border-sky-400/40 pb-1">OSP SCHEMATIC: FIBER ROUTE</div>
-              <div>POLE_SAG_CALC: PASS (&lt;2.1%)</div>
-              <div>OPTICAL_FIBER_RUN: 48-CORE SINGLE</div>
-              <div>TERMINAL_ADDR_VERIFY: OK</div>
-              <div>KATAPAULT_JOB_PLAN: 100% COMPLETE</div>
-              <div class="mt-2 pt-1 border-t border-sky-400/30 text-sky-300">
-                TOOL: Aramis-DT / GIS Suite
+            <div class="col-span-6 bg-[#f8f4ec] p-3 rounded border border-amber-800/30 text-stone-900 font-typewriter text-[10px] space-y-1.5 shadow-sm relative">
+              <div class="flex items-center justify-between border-b border-amber-900/20 pb-1">
+                <span class="font-bold text-amber-950 uppercase tracking-wider text-[9px]">FIELD MEMO: OSP SURVEY</span>
+                <span class="stamp border-blue-700 text-blue-800 text-[8px] px-1 py-0.2">TOLERANCE OK</span>
+              </div>
+              <div class="space-y-1 text-stone-800 text-[10px] leading-tight">
+                <div><strong>• Infrastructure Route:</strong> 48-Core Single Aerial Fiber distribution survey.</div>
+                <div><strong>• Sag Tension Analysis:</strong> Verified within municipal safety standards (&lt;2.1% margin).</div>
+                <div><strong>• Terminal Verification:</strong> Pole attachments &amp; splice locations mapped via Aramis-DT.</div>
+                <div><strong>• Job Plan Status:</strong> Work prints approved with zero field discrepancies.</div>
+              </div>
+              <div class="mt-1 pt-1 border-t border-stone-300 text-[9px] font-mono text-stone-600 flex justify-between items-center">
+                <span>Katapault GIS Suite</span>
+                <span class="text-amber-800 font-bold">100% Validated</span>
               </div>
             </div>
 
@@ -365,13 +457,20 @@
           </div>
 
           <div class="grid grid-cols-12 gap-4 items-center">
-            <div class="col-span-5 bg-[#0f172a] p-3 rounded border border-sky-700/60 font-mono text-[10px] space-y-1.5">
-              <div class="text-sky-300 font-bold border-b border-sky-800 pb-1">RPi 4B PINOUT INTERFACE</div>
-              <div class="text-emerald-400">• GPIO 18: Servo Chute Gate</div>
-              <div class="text-amber-400">• GPIO 23: Ultrasonic Trigger</div>
-              <div class="text-amber-400">• GPIO 24: Ultrasonic Echo</div>
-              <div class="text-blue-400">• GPIO 17: IR Proximity Bottle</div>
-              <div class="text-rose-400">• 5V / GND: Power Rail</div>
+            <div class="col-span-5 bg-[#faf6ed] p-3 rounded border border-amber-800/30 text-stone-900 font-typewriter text-[10px] space-y-1.5 shadow-sm">
+              <div class="flex items-center justify-between border-b border-stone-300 pb-1">
+                <span class="font-bold text-amber-950 uppercase tracking-wider text-[9px]">PATENT SPECIFICATION</span>
+                <span class="stamp border-emerald-700 text-emerald-800 text-[8px] px-1 py-0.2">FILED</span>
+              </div>
+              <div class="space-y-1 text-stone-800 text-[10px] leading-tight">
+                <div><strong>• Intake Sensing:</strong> Optical IR array verifies bottle insertion sequence.</div>
+                <div><strong>• Sizing &amp; Capacity:</strong> Ultrasonic acoustic profiling checks container dimensions.</div>
+                <div><strong>• Mechanical Gate:</strong> Automated 180° servo flap diverts approved bottles to bin.</div>
+              </div>
+              <div class="mt-1 pt-1 border-t border-stone-300 text-[9px] font-mono text-stone-600 flex justify-between items-center">
+                <span>Ref: VP-RVM-2024</span>
+                <span class="text-emerald-800 font-bold">Hardware Validated</span>
+              </div>
             </div>
 
             <div class="col-span-7 text-xs leading-relaxed text-sky-100 space-y-2">
@@ -706,20 +805,20 @@
         <div id="pin-av-telematics" class="pushpin" style="top: -6px; left: 125px;" title="AV Telematics Pin"></div>
         <div class="tape" style="top: -10px; left: 30px; width: 80px; height: 22px; transform: rotate(-3deg);"></div>
 
-        <div class="bg-[#f0f4ed] p-3.5 rounded shadow-xl border border-emerald-800/30 transform rotate-1 text-stone-900 font-mono text-[10px] space-y-1.5 relative">
-          <div class="flex items-center justify-between border-b border-emerald-900/30 pb-1">
-            <span class="text-emerald-900 font-bold uppercase tracking-wider">TELEMATICS LOG: AV SWQ</span>
-            <span class="stamp border-emerald-700 text-emerald-800 text-[8px] px-1 py-0.5">PASS 100%</span>
+        <div class="bg-[#fcf8f0] p-3.5 rounded shadow-xl border border-stone-400 transform rotate-1 text-stone-900 font-typewriter text-[10px] space-y-1.5 relative">
+          <div class="flex items-center justify-between border-b border-stone-300 pb-1">
+            <span class="text-stone-900 font-bold uppercase tracking-wider text-[9px]">FIELD DISPATCH: AV TRIAL</span>
+            <span class="stamp border-emerald-700 text-emerald-800 text-[8px] px-1 py-0.2">LOGGED</span>
           </div>
-          <div class="bg-[#121814] text-emerald-400 p-2 rounded text-[9px] space-y-0.5 border border-emerald-900/50">
-            <div>CAN 0x2A4: LAT_DEV=0.012m</div>
-            <div>HD_MAP_ALIGN: CORRIDOR_04</div>
-            <div>RADAR/LIDAR SYNC: 120k pts/s</div>
-            <div class="text-amber-300">REGRESSION #84: 0 CRIT FAILS</div>
+          <div class="p-2 rounded bg-[#f4ece1] border border-stone-300 text-[9px] space-y-1 text-stone-800 leading-tight">
+            <div><strong>• Sector:</strong> Hyderabad Mobility Corridor 04</div>
+            <div><strong>• Tracking:</strong> Trajectory plotted against municipal HD mapping base.</div>
+            <div><strong>• Telemetry:</strong> Radar &amp; LiDAR point clouds synchronized with 0 deviations.</div>
+            <div class="text-emerald-900 font-bold"><strong>• Finding:</strong> 84 test cycles passed with 0 critical defects.</div>
           </div>
           <div class="text-[9px] text-stone-600 flex justify-between items-center pt-1 border-t border-stone-300">
-            <span>Cognizant Mobility Lab</span>
-            <span class="text-red-700 font-bold hover:underline">Inspect ↗</span>
+            <span class="font-mono text-[9px]">Cognizant Mobility QA</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect File ↗</span>
           </div>
         </div>
       </div>
@@ -776,20 +875,22 @@
         <div id="pin-rvm-schematic" class="pushpin pushpin-blue" style="top: -6px; left: 120px;" title="RVM Mechanism Pin"></div>
         <div class="tape" style="top: -10px; left: 30px; width: 75px; height: 20px; transform: rotate(4deg);"></div>
 
-        <div class="bg-blueprint p-3.5 rounded shadow-xl border border-sky-400/30 transform rotate-2 text-sky-100 font-mono text-[10px] space-y-1.5 relative">
-          <div class="flex items-center justify-between border-b border-sky-400/30 pb-1">
-            <span class="text-sky-300 font-bold uppercase tracking-wider">RVM ACTUATOR BLUEPRINT</span>
-            <span class="stamp border-amber-400 text-amber-400 text-[8px] px-1 py-0.5">PATENT</span>
+        <div class="bg-[#f5ede0] p-3.5 rounded-sm shadow-xl border border-[#c4b39b] transform rotate-2 text-stone-900 font-typewriter text-[10px] space-y-1.5 relative">
+          <!-- Evidence Tag Top Hole Punch -->
+          <div class="w-3 h-3 rounded-full bg-[#1c1611] border border-stone-400 mx-auto -mt-1.5 mb-1 opacity-60"></div>
+          <div class="flex items-center justify-between border-b border-stone-300 pb-1">
+            <span class="text-stone-900 font-bold uppercase tracking-wider text-[9px]">SPECIMEN TAG: #ET-84</span>
+            <span class="stamp border-red-700 text-red-800 text-[8px] px-1 py-0.2">TESTED</span>
           </div>
-          <div class="bg-[#0f172a] p-2 rounded text-[9px] space-y-0.5 border border-sky-800">
-            <div>1. IR Inlet Trigger (GPIO 17)</div>
-            <div>2. Ultrasonic HC-SR04 (GPIO 23/24)</div>
-            <div>3. Servo 180° Gate (GPIO 18)</div>
-            <div class="text-emerald-400">STATUS: Cycle Verified</div>
+          <div class="p-2 rounded bg-white/70 border border-stone-300 text-[9px] space-y-1 text-stone-800 leading-tight">
+            <div><strong>• Apparatus:</strong> RVM Mechanical Chute Sorter</div>
+            <div><strong>• Trigger:</strong> Non-contact IR sensor detects bottle entry.</div>
+            <div><strong>• Sorting:</strong> High-torque 180° servo flap diverts approved recyclables.</div>
+            <div class="text-emerald-800 font-bold"><strong>• Verdict:</strong> Hardware cycle verified in R&amp;D lab.</div>
           </div>
-          <div class="text-[9px] text-sky-300 flex justify-between items-center pt-1 border-t border-sky-700/50">
-            <span>Vishnuspire R&amp;D Lab</span>
-            <span class="text-amber-300 font-bold hover:underline">Inspect ↗</span>
+          <div class="text-[9px] text-stone-600 flex justify-between items-center pt-1 border-t border-stone-300">
+            <span class="font-mono text-[9px]">Vishnuspire R&amp;D</span>
+            <span class="text-red-700 font-bold hover:underline">Inspect Tag ↗</span>
           </div>
         </div>
       </div>

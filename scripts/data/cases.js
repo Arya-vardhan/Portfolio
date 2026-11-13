@@ -389,24 +389,27 @@ export const EVIDENCE_DETAILS = {
   rvm_schematic: {
     id: "rvm_schematic",
     pageUrl: "pages/rvm.html",
-    title: "PATENT ARTIFACT: RVM CHUTE GATE MECHANISM",
-    subtitle: "ACTUATOR SYSTEM // REVERSE VENDING MACHINE",
-    stamp: "PATENT ARTIFACT",
-    badge: "GPIO ACTUATION",
-    summary: "Mechanical and electronic sorting gate designed for automated plastic bottle separation based on optical sensor triggers.",
+    title: "FORENSIC SPECIMEN #ET-84: RVM MECHANICAL CHUTE SORTER",
+    subtitle: "LAB EVIDENCE RECORD // VISHNUSPIRE R&D PROTOTYPE",
+    stamp: "LAB EVIDENCE",
+    badge: "PROTOTYPE TAG",
+    summary: "Physical electromechanical sorting mechanism inspected and validated for automated bottle segregation based on optical triggers.",
     content: `
       <div class="space-y-3 text-xs">
-        <div class="p-3 bg-sky-950 text-sky-100 rounded font-mono space-y-1 border border-sky-800">
-          <div class="text-emerald-400 font-bold">> RVM_SORTING_CYCLE:</div>
-          <div>1. IR Proximity Sensor (GPIO 17) detects bottle entry at inlet chute</div>
-          <div>2. Ultrasonic HC-SR04 (GPIO 23/24) checks container fullness</div>
-          <div>3. Python control daemon verifies object acceptance criteria</div>
-          <div>4. PWM pulse sent to Micro-Servo (GPIO 18) to divert gate to bin</div>
-          <div>5. Incentive token / credit generated via local system log</div>
+        <div class="p-4 bg-[#faf6ed] text-stone-900 rounded font-typewriter space-y-2 border border-stone-300 shadow-inner">
+          <div class="text-amber-950 font-bold border-b border-stone-300 pb-1 flex justify-between items-center">
+            <span>LAB INSPECTION LOG // PROTOTYPE VERIFICATION:</span>
+            <span class="stamp border-emerald-700 text-emerald-800 text-[9px] px-1 py-0.2">HARDWARE PASS</span>
+          </div>
+          <div><strong>1. Optical Intake Trigger:</strong> Non-contact infrared sensor array initiates bottle inspection cycle upon object insertion.</div>
+          <div><strong>2. Dimensional Verification:</strong> Ultrasonic acoustic profiling confirms container size and internal storage capacity.</div>
+          <div><strong>3. Controller Evaluation:</strong> Python control daemon processes sensory data and issues mechanical gate actuation pulse.</div>
+          <div><strong>4. Mechanical Sorting:</strong> 180° servo diversion chute segregates recyclables into internal containment chamber.</div>
+          <div><strong>5. Incentive Accounting:</strong> Automated credit token logged upon verified physical deposit.</div>
         </div>
         <div class="pt-2">
           <a href="pages/rvm.html" class="px-3 py-1.5 bg-emerald-900 hover:bg-emerald-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
-            View Complete RVM Patent Schematic →
+            View Complete RVM Patent Dossier →
           </a>
         </div>
       </div>
@@ -421,13 +424,16 @@ export const EVIDENCE_DETAILS = {
     badge: "48-COUNT SM FIBER",
     summary: "Production telecom engineering drawing specs for aerial fiber routing and structural pole sag clearance calculations.",
     content: `
-      <div class="space-y-3 text-xs font-mono">
-        <div class="p-3 bg-amber-50 rounded border border-amber-300 space-y-1 text-amber-950">
-          <div class="font-bold">CADSYS OSP DRAFTING SPECIFICATION:</div>
-          <div>• Cable Type: Corning SMF-28e+ 48-Core Single-Mode Loose Tube</div>
-          <div>• Maximum Catenary Sag: &lt;2.5% span length at 30°C loaded conditions</div>
-          <div>• Clearance Standards: Met National Electrical Safety Code (NESC)</div>
-          <div>• Tooling: Aramis-DT GIS Work Print Generator, Katapault photogrammetry</div>
+      <div class="space-y-3 text-xs">
+        <div class="p-4 bg-[#f8f4ec] rounded border border-amber-800/30 space-y-2 text-stone-900 font-typewriter">
+          <div class="font-bold border-b border-stone-300 pb-1 flex justify-between items-center">
+            <span>CADSYS OSP DRAFTING SPECIFICATION:</span>
+            <span class="stamp border-blue-700 text-blue-800 text-[9px] px-1 py-0.2">TOLERANCE OK</span>
+          </div>
+          <div><strong>• Route Infrastructure:</strong> Corning SMF-28e+ 48-Core Single-Mode Loose Tube aerial fiber distribution.</div>
+          <div><strong>• Structural Catenary Sag:</strong> Structural clearance verified under &lt;2.1% span margin under maximum load.</div>
+          <div><strong>• Municipal Standards:</strong> Exceeds National Electrical Safety Code (NESC) clearance guidelines.</div>
+          <div><strong>• Work Print Generation:</strong> Validated via Aramis-DT GIS Work Print Generator &amp; Katapault photogrammetry.</div>
         </div>
         <div class="pt-2">
           <a href="pages/cadsys.html" class="px-3 py-1.5 bg-blue-900 hover:bg-blue-800 text-white rounded text-xs font-mono font-bold transition-colors inline-block">
@@ -440,19 +446,22 @@ export const EVIDENCE_DETAILS = {
   av_telematics: {
     id: "av_telematics",
     pageUrl: "pages/cognizant.html",
-    title: "TELEMATICS AUDIT: AUTONOMOUS VEHICLE SWQ",
-    subtitle: "COGNIZANT FIELD LAB // MAPPING REGRESSION REPORT",
+    title: "SURVEILLANCE REPORT: AUTONOMOUS VEHICLE FIELD TRIALS",
+    subtitle: "COGNIZANT MOBILITY LAB // HIGH-DEFINITION CORRIDOR 04",
     stamp: "QA PASS 100%",
     badge: "HYD_TEST_NODE_04",
-    summary: "Automated regression validation output confirming road geometry alignment, HD map validation, and zero safety anomaly flags.",
+    summary: "Field road trial telemetry report confirming HD map corridor correlation, multi-sensor synchronization, and zero critical safety regressions.",
     content: `
-      <div class="space-y-3 text-xs font-mono">
-        <div class="p-3 bg-stone-900 text-stone-100 rounded space-y-1">
-          <div class="text-emerald-400 font-bold">> AV_TELEMATICS_REGRESSION_EXECUTION:</div>
-          <div>[PASS] GPS / IMU dead-reckoning trajectory correlation: 99.8%</div>
-          <div>[PASS] Lane-boundary detection tolerance: &lt;1.8cm lateral error</div>
-          <div>[PASS] HD Map vector layer alignment across complex junctions</div>
-          <div>[PASS] Regression Suite #84 completed with 0 critical defects</div>
+      <div class="space-y-3 text-xs">
+        <div class="p-4 bg-[#fcf8f0] text-stone-900 rounded space-y-2 border border-stone-300 font-typewriter shadow-inner">
+          <div class="text-stone-950 font-bold border-b border-stone-300 pb-1 flex justify-between items-center">
+            <span>AV SURVEILLANCE &amp; TELEMETRY LOG:</span>
+            <span class="stamp border-emerald-700 text-emerald-800 text-[9px] px-1 py-0.2">VALIDATED</span>
+          </div>
+          <div><strong>• Dead-Reckoning Trajectory:</strong> GPS / IMU road alignment verified at 99.8% precision over continuous test miles.</div>
+          <div><strong>• Lane-Boundary Margin:</strong> Lateral deviation maintained within &lt;1.8cm across diverse urban corridor geometries.</div>
+          <div><strong>• HD Map Correlation:</strong> Real-time vector layers locked with physical roadway infrastructure and signage.</div>
+          <div><strong>• Quality Verdict:</strong> Autonomous Vehicle SWQ Suite #84 concluded with zero critical behavioral safety faults.</div>
         </div>
         <div class="pt-2">
           <a href="pages/cognizant.html" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-amber-300 rounded text-xs font-mono font-bold transition-colors inline-block">

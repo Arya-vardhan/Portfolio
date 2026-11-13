@@ -6,6 +6,7 @@ import { toggleAudio, playTypewriterClick } from './audio.js';
 import { initThreeAmbient } from './three-ambient.js';
 import { initModal, openExamModal, closeExamModal } from './modal.js';
 import { open3DBadgeInspector, close3DBadgeInspector, loadBadgeModel, flipBadge3D, toggleBadgeAutoRotate } from './badge-3d.js';
+import { initIntro, openCaseFolder, skipIntro } from './intro.js';
 
 // Global window exposure for inline DOM events
 window.goToStop = goToStop;
@@ -19,6 +20,8 @@ window.close3DBadgeInspector = close3DBadgeInspector;
 window.loadBadgeModel = loadBadgeModel;
 window.flipBadge3D = flipBadge3D;
 window.toggleBadgeAutoRotate = toggleBadgeAutoRotate;
+window.openCaseFolder = openCaseFolder;
+window.skipIntro = skipIntro;
 
 window.handleElevatorClick = function(e) {
   const track = document.getElementById('elevator-track');
@@ -59,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTorch(torchOverlay);
   initThreeAmbient(threeCanvas);
   initModal(modal);
+  initIntro();
 
   // Attach 3D Tactile Hover Physics to Physical Evidence Badges
   document.querySelectorAll('.physical-evidence-badge').forEach((card) => {
